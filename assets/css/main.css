@@ -3589,3 +3589,20 @@ table.dataTable thead .sorting_desc::after {
   border-color: #1bbd36;
   box-shadow: 0 0 0 2px rgba(27, 189, 54, 0.5);
 }
+
+.btn-more {
+  background: linear-gradient(90deg, #007bff, #00c6ff);
+  border: none;
+  padding: 12px 28px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 50px;
+  box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+  transition: all 0.3s ease;
+}
+
+.btn-more:hover {
+  background: linear-gradient(90deg, #00c6ff, #007bff);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0, 123, 255, 0.5);
+}
