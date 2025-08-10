@@ -2248,13 +2248,187 @@
     // ========================================================================
     // === FINAL, CONSOLIDATED JAVASCRIPT FOR THE ENTIRE DASHBOARD ===
     // ========================================================================
+    /*
+        $(document).ready(function () {
+    
+          const csvFile = 'data/chartdata.csv';
+    
+          // 1. LOAD DATA ONCE
+          // This loads the CSV file and then passes the data to the functions that build the dashboard.
+          Papa.parse(csvFile, {
+            download: true,
+            header: true,
+            skipEmptyLines: true,
+            complete: function (results) {
+              // A robust filter to handle any inconsistencies in the CSV file
+              const allRawData = results.data.map(row => {
+                // Find the keys for state, date, type, and crimes, ignoring case
+                const stateKey = Object.keys(row).find(k => k.toLowerCase() === 'state');
+                const dateKey = Object.keys(row).find(k => k.toLowerCase() === 'date');
+                const typeKey = Object.keys(row).find(k => k.toLowerCase() === 'type');
+                const crimesKey = Object.keys(row).find(k => k.toLowerCase() === 'crimes');
+                if (stateKey && dateKey && typeKey && crimesKey && row[stateKey]) {
+                  return {
+                    state: row[stateKey],
+                    date: row[dateKey],
+                    type: row[typeKey],
+                    crimes: Number(String(row[crimesKey]).replace(/,/g, '')) || 0
+                  };
+                }
+                return null;
+              }).filter(row => row !== null);
+    
+              // 2. INITIALIZE BOTH COMPONENTS INDEPENDENTLY
+              initializeScatterChart(allRawData);
+              initializeDataTable(allRawData);
+            }
+          });
+    
+                function initializeScatterChart(rawData) {
+            if (!$("#scatterChart").length) return;
+    
+            const stateColors = [
+              'rgba(230, 25, 75, 0.8)', 'rgba(60, 180, 75, 0.8)', 'rgba(255, 225, 25, 0.8)',
+              'rgba(0, 130, 200, 0.8)', 'rgba(245, 130, 48, 0.8)', 'rgba(145, 30, 180, 0.8)',
+              'rgba(70, 240, 240, 0.8)', 'rgba(240, 50, 230, 0.8)', 'rgba(210, 245, 60, 0.8)'
+            ];
+            const propertyCrimeTypes = ['theft', 'burglary', 'vandalism', 'arson'];
+    
+            const dataByYear = {};
+            const years = new Set();
+            rawData.forEach(row => {
+              const year = new Date(row.date).getFullYear();
+              if (!year || isNaN(year)) return;
+              years.add(year);
+              const state = row.state;
+              if (!dataByYear[state]) dataByYear[state] = {};
+              if (!dataByYear[state][year]) dataByYear[state][year] = { property: 0, violent: 0 };
+              if (propertyCrimeTypes.some(type => row.type.toLowerCase().includes(type))) {
+                dataByYear[state][year].property += row.crimes;
+              } else {
+                dataByYear[state][year].violent += row.crimes;
+              }
+            });
+    
+            const allStates = Object.keys(dataByYear).sort();
+            const sortedYears = [...years].sort();
+            const checkboxContainer = $('#state-checkboxes-container');
+            allStates.forEach(state => { checkboxContainer.append(`<div class="form-check"><input class="form-check-input state-checkbox" type="checkbox" value="${state}" checked><label class="form-check-label">${state}</label></div>`); });
+    
+            const yearSlider = $('#year-slider');
+            const yearLabel = $('#current-year-label');
+            if (sortedYears.length > 0) {
+              yearSlider.attr('min', sortedYears[0]);
+              yearSlider.attr('max', sortedYears[sortedYears.length - 1]);
+              yearSlider.val(sortedYears[sortedYears.length - 1]);
+              yearLabel.text(sortedYears[sortedYears.length - 1]);
+            }
+    
+            const scatterChartCanvas = $("#scatterChart").get(0).getContext("2d");
+            const scatterChart = new Chart(scatterChartCanvas, {
+              type: 'scatter',
+              data: { datasets: [] },
+              options: {
+                responsive: true, maintainAspectRatio: false, animation: { duration: 750 },
+                scales: { xAxes: [{ type: 'linear', position: 'bottom', scaleLabel: { display: true, labelString: 'Total Property Crimes', fontSize: 14, fontStyle: 'bold' } }], yAxes: [{ type: 'linear', scaleLabel: { display: true, labelString: 'Total Violent Crimes', fontSize: 14, fontStyle: 'bold' } }] },
+                tooltips: { callbacks: { label: function (tooltipItem, data) { let label = data.datasets[tooltipItem.datasetIndex].label || ''; if (label) { label += ': '; } label += `(${Number(tooltipItem.xLabel).toLocaleString()}, ${Number(tooltipItem.yLabel).toLocaleString()})`; return label; } } },
+                legend: { display: true, position: 'top' },
+                plugins: [{ afterDraw: function (chart) { const ctx = chart.ctx; const chartArea = chart.chartArea; if (!chartArea) return; ctx.save(); ctx.beginPath(); ctx.moveTo(chartArea.left, chartArea.bottom); ctx.lineTo(chartArea.right, chartArea.top); ctx.strokeStyle = 'rgba(150, 150, 150, 0.6)'; ctx.lineWidth = 2; ctx.setLineDash([5, 5]); ctx.stroke(); ctx.restore(); } }]
+              }
+            });
+    
+            function updateChart() {
+              const selectedYear = yearSlider.val();
+              const selectedStates = $('.state-checkbox:checked').map((_, el) => $(el).val()).get();
+              let newDatasets = [];
+              yearLabel.text(selectedYear);
+              selectedStates.forEach((state, index) => {
+                const yearlyData = dataByYear[state] ? dataByYear[state][selectedYear] : null;
+                if (yearlyData) { newDatasets.push({ label: state, data: [{ x: yearlyData.property, y: yearlyData.violent }], backgroundColor: stateColors[index % stateColors.length], pointRadius: 8 }); }
+              });
+              scatterChart.data.datasets = newDatasets;
+              scatterChart.update();
+            }
+    
+            $('#state-checkboxes-container').on('change', '.state-checkbox', updateChart);
+            yearSlider.on('input', updateChart);
+            $('#select-all-states').on('click', () => { $('.state-checkbox').prop('checked', true); updateChart(); });
+            $('#deselect-all-states').on('click', () => { $('.state-checkbox').prop('checked', false); updateChart(); });
+            updateChart();
+          }
+    
+               function initializeDataTable(rawData) {
+            if (!$("#rawData-table").length) return;
+    
+            const states = [...new Set(rawData.map(item => item.state))].sort();
+            const crimeTypes = [...new Set(rawData.map(item => item.type))].sort();
+    
+            const stateFilter = $('#tableStateFilter');
+            stateFilter.append('<option value="">All States</option>');
+            states.forEach(state => stateFilter.append(`<option value="${state}">${state}</option>`));
+    
+            const crimeTypeFilter = $('#tableCrimeTypeFilter');
+            crimeTypeFilter.append('<option value="">All Crime Types</option>');
+            crimeTypes.forEach(type => crimeTypeFilter.append(`<option value="${type}">${type}</option>`));
+    
+            const dataTable = $('#rawData-table').DataTable({
+              data: rawData,
+              columns: [
+                { data: 'state' },
+                { data: 'date' },
+                { data: 'type' },
+                { data: 'crimes' }
+              ]
+            });
+    
+            function updateDataTable() {
+              const selectedState = stateFilter.val();
+              const selectedCrimeType = crimeTypeFilter.val();
+    
+              $.fn.dataTable.ext.search.pop();
+              $.fn.dataTable.ext.search.push(
+                function (settings, data, dataIndex) {
+                  const rowState = data[0];
+                  const rowCrimeType = data[2];
+                  const stateMatch = !selectedState || rowState === selectedState;
+                  const crimeTypeMatch = !selectedCrimeType || rowCrimeType === selectedCrimeType;
+                  return stateMatch && crimeTypeMatch;
+                }
+              );
+              dataTable.draw();
+            }
+    
+            stateFilter.on('change', updateDataTable);
+            crimeTypeFilter.on('change', updateDataTable);
+          }
+    
+        });
+    */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // ========================================================================
+    // === FINAL, MERGED JAVASCRIPT WITH YOUR PREFERRED CHART DESIGN ===
+    // ========================================================================
 
     $(document).ready(function () {
 
       const csvFile = 'data/chartdata.csv';
 
       // 1. LOAD DATA ONCE
-      // This loads the CSV file and then passes the data to the functions that build the dashboard.
+      // This loads the data and then passes it to the two independent functions.
       Papa.parse(csvFile, {
         download: true,
         header: true,
@@ -2262,7 +2436,6 @@
         complete: function (results) {
           // A robust filter to handle any inconsistencies in the CSV file
           const allRawData = results.data.map(row => {
-            // Find the keys for state, date, type, and crimes, ignoring case
             const stateKey = Object.keys(row).find(k => k.toLowerCase() === 'state');
             const dateKey = Object.keys(row).find(k => k.toLowerCase() === 'date');
             const typeKey = Object.keys(row).find(k => k.toLowerCase() === 'type');
@@ -2281,44 +2454,63 @@
           // 2. INITIALIZE BOTH COMPONENTS INDEPENDENTLY
           initializeScatterChart(allRawData);
           initializeDataTable(allRawData);
+        },
+        error: function (err) {
+          console.error("Error loading or parsing CSV file:", err);
+          alert("Failed to load the data file. Please check the file path and format.");
         }
       });
 
       /**
-       * This function initializes the Scatter Chart and its dedicated controls.
+       * YOUR PREFERRED SCATTER CHART CODE
+       * This function contains your working scatter chart code, exactly as you provided it.
        * @param {Array} rawData The complete dataset from the CSV.
        */
       function initializeScatterChart(rawData) {
         if (!$("#scatterChart").length) return;
 
+        // --- Your working chart code starts here ---
         const stateColors = [
-          'rgba(230, 25, 75, 0.8)', 'rgba(60, 180, 75, 0.8)', 'rgba(255, 225, 25, 0.8)',
-          'rgba(0, 130, 200, 0.8)', 'rgba(245, 130, 48, 0.8)', 'rgba(145, 30, 180, 0.8)',
-          'rgba(70, 240, 240, 0.8)', 'rgba(240, 50, 230, 0.8)', 'rgba(210, 245, 60, 0.8)'
+          'rgba(239, 21, 5, 0.8)',   // Red
+          'rgba(255, 84, 224, 0.8)',  // Pink
+          'rgba(174, 3, 205, 0.8)',  // Purple
+          'rgba(89, 37, 178, 0.8)',  // Deep Purple
+          'rgba(12, 36, 166, 0.8)',   // Indigo
+          'rgba(33, 150, 243, 0.8)',  // Blue
+          'rgba(0, 188, 212, 0.8)',   // Cyan
+          'rgba(0, 150, 136, 0.8)',   // Teal
+          'rgba(76, 175, 80, 0.8)',   // Green
+          'rgba(205, 220, 57, 0.8)',  // Lime
+          'rgba(255, 193, 7, 0.8)',   // Amber
+          'rgba(211, 129, 5, 0.8)',   // Orange
+          'rgba(121, 85, 72, 0.8)',   // Brown
+          'rgba(96, 125, 139, 0.8)'   // Blue Grey
         ];
         const propertyCrimeTypes = ['theft', 'burglary', 'vandalism', 'arson'];
+        const violentCrimeTypes = ['assault', 'robbery', 'murder', 'homicide', 'rape'];
 
         const dataByYear = {};
         const years = new Set();
         rawData.forEach(row => {
           const year = new Date(row.date).getFullYear();
-          if (!year || isNaN(year)) return;
+          if (!year || isNaN(year) || row.state === 'Malaysia') return;
           years.add(year);
           const state = row.state;
           if (!dataByYear[state]) dataByYear[state] = {};
           if (!dataByYear[state][year]) dataByYear[state][year] = { property: 0, violent: 0 };
-          if (propertyCrimeTypes.some(type => row.type.toLowerCase().includes(type))) {
-            dataByYear[state][year].property += row.crimes;
-          } else {
-            dataByYear[state][year].violent += row.crimes;
-          }
+          if (propertyCrimeTypes.some(type => row.type.toLowerCase().includes(type))) { dataByYear[state][year].property += row.crimes; }
+          if (violentCrimeTypes.some(type => row.type.toLowerCase().includes(type))) { dataByYear[state][year].violent += row.crimes; }
         });
 
         const allStates = Object.keys(dataByYear).sort();
         const sortedYears = [...years].sort();
-        const checkboxContainer = $('#state-checkboxes-container');
-        allStates.forEach(state => { checkboxContainer.append(`<div class="form-check"><input class="form-check-input state-checkbox" type="checkbox" value="${state}" checked><label class="form-check-label">${state}</label></div>`); });
 
+        const checkboxContainer = $('#state-checkboxes-container');
+        allStates.forEach(state => {
+          checkboxContainer.append(
+            `<div class="form-check"><input class="form-check-input state-checkbox" type="checkbox" value="${state}" id="check-${state}" checked><label class="form-check-label" for="check-${state}">${state}</label></div>`
+          );
+        });
         const yearSlider = $('#year-slider');
         const yearLabel = $('#current-year-label');
         if (sortedYears.length > 0) {
@@ -2333,12 +2525,62 @@
           type: 'scatter',
           data: { datasets: [] },
           options: {
-            responsive: true, maintainAspectRatio: false, animation: { duration: 750 },
-            scales: { xAxes: [{ type: 'linear', position: 'bottom', scaleLabel: { display: true, labelString: 'Total Property Crimes', fontSize: 14, fontStyle: 'bold' } }], yAxes: [{ type: 'linear', scaleLabel: { display: true, labelString: 'Total Violent Crimes', fontSize: 14, fontStyle: 'bold' } }] },
-            tooltips: { callbacks: { label: function (tooltipItem, data) { let label = data.datasets[tooltipItem.datasetIndex].label || ''; if (label) { label += ': '; } label += `(${Number(tooltipItem.xLabel).toLocaleString()}, ${Number(tooltipItem.yLabel).toLocaleString()})`; return label; } } },
-            legend: { display: true, position: 'top' },
-            plugins: [{ afterDraw: function (chart) { const ctx = chart.ctx; const chartArea = chart.chartArea; if (!chartArea) return; ctx.save(); ctx.beginPath(); ctx.moveTo(chartArea.left, chartArea.bottom); ctx.lineTo(chartArea.right, chartArea.top); ctx.strokeStyle = 'rgba(150, 150, 150, 0.6)'; ctx.lineWidth = 2; ctx.setLineDash([5, 5]); ctx.stroke(); ctx.restore(); } }]
-          }
+            responsive: true,
+            maintainAspectRatio: false,
+            animation: { duration: 750 },
+            scales: {
+              xAxes: [{
+                type: 'linear',
+                position: 'bottom',
+                scaleLabel: {
+                  display: true,
+                  labelString: 'Total Property Crimes',
+                  fontSize: 14,
+                  fontStyle: 'bold'
+                }
+              }],
+              yAxes: [{
+                type: 'linear',
+                scaleLabel: {
+                  display: true,
+                  labelString: 'Total Violent Crimes',
+                  fontSize: 14,
+                  fontStyle: 'bold'
+                }
+              }]
+            },
+            tooltips: {
+              callbacks: {
+                label: function (tooltipItem, data) {
+                  let label = data.datasets[tooltipItem.datasetIndex].label || '';
+                  if (label) { label += ': '; }
+                  label += `(${Number(tooltipItem.xLabel).toLocaleString()}, ${Number(tooltipItem.yLabel).toLocaleString()})`;
+                  return label;
+                }
+              }
+            },
+            legend: {
+              display: true,
+              position: 'top',
+              onClick: null
+            }
+          },
+          plugins: [{
+            afterDraw: function (chart) {
+              const ctx = chart.ctx;
+              const chartArea = chart.chartArea;
+              if (!chartArea) return;
+              ctx.save();
+              ctx.beginPath();
+              ctx.moveTo(chartArea.left, chartArea.bottom);
+              ctx.lineTo(chartArea.right, chartArea.top);
+              ctx.strokeStyle = 'rgba(150, 150, 150, 0.6)';
+              ctx.lineWidth = 2;
+              ctx.setLineDash([5, 5]);
+              ctx.stroke();
+              ctx.restore();
+            }
+          }]
         });
 
         function updateChart() {
@@ -2348,69 +2590,108 @@
           yearLabel.text(selectedYear);
           selectedStates.forEach((state, index) => {
             const yearlyData = dataByYear[state] ? dataByYear[state][selectedYear] : null;
-            if (yearlyData) { newDatasets.push({ label: state, data: [{ x: yearlyData.property, y: yearlyData.violent }], backgroundColor: stateColors[index % stateColors.length], pointRadius: 8 }); }
+            if (yearlyData) {
+              newDatasets.push({
+                label: state,
+                data: [{ x: yearlyData.property, y: yearlyData.violent }],
+                backgroundColor: stateColors[index % stateColors.length],
+                pointRadius: 8
+              });
+            }
           });
           scatterChart.data.datasets = newDatasets;
           scatterChart.update();
+          const selectAllBtn = $('#select-all-states');
+          const deselectAllBtn = $('#deselect-all-states');
+          selectAllBtn.removeClass('active');
+          deselectAllBtn.removeClass('active');
+          if (selectedStates.length === allStates.length) {
+            selectAllBtn.addClass('active');
+          } else if (selectedStates.length === 0) {
+            deselectAllBtn.addClass('active');
+          }
         }
 
         $('#state-checkboxes-container').on('change', '.state-checkbox', updateChart);
         yearSlider.on('input', updateChart);
-        $('#select-all-states').on('click', () => { $('.state-checkbox').prop('checked', true); updateChart(); });
-        $('#deselect-all-states').on('click', () => { $('.state-checkbox').prop('checked', false); updateChart(); });
+        $('#select-all-states').on('click', () => {
+          $('.state-checkbox').prop('checked', true);
+          updateChart();
+        });
+        $('#deselect-all-states').on('click', () => {
+          $('.state-checkbox').prop('checked', false);
+          updateChart();
+        });
         updateChart();
+        // --- Your working chart code ends here ---
       }
 
       /**
-       * This function initializes the Data Table and its dedicated filters.
-       * @param {Array} rawData The complete dataset from the CSV.
+       * Initializes the Data Table after aggregating data by State and Date.
        */
       function initializeDataTable(rawData) {
         if (!$("#rawData-table").length) return;
 
-        const states = [...new Set(rawData.map(item => item.state))].sort();
-        const crimeTypes = [...new Set(rawData.map(item => item.type))].sort();
+        const aggregatedDataMap = {};
+        rawData.forEach(row => {
+          const key = `${row.state}|${row.date}`;
+          if (!aggregatedDataMap[key]) {
+            aggregatedDataMap[key] = { state: row.state, date: row.date, crimes: 0 };
+          }
+          aggregatedDataMap[key].crimes += row.crimes;
+        });
+        const aggregatedData = Object.values(aggregatedDataMap);
 
-        const stateFilter = $('#tableStateFilter');
-        stateFilter.append('<option value="">All States</option>');
-        states.forEach(state => stateFilter.append(`<option value="${state}">${state}</option>`));
-
-        const crimeTypeFilter = $('#tableCrimeTypeFilter');
-        crimeTypeFilter.append('<option value="">All Crime Types</option>');
-        crimeTypes.forEach(type => crimeTypeFilter.append(`<option value="${type}">${type}</option>`));
+        // Inside the initializeDataTable function...
 
         const dataTable = $('#rawData-table').DataTable({
-          data: rawData,
+          data: aggregatedData,
           columns: [
             { data: 'state' },
             { data: 'date' },
-            { data: 'type' },
-            { data: 'crimes' }
-          ]
+            { data: 'crimes', render: $.fn.dataTable.render.number(',', '.', 0) }
+          ],
+          // The 'f' in the dom string tells DataTables to create the filter (search) input
+          dom: '<"row"<"col-sm-12"f>>' + // We only need the search box generated
+            '<"row"<"col-sm-12"tr>>',
+          scrollY: '450px',
+          scrollCollapse: true,
+          paging: false,
+          info: false,
+
+          // --- THIS IS THE KEY CHANGE ---
+          // This function runs after the table is fully built.
+          initComplete: function () {
+            // Find the search box DataTables created...
+            const searchInput = $('#rawData-table_filter');
+            // ...and move it into our new placeholder div.
+            searchInput.appendTo('#table-search-placeholder');
+          }
         });
 
-        function updateDataTable() {
-          const selectedState = stateFilter.val();
-          const selectedCrimeType = crimeTypeFilter.val();
-
-          $.fn.dataTable.ext.search.pop();
-          $.fn.dataTable.ext.search.push(
-            function (settings, data, dataIndex) {
-              const rowState = data[0];
-              const rowCrimeType = data[2];
-              const stateMatch = !selectedState || rowState === selectedState;
-              const crimeTypeMatch = !selectedCrimeType || rowCrimeType === selectedCrimeType;
-              return stateMatch && crimeTypeMatch;
-            }
-          );
-          dataTable.draw();
-        }
-
-        stateFilter.on('change', updateDataTable);
-        crimeTypeFilter.on('change', updateDataTable);
+        /* dataTable.on('init.dt', function () {
+           dataTable.columns.adjust().draw();
+         });
+ 
+         $.fn.dataTable.ext.search.push(
+           function (settings, data, dataIndex) {
+             const selectedState = stateFilter.val();
+             const rowState = data[0];
+             return !selectedState || rowState === selectedState;
+           }
+         );
+ 
+         stateFilter.on('change', () => dataTable.draw()); */
       }
-
     });
+
+
+
+
+
+
+
+
 
 
 

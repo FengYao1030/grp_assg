@@ -3359,8 +3359,8 @@ section,
 
 
 #stateFilter:focus {
-  border-color: #2ae149;
-  box-shadow: 0 0 0 0.25rem rgba(42, 225, 73, 0.5);
+  border-color: #1bbd36;
+  box-shadow: 0 0 0 2px rgba(27, 189, 54, 0.5);
 }
 
 
@@ -3385,10 +3385,6 @@ section,
   background-color: #2ae149;
   color: #fff;
   /* Sets the text color to white for better contrast */
-}
-
-.footer h4 {
-  color: #2ae149;
 }
 
 .card-description {
@@ -3465,4 +3461,131 @@ section,
   border-color: #1bbd36;
   color: #fff;
   font-weight: bold;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+.dataTables_wrapper .row {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.dataTables_wrapper .row:first-child {
+  display: flex;
+  justify-content: space-between;
+  /* Pushes children to opposite ends */
+  align-items: center;
+  /* Vertically aligns them */
+  padding-bottom: 1rem;
+  /* Adds some space below the controls */
+  width: 100%;
+  margin: 0;
+}
+
+
+/* Position the search box and length menu correctly */
+.dataTables_wrapper .top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 1rem;
+}
+
+.dataTables_filter {
+  text-align: right;
+}
+
+.dataTables_filter input {
+  width: auto;
+  /* Allows the input to size naturally */
+  display: inline-block;
+}
+
+/* Definitive fix for the duplicate header when scrolling */
+.dataTables_scrollBody thead tr {
+  visibility: collapse !important;
+}
+
+/* Fix for the sorting arrows */
+table.dataTable thead>tr>th.sorting,
+table.dataTable thead>tr>th.sorting_asc,
+table.dataTable thead>tr>th.sorting_desc {
+  padding-right: 30px !important;
+  position: relative;
+}
+
+table.dataTable thead .sorting::after,
+table.dataTable thead .sorting_asc::after,
+table.dataTable thead .sorting_desc::after {
+  content: ' ';
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1em;
+  height: 1em;
+  opacity: 0.5;
+}
+
+table.dataTable thead .sorting::after {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%236c757d'%3e%3cpath fill-rule='evenodd' d='M4.646 9.646a.5.5 0 0 1 .708 0L8 12.293l2.646-2.647a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 0 1 0-.708z'/%3e%3cpath fill-rule='evenodd' d='M4.646 6.354a.5.5 0 0 0 .708 0L8 3.707l2.646 2.647a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 0 0 0 .708z'/%3e%3c/svg%3e") !important;
+}
+
+table.dataTable thead .sorting_asc::after {
+  opacity: 1;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'%3e%3cpath fill-rule='evenodd' d='M4.646 6.354a.5.5 0 0 0 .708 0L8 3.707l2.646 2.647a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 0 0 0 .708z'/%3e%3c/svg%3e") !important;
+}
+
+table.dataTable thead .sorting_desc::after {
+  opacity: 1;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'%3e%3cpath fill-rule='evenodd' d='M4.646 9.646a.5.5 0 0 1 .708 0L8 12.293l2.646-2.647a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e") !important;
+}
+
+.table-header-controls {
+  display: flex;
+  justify-content: space-between;
+  /* Pushes title and search to opposite ends */
+  align-items: flex-start;
+  /* Aligns them to the top */
+  padding-bottom: 1rem;
+}
+
+/* Removes the top margin from the card title to improve alignment */
+.table-header-controls .card-title {
+  margin-top: 0 !important;
+}
+
+/* Styling for the search bar label and input */
+#rawData-table_filter {
+  text-align: right;
+}
+
+#rawData-table_filter label {
+  font-weight: normal;
+  white-space: nowrap;
+  text-align: left;
+  margin-right: 30px;
+}
+
+.dataTables_filter input {
+  width: 250px;
+  /* You can change this value to make the bar wider or narrower */
+  margin-left: 0.5em;
+  /* This adds a small space between the "Search:" label and the input box */
+  color: #1bbd36;
+}
+
+.dataTables_filter input:focus {
+  border-color: #1bbd36;
+  box-shadow: 0 0 0 2px rgba(27, 189, 54, 0.5);
 }

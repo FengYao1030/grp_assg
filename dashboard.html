@@ -38,15 +38,15 @@
             <a href="index.html" class="logo d-flex align-items-center me-auto">
                 <!-- Uncomment the line below if you also wish to use an image logo -->
                 <!-- <img src="assets/img/logo.png" alt=""> -->
-                <h1 class="sitename">CrimeMY</h1><span>.</span>
+                <h1 class="sitename">CrimeMY</h1>
             </a>
 
             <nav id="navmenu" class="navmenu">
                 <ul>
                     <li><a href="index.html">Home</a></li>
-                    <li><a href="services.html">Crime Types</a></li>
+                    <li><a href="crime.html">Crime Types</a></li>
                     <li><a href="dashboard.html" class="active">Dashboard</a></li>
-                    <li><a href="blog.html">Case Studies</a></li>
+                    <li><a href="casestudies.html">Case Studies</a></li>
                     <li><a href="contact.html">Contact</a></li>
                 </ul>
                 <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
@@ -55,7 +55,6 @@
     </header>
 
     <main class="main">
-
         <div class="row" id="proBanner">
             <div class="col-12">
                 <span class="d-flex align-items-center purchase-popup">
@@ -179,7 +178,7 @@
                                     </div>
 
                                     <div class="doughnut-chart-container"
-                                        style="height: 420px; position: relative; margin-top: 50px;">
+                                        style="height: 475px; position: relative; margin-top: 50px;">
                                         <canvas id="doughnutChart"></canvas>
                                     </div>
 
@@ -277,29 +276,22 @@
                     <!-- ====================================================== -->
                     <div class="row mt-4">
                         <div class="col-12 grid-margin stretch-card">
-                            <div class="card">
+                            <div class="card shadow-sm">
                                 <div class="card-body">
-                                    <h5 class="card-title mt-3">Raw Data Explorer</h5>
-                                    <div class="row mb-3 gx-3">
-                                        <div class="col-md-3">
-                                            <label for="tableStateFilter"
-                                                class="form-label"><strong>State:</strong></label>
-                                            <select id="tableStateFilter" class="form-select"></select>
+                                    <div class="table-header-controls">
+                                        <div>
+                                            <h5 class="card-title">Raw Data Explorer</h5>
+                                            <p class="card-description">desxription</p>
                                         </div>
-                                        <div class="col-md-3">
-                                            <label for="tableCrimeTypeFilter" class="form-label"><strong>Crime
-                                                    Type:</strong></label>
-                                            <select id="tableCrimeTypeFilter" class="form-select"></select>
-                                        </div>
+                                        <div id="table-search-placeholder"></div>
                                     </div>
-                                    <div class="table-responsive">
+                                    <div>
                                         <table id="rawData-table" class="table table-striped" style="width:100%">
                                             <thead>
                                                 <tr>
                                                     <th>State</th>
                                                     <th>Date</th>
-                                                    <th>Crime Type</th>
-                                                    <th>Cases</th>
+                                                    <th>Total Cases</th>
                                                 </tr>
                                             </thead>
                                             <tbody></tbody>
@@ -310,15 +302,6 @@
                         </div>
                     </div>
 
-
-
-                    <!--Sorting & Searching (for tables): If a data table is included, implement client side sorting and searching functionality.
-
-                        Interactive Data Table (Tables & JavaScript): 
-                        Display a portion of all the raw data in a well-structured HTML table.  
-                        The table should dynamically update based on the applied filters.  
-                        Implement basic table sorting by column headers (e.g., clicking a header sorts 
-                        the column ascending/descending). -->
 
 
 
@@ -333,6 +316,63 @@
 
     </main>
 
+
+    <footer id="footer" class="footer dark-background">
+        <div class="container footer-top">
+            <div class="row gy-4">
+                <div class="col-lg-4 col-md-6 footer-about">
+                    <a href="index.html" class="logo d-flex align-items-center">
+                        <span class="sitename">CrimeMY</span>
+                    </a>
+                    <div class="footer-contact pt-3">
+                        <p>1, Jln BU 3/1, Bandar Utama, 47800 </p>
+                        <p>Petaling Jaya, Selangor</p>
+                        <p class="mt-3"><strong>Emergency:</strong> <span>60189815566</span></p>
+                        <p><strong>Email:</strong> <span>contact@crimemy.my </span></p>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-3 footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="dashboard.html">Dashboard</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-2 col-md-3 footer-links">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="crime.html">Crime Types</a></li>
+                        <li><a href="casestudies.html">Case Studies</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-4 col-md-12 footer-newsletter">
+                    <h4>Crime Alert Newsletter</h4>
+                    <p>Subscribe to receive updates on local crime trends and prevention tips in your area.</p>
+                    <form id="newsletter-form" action="forms/newsletter.php" method="post" class="php-email-form">
+                        <div class="newsletter-form">
+                            <input type="email" name="email" placeholder="Your Email" required>
+                            <input type="submit" value="Subscribe">
+                        </div>
+                        <div class="sent-message">Your subscription request has been sent. Thank you!</div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="container copyright text-center mt-4">
+            <p>© <span>Copyright</span> <strong class="px-1 sitename">CrimeMY</strong> <span>All Rights Reserved</span>
+            </p>
+        </div>
+    </footer>
+
+
+
+
+    <!--
     <footer id="footer" class="footer dark-background">
         <div class="container footer-top">
             <div class="row gy-4">
@@ -376,6 +416,7 @@
         </div>
 
     </footer>
+-->
     <!-- Scroll Top -->
     <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
             class="bi bi-arrow-up-short"></i></a>
@@ -415,6 +456,22 @@
         hideBanner();
         const observer = new MutationObserver(hideBanner);
         observer.observe(document.body, { childList: true, subtree: true });
+
+        document.getElementById('newsletter-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+            const emailInput = this.querySelector('input[name="email"]');
+            const email = emailInput.value;
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            if (emailRegex.test(email)) {
+                // Hide form and show success message
+                this.querySelector('.newsletter-form').classList.add('hidden');
+                this.querySelector('.sent-message').classList.add('visible');
+
+                // Reset form
+                this.reset();
+            }
+        });
     </script>
 
 </body>
