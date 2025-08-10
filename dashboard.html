@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Dashboard</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+
+    <!-- Favicons -->
+    <link href="assets/img/favicon2.png" rel="icon">
+    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+    <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+    <!-- Main CSS File -->
+    <link href="assets/css/main.css" rel="stylesheet">
+</head>
+
+<body class="index-page">
+
+    <header id="header" class="header d-flex align-items-center sticky-top">
+        <div class="container position-relative d-flex align-items-center">
+
+            <a href="index.html" class="logo d-flex align-items-center me-auto">
+                <!-- Uncomment the line below if you also wish to use an image logo -->
+                <!-- <img src="assets/img/logo.png" alt=""> -->
+                <h1 class="sitename">CrimeMY</h1><span>.</span>
+            </a>
+
+            <nav id="navmenu" class="navmenu">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="services.html">Crime Types</a></li>
+                    <li><a href="dashboard.html" class="active">Dashboard</a></li>
+                    <li><a href="blog.html">Case Studies</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+                <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main">
+
+        <div class="row" id="proBanner">
+            <div class="col-12">
+                <span class="d-flex align-items-center purchase-popup">
+                    <p>Get tons of UI components, Plugins, multiple layouts, 20+ sample pages, and more!</p>
+                    <a href="https://bootstrapdash.com/demo/polluxui/template/dashboard.html?utm_source=organic&utm_medium=banner&utm_campaign=free-preview"
+                        target="_blank" class="btn download-button purchase-button ml-auto">Upgrade To Pro</a>
+                    <i class="typcn typcn-delete-outline" id="bannerClose"></i>
+                </span>
+            </div>
+        </div>
+        <div class="container-fluid page-body-wrapper">
+            <!-- partial -->
+            <div class="main-panel" style="width: 100%; margin-left: 0;">
+                <div class="content-wrapper">
+                    <div class="row">
+                        <div class="col-xl-6 grid-margin stretch-card flex-column">
+                            <h5 class="mb-2 text-titlecase mb-4">Status statistics</h5>
+                            <div class="row">
+                                <div class="col-md-6 grid-margin stretch-card">
+                                    <div class="card">
+                                        <div class="card-body d-flex flex-column justify-content-between">
+                                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                                <p class="mb-0 text-muted">Transactions</p>
+                                                <p class="mb-0 text-muted">+1.37%</p>
+                                            </div>
+                                            <h4>1352</h4>
+                                            <canvas id="transactions-chart" class="mt-auto" height="65"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 grid-margin stretch-card">
+                                    <div class="card">
+                                        <div class="card-body d-flex flex-column justify-content-between">
+                                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                                <div>
+                                                    <p class="mb-2 text-muted">Sales</p>
+                                                    <h6 class="mb-0">563</h6>
+                                                </div>
+                                                <div>
+                                                    <p class="mb-2 text-muted">Orders</p>
+                                                    <h6 class="mb-0">720</h6>
+                                                </div>
+                                                <div>
+                                                    <p class="mb-2 text-muted">Revenue</p>
+                                                    <h6 class="mb-0">5900</h6>
+                                                </div>
+                                            </div>
+                                            <canvas id="sales-chart-a" class="mt-auto" height="65"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row h-100">
+                                <div class="col-md-6 stretch-card grid-margin grid-margin-md-0">
+                                    <div class="card">
+                                        <div class="card-body d-flex flex-column justify-content-between">
+                                            <p class="text-muted">Sales Analytics</p>
+                                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                                <h3 class="mb-">27632</h3>
+                                                <h3 class="mb-">78%</h3>
+                                            </div>
+                                            <canvas id="sales-chart-b" class="mt-auto" height="38"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 stretch-card">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="row h-100">
+                                                <div class="col-6 d-flex flex-column justify-content-between">
+                                                    <p class="text-muted">CPU</p>
+                                                    <h4>55%</h4>
+                                                    <canvas id="cpu-chart" class="mt-auto"></canvas>
+                                                </div>
+                                                <div class="col-6 d-flex flex-column justify-content-between">
+                                                    <p class="text-muted">Memory</p>
+                                                    <h4>123,65</h4>
+                                                    <canvas id="memory-chart" class="mt-auto"></canvas>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 grid-margin stretch-card flex-column">
+                            <h5 class="mb-2 text-titlecase mb-4">Income statistics</h5>
+                            <div class="row h-100">
+                                <div class="col-md-12 stretch-card">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="d-flex justify-content-between align-items-start flex-wrap">
+                                                <div>
+                                                    <p class="mb-3">Monthly Increase</p>
+                                                    <h3>67842</h3>
+                                                </div>
+                                                <div id="income-chart-legend" class="d-flex flex-wrap mt-1 mt-md-0">
+                                                </div>
+                                            </div>
+                                            <canvas id="income-chart"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+
+
+                        <div class="col-xl-6 grid-margin stretch-card">
+                            <div class="card">
+                                <div class="card-body">
+
+                                    <div class="d-flex justify-content-between align-items-center mb-4">
+                                        <h6 class="mb-3 mb-md-0 text-uppercase font-weight-medium">Top Five Crime Types
+                                        </h6>
+                                        <div id="doughnut-chart-filter-container" style="width: 200px;">
+                                            <select id="stateFilter" class="form-control"></select>
+                                        </div>
+                                    </div>
+
+                                    <div class="doughnut-chart-container"
+                                        style="height: 420px; position: relative; margin-top: 50px;">
+                                        <canvas id="doughnutChart"></canvas>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-xl-6 grid-margin stretch-card">
+                            <div class="card">
+                                <div class="card-body border-bottom">
+                                    <div class="d-flex justify-content-between align-items-center flex-wrap">
+                                        <h6 class="mb-3 mb-md-0 text-uppercase font-weight-medium">Sales statistics</h6>
+                                        <div class="dropdown">
+                                            <button class="btn bg-white p-0 pb-1 text-muted btn-sm dropdown-toggle"
+                                                type="button" id="dropdownMenuSizeButton4" data-toggle="dropdown"
+                                                aria-haspopup="true" aria-expanded="false">
+                                                Last 7 days
+                                            </button>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuSizeButton4">
+                                                <h6 class="dropdown-header">Settings</h6>
+                                                <a class="dropdown-item" href="javascript:;">Action</a>
+                                                <a class="dropdown-item" href="javascript:;">Another action</a>
+                                                <a class="dropdown-item" href="javascript:;">Something else here</a>
+                                                <div class="dropdown-divider"></div>
+                                                <a class="dropdown-item" href="javascript:;">Separated link</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <canvas id="sales-chart-d" height="200"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!--
+                    <div class="col-xl-12 mx-auto grid-margin stretch-card mt-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h6 class="mb-3 mb-md-0 text-uppercase font-weight-medium">Property vs. Violent Crime
+                                    Rate by State</h6>
+                                <div class="scatter-chart-container" style="height: 400px; position: relative;">
+                                    <canvas id="scatterChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+
+                    <div class="row">
+                        <div class="col-xl-8 grid-margin stretch-card">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6 class="mb-3 mb-md-0 text-uppercase font-weight-medium">Property Vs. Violent Rate
+                                    </h6>
+                                    <p class="card-description">
+                                        Each dot is a state's total crime profile for the selected year.
+                                    </p>
+                                    <div style="height: 450px; position: relative;">
+                                        <canvas id="scatterChart"></canvas>
+                                    </div>
+                                    <div class="pt-4">
+                                        <label for="year-slider" class="form-label"><strong>Year: <span
+                                                    id="current-year-label">2023</span></strong></label>
+                                        <input type="range" class="form-range" id="year-slider">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-4 grid-margin stretch-card">
+                            <div class="card" style="height: 665px;">
+                                <div class="card-body">
+                                    <h6 class="mb-3 mb-md-0 text-uppercase font-weight-medium">Select States</h6>
+                                    <div class="row g-2 my-3">
+                                        <div class="col">
+                                            <button type="button" class="btn btn-outline-success w-100"
+                                                id="select-all-states">Select All</button>
+                                        </div>
+                                        <div class="col">
+                                            <button type="button" class="btn btn-outline-secondary w-100"
+                                                id="deselect-all-states">Deselect All</button>
+                                        </div>
+                                    </div>
+                                    <div id="state-checkboxes-container" style="height: 600px; overflow-y: auto;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- ====================================================== -->
+                    <!-- NEW SECTION: INDEPENDENT DATA TABLE -->
+                    <!-- ====================================================== -->
+                    <div class="row mt-4">
+                        <div class="col-12 grid-margin stretch-card">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title mt-3">Raw Data Explorer</h5>
+                                    <div class="row mb-3 gx-3">
+                                        <div class="col-md-3">
+                                            <label for="tableStateFilter"
+                                                class="form-label"><strong>State:</strong></label>
+                                            <select id="tableStateFilter" class="form-select"></select>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="tableCrimeTypeFilter" class="form-label"><strong>Crime
+                                                    Type:</strong></label>
+                                            <select id="tableCrimeTypeFilter" class="form-select"></select>
+                                        </div>
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table id="rawData-table" class="table table-striped" style="width:100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>State</th>
+                                                    <th>Date</th>
+                                                    <th>Crime Type</th>
+                                                    <th>Cases</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <!--Sorting & Searching (for tables): If a data table is included, implement client side sorting and searching functionality.
+
+                        Interactive Data Table (Tables & JavaScript): 
+                        Display a portion of all the raw data in a well-structured HTML table.  
+                        The table should dynamically update based on the applied filters.  
+                        Implement basic table sorting by column headers (e.g., clicking a header sorts 
+                        the column ascending/descending). -->
+
+
+
+
+                </div>
+
+                <!-- partial -->
+            </div>
+            <!-- main-panel ends -->
+        </div>
+        <!-- page-body-wrapper ends -->
+
+    </main>
+
+    <footer id="footer" class="footer dark-background">
+        <div class="container footer-top">
+            <div class="row gy-4">
+
+                <div class="col-lg-4 col-md-12 footer-about">
+                    <a href="index.html" class="logo d-flex align-items-center">
+                        <span class="sitename">CrimeMY</span><span style="color: #2ae149;">.</span>
+                    </a>
+                    <p class="mt-4">CrimeMY is committed to shedding light on crime trends across Malaysia. Explore our
+                        data, case studies, and resources to better understand your community and contribute to a safer
+                        nation.</p>
+                </div>
+
+                <div class="col-lg-2 col-6 offset-lg-1 footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="dashboard.html">Dashboard</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-2 col-6 footer-links">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="services.html">Crime Types</a></li>
+                        <li><a href="blog.html">Case Studies</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-12 footer-contact">
+                    <h4>Contact Us</h4>
+                    <p><strong>Address:</strong><br>1, Jln BU 3/1, Bandar Utama<br>47800 Petaling Jaya, Selangor</p>
+                    <p class="mt-3"><strong>Phone:</strong> <span>+6010 8981 5566</span></p>
+                    <p><strong>Email:</strong> <span>contact@crimemy.my</span></p>
+                </div>
+            </div>
+        </div>
+        <div class="container copyright text-center mt-4">
+            <p>© <span>Copyright</span> <strong class="px-1 sitename">CrimeMY</strong> <span>All Rights Reserved</span>
+            </p>
+        </div>
+
+    </footer>
+    <!-- Scroll Top -->
+    <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
+            class="bi bi-arrow-up-short"></i></a>
+
+    <!-- Preloader -->
+    <div id="preloader"></div>
+
+    <!-- Vendor JS Files -->
+    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/vendor/php-email-form/validate.js"></script>
+    <script src="assets/vendor/aos/aos.js"></script>
+    <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+    <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+    <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
+    <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+    <!-- Main JS File -->
+    <script src="assets/js/main.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <!--<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+
+
+    <script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.8/js/dataTables.bootstrap5.min.js"></script>
+
+    <script src="template/js/dashboard.js"></script>
+
+    <script>
+        const hideBanner = () => {
+            const banner = document.getElementById('proBanner');
+            if (banner) banner.style.display = 'none';
+        };
+        hideBanner();
+        const observer = new MutationObserver(hideBanner);
+        observer.observe(document.body, { childList: true, subtree: true });
+    </script>
+
+</body>
+
+</html>

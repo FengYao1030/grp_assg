@@ -12,29 +12,41 @@
 --------------------------------------------------------------*/
 /* Fonts */
 :root {
-  --default-font: "Roboto",  system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --heading-font: "Raleway",  sans-serif;
-  --nav-font: "Nunito",  sans-serif;
+  --default-font: "Roboto", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --heading-font: "Raleway", sans-serif;
+  --nav-font: "Nunito", sans-serif;
 }
 
 /* Global Colors - The following color variables are used throughout the website. Updating them here will change the color scheme of the entire website */
-:root { 
-  --background-color: #ffffff; /* Background color for the entire website, including individual sections */
-  --default-color: #444444; /* Default color used for the majority of the text content across the entire website */
-  --heading-color: #111111; /* Color for headings, subheadings and title throughout the website */
-  --accent-color: #1bbd36; /* Accent color that represents your brand on the website. It's used for buttons, links, and other elements that need to stand out */
-  --surface-color: #ffffff; /* The surface color is used as a background of boxed elements within sections, such as cards, icon boxes, or other elements that require a visual separation from the global background. */
-  --contrast-color: #ffffff; /* Contrast color for text, ensuring readability against backgrounds of accent, heading, or default colors. */
+:root {
+  --background-color: #ffffff;
+  /* Background color for the entire website, including individual sections */
+  --default-color: #444444;
+  /* Default color used for the majority of the text content across the entire website */
+  --heading-color: #111111;
+  /* Color for headings, subheadings and title throughout the website */
+  --accent-color: #1bbd36;
+  /* Accent color that represents your brand on the website. It's used for buttons, links, and other elements that need to stand out */
+  --surface-color: #ffffff;
+  /* The surface color is used as a background of boxed elements within sections, such as cards, icon boxes, or other elements that require a visual separation from the global background. */
+  --contrast-color: #ffffff;
+  /* Contrast color for text, ensuring readability against backgrounds of accent, heading, or default colors. */
 }
 
 /* Nav Menu Colors - The following color variables are used specifically for the navigation menu. They are separate from the global colors to allow for more customization options */
 :root {
-  --nav-color: #444444;  /* The default color of the main navmenu links */
-  --nav-hover-color: #1bbd36; /* Applied to main navmenu links when they are hovered over or active */
-  --nav-mobile-background-color: #ffffff; /* Used as the background color for mobile navigation menu */
-  --nav-dropdown-background-color: #ffffff; /* Used as the background color for dropdown items that appear when hovering over primary navigation items */
-  --nav-dropdown-color: #444444; /* Used for navigation links of the dropdown items in the navigation menu. */
-  --nav-dropdown-hover-color: #1bbd36; /* Similar to --nav-hover-color, this color is applied to dropdown navigation links when they are hovered over. */
+  --nav-color: #444444;
+  /* The default color of the main navmenu links */
+  --nav-hover-color: #1bbd36;
+  /* Applied to main navmenu links when they are hovered over or active */
+  --nav-mobile-background-color: #ffffff;
+  /* Used as the background color for mobile navigation menu */
+  --nav-dropdown-background-color: #ffffff;
+  /* Used as the background color for dropdown items that appear when hovering over primary navigation items */
+  --nav-dropdown-color: #444444;
+  /* Used for navigation links of the dropdown items in the navigation menu. */
+  --nav-dropdown-hover-color: #1bbd36;
+  /* Similar to --nav-hover-color, this color is applied to dropdown navigation links when they are hovered over. */
 }
 
 /* Color Presets - These classes override global colors when applied to any section or element, providing reuse of the sam color scheme. */
@@ -94,6 +106,10 @@ h5,
 h6 {
   color: var(--heading-color);
   font-family: var(--heading-font);
+}
+
+h6 {
+  font-weight: bold;
 }
 
 /* PHP Email Form Messages
@@ -2626,4 +2642,827 @@ section,
   padding-left: 5px;
   color: color-mix(in srgb, var(--default-color), transparent 60%);
   font-size: 14px;
+}
+
+.crime-card {
+  transition: all 0.3s ease;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  border: none;
+  margin-bottom: 30px;
+}
+
+.crime-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+}
+
+.crime-header {
+  color: white;
+  padding: 20px;
+  position: relative;
+}
+
+.cybercrime-header {
+  background: linear-gradient(135deg, #00b4db, #0083b0);
+}
+
+.burglary-header {
+  background: linear-gradient(135deg, #ff7b25, #d64b00);
+}
+
+.fraud-header {
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
+}
+
+.vehicle-header {
+  background: linear-gradient(135deg, #f83600, #f9d423);
+}
+
+.identity-header {
+  background: linear-gradient(135deg, #11998e, #38ef7d);
+}
+
+.phone-header {
+  background: linear-gradient(135deg, #8e2de2, #4a00e0);
+}
+
+.crime-icon {
+  font-size: 2.5rem;
+  margin-bottom: 15px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.crime-body {
+  padding: 25px;
+  background-color: #f8f9fa;
+}
+
+.crime-section {
+  margin-bottom: 20px;
+}
+
+.crime-section h4 {
+  border-bottom: 2px solid #e9ecef;
+  padding-bottom: 8px;
+  margin-bottom: 15px;
+}
+
+.cybercrime-section h4 {
+  color: #0083b0;
+}
+
+.burglary-section h4 {
+  color: #d64b00;
+}
+
+.fraud-section h4 {
+  color: #2575fc;
+}
+
+.vehicle-section h4 {
+  color: #f83600;
+}
+
+.identity-section h4 {
+  color: #11998e;
+}
+
+.phone-section h4 {
+  color: #8e2de2;
+}
+
+.emergency-contacts {
+  background-color: #fff8e1;
+  border-left: 4px solid #ffc107;
+  padding: 15px;
+  border-radius: 5px;
+}
+
+.emergency-contacts li {
+  margin-bottom: 8px;
+}
+
+.threat-method {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+
+.cybercrime-method i {
+  color: #00b4db;
+}
+
+.burglary-method i {
+  color: #ff7b25;
+}
+
+.fraud-method i {
+  color: #6a11cb;
+}
+
+.vehicle-method i {
+  color: #f83600;
+}
+
+.identity-method i {
+  color: #11998e;
+}
+
+.phone-method i {
+  color: #8e2de2;
+}
+
+.threat-method i {
+  margin-right: 10px;
+  margin-top: 3px;
+  flex-shrink: 0;
+}
+
+.protection-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.protection-tip {
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.protection-tip:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.protection-tip i {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.cyber-tip i {
+  color: #0083b0;
+}
+
+.burglary-tip i {
+  color: #d64b00;
+}
+
+.fraud-tip i {
+  color: #2575fc;
+}
+
+.vehicle-tip i {
+  color: #f83600;
+}
+
+.identity-tip i {
+  color: #11998e;
+}
+
+.phone-tip i {
+  color: #8e2de2;
+}
+
+.crime-alert {
+  background-color: #fff3cd;
+  border-left: 4px solid #ffc107;
+  padding: 15px;
+  border-radius: 5px;
+  margin-top: 20px;
+}
+
+.crime-alert i {
+  color: #d4a017;
+  margin-right: 10px;
+}
+
+.stats-highlight {
+  font-weight: bold;
+}
+
+.cyber-highlight {
+  color: #0083b0;
+}
+
+.burglary-highlight {
+  color: #d64b00;
+}
+
+.fraud-highlight {
+  color: #2575fc;
+}
+
+.vehicle-highlight {
+  color: #f83600;
+}
+
+.identity-highlight {
+  color: #11998e;
+}
+
+.phone-highlight {
+  color: #8e2de2;
+}
+
+.timeline {
+  position: relative;
+  padding-left: 30px;
+  margin-top: 20px;
+}
+
+.timeline:before {
+  content: '';
+  position: absolute;
+  left: 6px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: #e9ecef;
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.timeline-item:before {
+  content: '';
+  position: absolute;
+  left: -30px;
+  top: 5px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #fff;
+  border: 3px solid;
+}
+
+.cyber-timeline .timeline-item:before {
+  border-color: #00b4db;
+}
+
+.burglary-timeline .timeline-item:before {
+  border-color: #ff7b25;
+}
+
+.fraud-timeline .timeline-item:before {
+  border-color: #6a11cb;
+}
+
+.vehicle-timeline .timeline-item:before {
+  border-color: #f83600;
+}
+
+.identity-timeline .timeline-item:before {
+  border-color: #11998e;
+}
+
+.phone-timeline .timeline-item:before {
+  border-color: #8e2de2;
+}
+
+.timeline-title {
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.risk-meter {
+  height: 10px;
+  background: #e9ecef;
+  border-radius: 5px;
+  margin: 15px 0;
+  overflow: hidden;
+}
+
+.risk-level {
+  height: 100%;
+}
+
+.cyber-risk {
+  background: linear-gradient(90deg, #00b4db, #0083b0);
+  width: 80%;
+}
+
+.burglary-risk {
+  background: linear-gradient(90deg, #ff7b25, #d64b00);
+  width: 65%;
+}
+
+.fraud-risk {
+  background: linear-gradient(90deg, #6a11cb, #2575fc);
+  width: 75%;
+}
+
+.vehicle-risk {
+  background: linear-gradient(90deg, #f83600, #f9d423);
+  width: 70%;
+}
+
+.identity-risk {
+  background: linear-gradient(90deg, #11998e, #38ef7d);
+  width: 85%;
+}
+
+.phone-risk {
+  background: linear-gradient(90deg, #8e2de2, #4a00e0);
+  width: 60%;
+}
+
+.risk-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: #6c757d;
+}
+
+.hotspot-map {
+  width: 100%;
+  height: 200px;
+  background-color: #e9ecef;
+  border-radius: 8px;
+  margin: 15px 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.hotspot {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background-color: rgba(255, 0, 0, 0.7);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.scam-types {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.scam-badge {
+  background: white;
+  padding: 8px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Custom CSS for Crime Cards */
+.hotspot-map {
+  margin: 15px 0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.map-container {
+  width: 100%;
+  height: auto;
+  max-height: 200px;
+  /* Adjust this value as needed */
+}
+
+.map-container img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  display: block;
+}
+
+/* Custom CSS for Crime Cards */
+.hotspot-map {
+  margin: 15px 0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.map-container {
+  width: 100%;
+  height: auto;
+  max-height: 200px;
+  /* Adjust this value as needed */
+}
+
+.map-container img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  display: block;
+}
+
+
+
+
+.case-studies .post-img {
+  height: 200px;
+  /* Fixed height for images */
+  overflow: hidden;
+  position: relative;
+}
+
+.case-studies .post-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Ensures images fill the space uniformly */
+  object-position: center;
+}
+
+.case-studies .post-date {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.case-studies .post-content {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  height: 220px;
+  /* Fixed height for content area */
+}
+
+.case-studies .post-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  height: 40px;
+  /* Fixed height for title */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.case-studies .meta {
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: #666;
+}
+
+.case-studies .meta .crime-tag {
+  background-color: #e9ecef;
+  padding: 3px 8px;
+  border-radius: 3px;
+  margin-right: 5px;
+  font-size: 12px;
+}
+
+.case-studies .post-content p {
+  font-size: 14px;
+  margin-bottom: 10px;
+  height: 60px;
+  /* Fixed height for description */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.case-studies .readmore-btn {
+  display: inline-block;
+  padding: 8px 16px;
+  background-color: #007bff;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  font-size: 14px;
+  text-align: center;
+  transition: background-color 0.3s ease;
+  margin-top: auto;
+  /* Pushes button to bottom of card */
+}
+
+.case-studies .readmore-btn:hover {
+  background-color: #0056b3;
+  color: #fff;
+}
+
+.case-studies .readmore-btn i {
+  margin-left: 5px;
+}
+
+.case-studies article {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  height: 420px;
+  /* Fixed total height for cards */
+  display: flex;
+  flex-direction: column;
+}
+
+.case-studies .row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  /* Consistent spacing between cards */
+}
+
+.case-studies .col-lg-4 {
+  flex: 0 0 calc(33.333% - 14px);
+  /* Adjust for gap */
+  max-width: calc(33.333% - 14px);
+}
+
+@media (max-width: 992px) {
+  .case-studies .col-lg-4 {
+    flex: 0 0 calc(50% - 10px);
+    max-width: calc(50% - 10px);
+  }
+}
+
+@media (max-width: 576px) {
+  .case-studies .col-lg-4 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}
+
+
+.footer {
+  display: block !important;
+  width: 100%;
+  position: relative;
+  bottom: 0;
+}
+
+.case-studies .col-lg-4 {
+  display: none;
+}
+
+.case-studies .col-lg-4.page4 {
+  display: block;
+}
+
+.pagination .page-link.active {
+  background-color: #007bff;
+  color: white;
+}
+
+
+.footer {
+  display: block !important;
+  width: 100%;
+  position: relative;
+  bottom: 0;
+}
+
+.case-studies .col-lg-4 {
+  display: none;
+}
+
+.case-studies .col-lg-4.page1 {
+  display: block;
+}
+
+.pagination .page-link.active {
+  background-color: #007bff;
+  color: white;
+}
+
+/* Hide form and show success message after submission */
+.footer-newsletter .newsletter-form.hidden {
+  display: none;
+}
+
+.footer-newsletter .sent-message {
+  display: none;
+}
+
+.footer-newsletter .sent-message.visible {
+  display: block;
+}
+
+
+
+
+
+
+.post-content {
+  padding: 20px;
+  min-height: 300px;
+  /* Increased to accommodate longer descriptions */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.post-content p {
+  flex-grow: 1;
+  margin-bottom: 20px;
+  /* Add spacing below the description */
+  font-size: 14px;
+  /* Ensure readability */
+  line-height: 1.6;
+  /* Improve text legibility */
+}
+
+.post-img {
+  height: 200px;
+  /* Maintain consistent image height */
+  overflow: hidden;
+}
+
+.post-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Ensure images scale properly */
+}
+
+.case-studies article {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  height: 100%;
+  /* Ensure full height for consistency */
+}
+
+
+.footer-newsletter .newsletter-form.hidden {
+  display: none;
+}
+
+.footer-newsletter .sent-message {
+  display: none;
+}
+
+.footer-newsletter .sent-message.visible {
+  display: block;
+}
+
+
+.content-wrapper {
+  padding: 40px;
+  background-color: #f9f9f9;
+}
+
+.card {
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+  margin-bottom: 20px;
+}
+
+.card .card-body {
+  padding: 2rem;
+}
+
+.card-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  font-family: "Raleway", sans-serif;
+  color: #333;
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  height: calc(1.5em + .75rem + 2px);
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: .25rem;
+}
+
+
+
+
+
+
+
+
+
+
+
+#stateFilter:focus {
+  border-color: #2ae149;
+  box-shadow: 0 0 0 0.25rem rgba(42, 225, 73, 0.5);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.form-control::selection {
+  background-color: #2ae149;
+  color: #fff;
+  /* Sets the text color to white for better contrast */
+}
+
+/* For Firefox */
+.form-control::-moz-selection {
+  background-color: #2ae149;
+  color: #fff;
+  /* Sets the text color to white for better contrast */
+}
+
+.footer h4 {
+  color: #2ae149;
+}
+
+.card-description {
+  font-size: 13px;
+  padding-top: 10px;
+  color: #495057;
+}
+
+#state-checkboxes-container .form-check {
+  padding-bottom: 8px;
+  margin-bottom: 2px;
+}
+
+
+/* 2. Apply your custom green theme color (#1bbd36) */
+
+/* Color for checked checkboxes */
+.form-check-input:checked {
+  background-color: #1bbd36;
+  border-color: #1bbd36;
+}
+
+/* --- Styling for the Year Slider Handle --- */
+.form-range::-webkit-slider-thumb {
+  background-color: #1bbd36;
+}
+
+.form-range::-moz-range-thumb {
+  background-color: #1bbd36;
+}
+
+.form-range::-ms-thumb {
+  background-color: #1bbd36;
+}
+
+/* --- Styling for Buttons on Hover --- */
+/* Smooth transitions */
+.btn-outline-success,
+.btn-outline-secondary {
+  transition: all 0.15s ease-in-out;
+}
+
+/* Hover styles */
+.btn-outline-success:hover,
+.btn-outline-secondary:hover {
+  background-color: #1bbd36;
+  border-color: #1bbd36;
+  color: #fff;
+}
+
+/* Persistent selected look */
+.btn-outline-success.selected {
+  background-color: #1bbd36;
+  border-color: #1bbd36;
+  color: #fff;
+  font-weight: bold;
+}
+
+.btn-outline-secondary.selected {
+  background-color: #1bbd36;
+  border-color: #1bbd36;
+  color: #fff;
+  font-weight: bold;
+}
+
+/* Padding for checkbox container */
+#state-checkboxes-container .form-check {
+  padding-bottom: 10px;
+}
+
+#select-all-states.active,
+#deselect-all-states.active {
+  background-color: #1bbd36;
+  border-color: #1bbd36;
+  color: #fff;
+  font-weight: bold;
 }
