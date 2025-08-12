@@ -12,9 +12,9 @@
 --------------------------------------------------------------*/
 /* Fonts */
 :root {
-  --default-font: "Roboto", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --heading-font: "Raleway", sans-serif;
-  --nav-font: "Nunito", sans-serif;
+  --heading-font: "Poppins", sans-serif;
+  --default-font: "Lato", sans-serif;
+  --nav-font: "Lato", sans-serif;
 }
 
 /* Global Colors - The following color variables are used throughout the website. Updating them here will change the color scheme of the entire website */
@@ -1065,7 +1065,7 @@ section,
 
 @media (min-width: 992px) {
   .about .about-img img {
-    max-height: 250px; 
+    max-height: 250px;
   }
 }
 
@@ -3306,7 +3306,7 @@ section,
 
 .content-wrapper {
   padding: 40px;
-  background-color: #f9f9f9;
+  background-color: #f4f7f6;
 }
 
 .card {
@@ -3318,6 +3318,7 @@ section,
 
 .card .card-body {
   padding: 2rem;
+  border-top: none !important;
 }
 
 .card-title {
@@ -3585,7 +3586,8 @@ table.dataTable thead .sorting_desc::after {
 }
 
 .btn-custom-primary {
-  background: linear-gradient(135deg, #2dd4bf, #0d9488); /* 青绿色渐变 */
+  background: linear-gradient(135deg, #2dd4bf, #0d9488);
+  /* 青绿色渐变 */
   color: white;
   border: none;
   padding: 10px 20px;
@@ -3595,7 +3597,8 @@ table.dataTable thead .sorting_desc::after {
 }
 
 .btn-custom-primary:hover {
-  background: linear-gradient(135deg, #0d9488, #115e59); /* 深一点的青色 */
+  background: linear-gradient(135deg, #0d9488, #115e59);
+  /* 深一点的青色 */
   transform: translateY(-2px);
   box-shadow: 0 4px 15px rgba(13, 148, 136, 0.4);
 }
@@ -3616,3 +3619,17 @@ table.dataTable thead .sorting_desc::after {
   box-shadow: 0 4px 15px rgba(45, 212, 191, 0.4);
 }
 
+
+#kpi-title-1,
+#kpi-title-2,
+#kpi-title-3,
+#kpi-title-4 {
+  font-size: 15px;
+}
+
+#kpi-value-1,
+#kpi-value-2,
+#kpi-value-3,
+#kpi-value-4 {
+  font-size: 35px;
+}
