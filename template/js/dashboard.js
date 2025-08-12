@@ -590,6 +590,8 @@
     }
     // desktop-chart end
 
+
+    /*
     // income-chart start
     if ($('#income-chart').length) {
       var incomeChartCanvas = $("#income-chart").get(0).getContext("2d");
@@ -809,137 +811,141 @@
       document.getElementById('income-chart-dark-legend').innerHTML = incomeChart.generateLegend();
     }
     // income-chart-dark end
+*/
 
-    // sales-chart-c start
-
-    if ($("#sales-chart-c").length) {
-      Papa.parse("data/chartdata.csv", {
-        download: true,
-        header: true,
-        skipEmptyLines: true,
-        complete: function (results) {
-          console.log("CSV Loaded:", results.data);
-
-          const crimeData = {};
-
-          results.data.forEach(row => {
-            const type = row.type?.trim();
-            const crimes = parseInt(row.crimes);
-            if (type && !isNaN(crimes)) {
-              crimeData[type] = (crimeData[type] || 0) + crimes;
-            }
-          });
-
-          const chartLabels = Object.keys(crimeData);
-          const chartData = Object.values(crimeData);
-
-          if (chartLabels.length === 0) {
-            alert("No valid data found in CSV.");
-            return;
-          }
-
-          const ctx = document.getElementById("sales-chart-c").getContext("2d");
-          new Chart(ctx, {
-            type: 'pie',
-            data: {
-              labels: chartLabels,
-              datasets: [{
-                data: chartData,
-                backgroundColor: ['#f39915', '#21bf06', '#a43cda', '#14a2ff', '#ff5252'],
-                borderColor: ['#fff', '#fff', '#fff', '#fff', '#fff']
-              }]
-            },
-            options: {
-              responsive: true,
-              plugins: {
-                legend: {
-                  display: true,
-                  position: 'bottom'
+    /*
+        // sales-chart-c start
+    
+        if ($("#sales-chart-c").length) {
+          Papa.parse("data/chartdata.csv", {
+            download: true,
+            header: true,
+            skipEmptyLines: true,
+            complete: function (results) {
+              console.log("CSV Loaded:", results.data);
+    
+              const crimeData = {};
+    
+              results.data.forEach(row => {
+                const type = row.type?.trim();
+                const crimes = parseInt(row.crimes);
+                if (type && !isNaN(crimes)) {
+                  crimeData[type] = (crimeData[type] || 0) + crimes;
                 }
+              });
+    
+              const chartLabels = Object.keys(crimeData);
+              const chartData = Object.values(crimeData);
+    
+              if (chartLabels.length === 0) {
+                alert("No valid data found in CSV.");
+                return;
               }
+    
+              const ctx = document.getElementById("sales-chart-c").getContext("2d");
+              new Chart(ctx, {
+                type: 'pie',
+                data: {
+                  labels: chartLabels,
+                  datasets: [{
+                    data: chartData,
+                    backgroundColor: ['#f39915', '#21bf06', '#a43cda', '#14a2ff', '#ff5252'],
+                    borderColor: ['#fff', '#fff', '#fff', '#fff', '#fff']
+                  }]
+                },
+                options: {
+                  responsive: true,
+                  plugins: {
+                    legend: {
+                      display: true,
+                      position: 'bottom'
+                    }
+                  }
+                }
+              });
             }
           });
         }
-      });
-    }
-
-
-
-
-    // sales-chart-c end
-
-    // sales-chart-d start
-    if ($("#sales-chart-d").length) {
-      var SalesChartDCanvas = $("#sales-chart-d").get(0).getContext("2d");
-      var SalesChartD = new Chart(SalesChartDCanvas, {
-        type: 'bar',
-        data: {
-          labels: ["2014", "2015", "2016", "2017", "2018", "2019"],
-          datasets: [{
-            label: 'Offline Sales',
-            data: [52, 40, 33, 45, 22, 50],
-            backgroundColor: '#a43cda'
-          },
-          {
-            label: 'Online Sales',
-            data: [22, 45, 23, 50, 15, 40],
-            backgroundColor: '#f39915'
-          }
-          ]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: true,
-          layout: {
-            padding: {
-              left: 0,
-              right: 0,
-              top: 0,
-              bottom: 0
-            }
-          },
-          scales: {
-            yAxes: [{
-              display: true,
-              gridLines: {
-                display: false,
-                drawBorder: false
+    
+    
+    
+    
+        // sales-chart-c end
+    
+        // sales-chart-d start
+        if ($("#sales-chart-d").length) {
+          var SalesChartDCanvas = $("#sales-chart-d").get(0).getContext("2d");
+          var SalesChartD = new Chart(SalesChartDCanvas, {
+            type: 'bar',
+            data: {
+              labels: ["2014", "2015", "2016", "2017", "2018", "2019"],
+              datasets: [{
+                label: 'Offline Sales',
+                data: [52, 40, 33, 45, 22, 50],
+                backgroundColor: '#a43cda'
               },
-              ticks: {
-                display: true,
-                min: 0,
-                max: 60,
-                stepSize: 10,
-                fontSize: 10,
-                fontColor: "#001737",
+              {
+                label: 'Online Sales',
+                data: [22, 45, 23, 50, 15, 40],
+                backgroundColor: '#f39915'
               }
-            }],
-            xAxes: [{
-              stacked: false,
-              ticks: {
-                beginAtZero: true,
-                fontColor: "#001737",
-                fontSize: 10
+              ]
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: true,
+              layout: {
+                padding: {
+                  left: 0,
+                  right: 0,
+                  top: 0,
+                  bottom: 0
+                }
               },
-              gridLines: {
-                color: "rgba(0, 0, 0, 0)",
+              scales: {
+                yAxes: [{
+                  display: true,
+                  gridLines: {
+                    display: false,
+                    drawBorder: false
+                  },
+                  ticks: {
+                    display: true,
+                    min: 0,
+                    max: 60,
+                    stepSize: 10,
+                    fontSize: 10,
+                    fontColor: "#001737",
+                  }
+                }],
+                xAxes: [{
+                  stacked: false,
+                  ticks: {
+                    beginAtZero: true,
+                    fontColor: "#001737",
+                    fontSize: 10
+                  },
+                  gridLines: {
+                    color: "rgba(0, 0, 0, 0)",
+                    display: false
+                  },
+                  barPercentage: .3
+                }]
+              },
+              legend: {
                 display: false
               },
-              barPercentage: .3
-            }]
-          },
-          legend: {
-            display: false
-          },
-          elements: {
-            point: {
-              radius: 0
-            }
-          }
-        },
-      });
-    }
-    // sales-chart-d end
+              elements: {
+                point: {
+                  radius: 0
+                }
+              }
+            },
+          });
+        }
+        // sales-chart-d end
+    
+        */
 
     // sales-chart-d-dark start
     if ($("#sales-chart-d-dark").length) {
@@ -1784,18 +1790,18 @@
               onClick: null
             },
             tooltips: {
-              enabled: true,
-              backgroundColor: '#222',
-              titleFontColor: '#fff',
-              bodyFontColor: '#fff',
-              displayColors: false,
-              callbacks: {
-                label: function (tooltipItem, data) {
-                  let label = data.labels[tooltipItem.index] || '';
-                  let value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
-                  return ` ${label}: ${value.toLocaleString()}`;
-                }
-              }
+              /* enabled: true,
+               backgroundColor: '#222',
+               titleFontColor: '#fff',
+               bodyFontColor: '#fff',
+               displayColors: false,
+               callbacks: {
+                 label: function (tooltipItem, data) {
+                   let label = data.labels[tooltipItem.index] || '';
+                   let value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+                   return ` ${label}: ${value.toLocaleString()}`;
+                 }
+               }*/
             }
           }
         });
@@ -1845,377 +1851,186 @@
       });
     }
 
+    // ================== PASTE THE FINAL DOUGHNUT CHART CODE HERE ==================
 
 
 
-    /*
-    
-        if ($("#scatterChart").length) {
-    
-          const csvFile = 'data/chartdata.csv';
-          const stateColors = [
-            'rgba(239, 21, 5, 0.8)',   // Red
-            'rgba(255, 84, 224, 0.8)',   // Pink
-            'rgba(174, 3, 205, 0.8)',  // Purple
-            'rgba(89, 37, 178, 0.8)',  // Deep Purple
-            'rgba(12, 36, 166, 0.8)',   // Indigo
-            'rgba(33, 150, 243, 0.8)',  // Blue
-            'rgba(0, 188, 212, 0.8)',   // Cyan
-            'rgba(0, 150, 136, 0.8)',   // Teal
-            'rgba(76, 175, 80, 0.8)',   // Green
-            'rgba(205, 220, 57, 0.8)',  // Lime
-            'rgba(255, 193, 7, 0.8)',   // Amber
-            'rgba(211, 129, 5, 0.8)',   // Orange
-            'rgba(121, 85, 72, 0.8)',   // Brown
-            'rgba(96, 125, 139, 0.8)'   // Blue Grey
-          ];
-          const propertyCrimeTypes = ['theft', 'burglary', 'vandalism', 'arson'];
-          const violentCrimeTypes = ['assault', 'robbery', 'murder', 'homicide', 'rape'];
-    
-          Papa.parse(csvFile, {
-            download: true,
-            header: true,
-            dynamicTyping: true,
-            complete: function (results) {
-              const allData = results.data.filter(r => r && r.state && r.date && typeof r.crimes === 'number');
-    
-              const dataByYear = {};
-              const years = new Set();
-              allData.forEach(row => {
-                const year = new Date(row.date).getFullYear();
-                if (!year || isNaN(year)) return;
-                years.add(year);
-    
-                const state = row.state;
-                if (state === 'Malaysia') return;
-    
-                if (!dataByYear[state]) dataByYear[state] = {};
-                if (!dataByYear[state][year]) dataByYear[state][year] = { property: 0, violent: 0 };
-    
-                if (propertyCrimeTypes.some(type => row.type.toLowerCase().includes(type))) {
-                  dataByYear[state][year].property += row.crimes;
-                }
-                if (violentCrimeTypes.some(type => row.type.toLowerCase().includes(type))) {
-                  dataByYear[state][year].violent += row.crimes;
-                }
-              });
-    
-              const allStates = Object.keys(dataByYear).sort();
-              const sortedYears = [...years].sort();
-    
-              const checkboxContainer = $('#state-checkboxes-container');
-              allStates.forEach(state => {
-                checkboxContainer.append(`
-                        <div class="form-check"><input class="form-check-input state-checkbox" type="checkbox" value="${state}" id="check-${state}" checked>
-                            <label class="form-check-label" for="check-${state}">${state}</label>
-                        </div>`);
-              });
-    
-              const yearSlider = $('#year-slider');
-              const yearLabel = $('#current-year-label');
-              if (sortedYears.length > 0) {
-                yearSlider.attr('min', sortedYears[0]);
-                yearSlider.attr('max', sortedYears[sortedYears.length - 1]);
-                yearSlider.val(sortedYears[sortedYears.length - 1]);
-                yearLabel.text(sortedYears[sortedYears.length - 1]);
-              }
-    
-              // --- 1. DEFINE THE DIAGONAL LINE PLUGIN ---
-              const diagonalLinePlugin = {
-                id: 'diagonalLine',
-                afterDraw: (chart, args, options) => {
-                  if (options.display) {
-                    const { ctx, chartArea: { left, right, top, bottom } } = chart;
-                    ctx.save();
-                    ctx.beginPath();
-                    ctx.moveTo(left, bottom);
-                    ctx.lineTo(right, top);
-                    ctx.strokeStyle = 'rgba(150, 150, 150, 0.6)';
-                    ctx.lineWidth = 2;
-                    ctx.setLineDash([5, 5]);
-                    ctx.stroke();
-                    ctx.restore();
-                  }
-                }
-              };
-    
-              const scatterChartCanvas = $("#scatterChart").get(0).getContext("2d");
-              const scatterChart = new Chart(scatterChartCanvas, {
-                type: 'scatter',
-                data: { datasets: [] },
-                options: {
-                  responsive: true,
-                  maintainAspectRatio: false,
-                  animation: { duration: 750, easing: 'easeInOutQuart' },
-                  scales: {
-                    x: {
-                      type: 'logarithmic',
-                      title: {
-                        display: true, // This makes the title visible
-                        text: 'Total Property Crimes', // This is the text that will appear
-                        font: {
-                          size: 14,
-                          weight: 'bold'
-                        }
-                      }
-                    },
-                    y: {
-                      type: 'logarithmic',
-                      title: {
-                        display: true, // This makes the title visible
-                        text: 'Total Violent Crimes', // This is the text that will appear
-                        font: {
-                          size: 14,
-                          weight: 'bold'
-                        }
-                      }
-                    }
-                  },
-                  plugins: {
-                    tooltip: {
-                      callbacks: {
-                        label: function (context) {
-                          let label = context.dataset.label || '';
-                          if (label) { label += ': '; }
-                          let point = context.raw;
-                          return `${label}(${point.x.toLocaleString()}, ${point.y.toLocaleString()})`;
-                        }
-                      }
-                    },
-                    // --- 2. CONFIGURE THE PLUGIN OPTIONS ---
-                    diagonalLine: {
-                      display: true // We want the line to be visible
-                    }
-                  }
-                },
-                // --- 3. REGISTER THE PLUGIN WITH THE CHART ---
-                plugins: [diagonalLinePlugin]
-              });
-    
-              // --- THE MAIN UPDATE FUNCTION ---
-              function updateChart() {
-                const selectedYear = yearSlider.val();
-                const selectedStates = $('.state-checkbox:checked').map((_, el) => $(el).val()).get();
-                let newDatasets = [];
-    
-                yearLabel.text(selectedYear);
-    
-                selectedStates.forEach((state, index) => {
-                  const yearlyData = dataByYear[state] ? dataByYear[state][selectedYear] : null;
-    
-                  if (yearlyData && yearlyData.property > 0 && yearlyData.violent > 0) {
-                    newDatasets.push({
-                      label: state,
-                      data: [{ x: yearlyData.property, y: yearlyData.violent }],
-                      backgroundColor: stateColors[index % stateColors.length],
-                      radius: 8
-                    });
-                  }
-                });
-    
-                scatterChart.data.datasets = newDatasets;
-                scatterChart.update();
-              }
-    
-              // --- Event Listeners & Initial Load ---
-              $('#state-checkboxes-container').on('change', '.state-checkbox', updateChart);
-              yearSlider.on('input', updateChart);
-              $('#select-all-states').on('click', () => { $('.state-checkbox').prop('checked', true).trigger('change'); });
-              $('#deselect-all-states').on('click', () => { $('.state-checkbox').prop('checked', false).trigger('change'); });
-    
-              updateChart();
+    // 这里加你的 Line chart 代码
+
+    if ($("#line-chart").length) {
+      const csvFile = 'data/chartdata.csv';
+      let chartInstance = null;
+      let allCrimeData = [];
+      let allStates = [];
+
+      function drawChart(selectedStates = []) {
+        const ctx = $("#line-chart").get(0).getContext("2d");
+
+        if (chartInstance) chartInstance.destroy();
+
+        if (selectedStates.length === 0) {
+          // 显示所有州犯罪数据总和
+          const dateMap = {};
+          allCrimeData.forEach(row => {
+            const date = new Date(row.date);
+            if (!isNaN(date) && typeof row.crimes === 'number') {
+              const yearMonth = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-01`;
+              dateMap[yearMonth] = (dateMap[yearMonth] || 0) + row.crimes;
             }
           });
-        }
-    */
+          const sortedDates = Object.keys(dateMap).sort((a, b) => new Date(a) - new Date(b));
+          const values = sortedDates.map(date => dateMap[date]);
 
-
-
-
-
-
-
-
-
-    // ================== LATEST VERSION ==================   /*
-    /*
-    if ($("#scatterChart").length) {
-
-      const csvFile = 'data/chartdata.csv';
-      const stateColors = [
-        'rgba(239, 21, 5, 0.8)',   // Red
-        'rgba(255, 84, 224, 0.8)',   // Pink
-        'rgba(174, 3, 205, 0.8)',  // Purple
-        'rgba(89, 37, 178, 0.8)',  // Deep Purple
-        'rgba(12, 36, 166, 0.8)',   // Indigo
-        'rgba(33, 150, 243, 0.8)',  // Blue
-        'rgba(0, 188, 212, 0.8)',   // Cyan
-        'rgba(0, 150, 136, 0.8)',   // Teal
-        'rgba(76, 175, 80, 0.8)',   // Green
-        'rgba(205, 220, 57, 0.8)',  // Lime
-        'rgba(255, 193, 7, 0.8)',   // Amber
-        'rgba(211, 129, 5, 0.8)',   // Orange
-        'rgba(121, 85, 72, 0.8)',   // Brown
-        'rgba(96, 125, 139, 0.8)'   // Blue Grey
-      ];
-      const propertyCrimeTypes = ['theft', 'burglary', 'vandalism', 'arson'];
-      const violentCrimeTypes = ['assault', 'robbery', 'murder', 'homicide', 'rape'];
-
-      Papa.parse(csvFile, {
-        download: true,
-        header: true,
-        dynamicTyping: true,
-        complete: function (results) {
-          const allData = results.data.filter(r => r && r.state && r.date && typeof r.crimes === 'number');
-
-          const dataByYear = {};
-          const years = new Set();
-          allData.forEach(row => {
-            const year = new Date(row.date).getFullYear();
-            if (!year || isNaN(year) || row.state === 'Malaysia') return;
-            years.add(year);
-            const state = row.state;
-            if (!dataByYear[state]) dataByYear[state] = {};
-            if (!dataByYear[state][year]) dataByYear[state][year] = { property: 0, violent: 0 };
-            if (propertyCrimeTypes.some(type => row.type.toLowerCase().includes(type))) { dataByYear[state][year].property += row.crimes; }
-            if (violentCrimeTypes.some(type => row.type.toLowerCase().includes(type))) { dataByYear[state][year].violent += row.crimes; }
-          });
-
-          const allStates = Object.keys(dataByYear).sort();
-          const sortedYears = [...years].sort();
-
-          const checkboxContainer = $('#state-checkboxes-container');
-          allStates.forEach(state => {
-            checkboxContainer.append(
-              `<div class="form-check"><input class="form-check-input state-checkbox" type="checkbox" value="${state}" id="check-${state}" checked><label class="form-check-label" for="check-${state}">${state}</label></div>`
-            );
-          });
-          const yearSlider = $('#year-slider');
-          const yearLabel = $('#current-year-label');
-          if (sortedYears.length > 0) {
-            yearSlider.attr('min', sortedYears[0]);
-            yearSlider.attr('max', sortedYears[sortedYears.length - 1]);
-            yearSlider.val(sortedYears[sortedYears.length - 1]);
-            yearLabel.text(sortedYears[sortedYears.length - 1]);
-          }
-
-          const scatterChartCanvas = $("#scatterChart").get(0).getContext("2d");
-          const scatterChart = new Chart(scatterChartCanvas, {
-            type: 'scatter',
-            data: { datasets: [] },
+          chartInstance = new Chart(ctx, {
+            type: 'line',
+            data: {
+              labels: sortedDates,
+              datasets: [{
+                label: 'Malaysia Crime Trend (All States)',
+                data: values,
+                borderColor: '#176b9f',
+                backgroundColor: 'rgba(23, 107, 159, 0.2)',
+                fill: true,
+                tension: 0.3,
+                pointRadius: 4,
+                pointHoverRadius: 6
+              }]
+            },
             options: {
               responsive: true,
               maintainAspectRatio: false,
               animation: { duration: 750 },
               scales: {
-                xAxes: [{
-                  type: 'linear',
-                  position: 'bottom',
-                  scaleLabel: {
-                    display: true,
-                    labelString: 'Total Property Crimes',
-                    fontSize: 14,
-                    fontStyle: 'bold'
-                  }
-                }],
-                yAxes: [{
-                  type: 'linear',
-                  scaleLabel: {
-                    display: true,
-                    labelString: 'Total Violent Crimes',
-                    fontSize: 14,
-                    fontStyle: 'bold'
-                  }
-                }]
-              },
-              tooltips: {
-                callbacks: {
-                  label: function (tooltipItem, data) {
-                    let label = data.datasets[tooltipItem.datasetIndex].label || '';
-                    if (label) { label += ': '; }
-                    label += `(${Number(tooltipItem.xLabel).toLocaleString()}, ${Number(tooltipItem.yLabel).toLocaleString()})`;
-                    return label;
-                  }
+                x: {
+                  type: 'time',
+                  time: { unit: 'month', tooltipFormat: 'YYYY-MM', displayFormats: { month: 'YYYY-MM' } },
+                  ticks: { maxTicksLimit: 12 }
+                },
+                y: {
+                  beginAtZero: true,
+                  ticks: { callback: v => v.toLocaleString() }
                 }
-              },
-              legend: {
-                display: true,
-                position: 'top',
-                onClick: null
               }
-            },
-            // --- THIS IS THE CORRECTED PLUGIN REGISTRATION FOR CHART.JS v2 ---
-            plugins: [{
-              afterDraw: function (chart) {
-                const ctx = chart.ctx;
-                const chartArea = chart.chartArea;
-                if (!chartArea) return;
+            }
+          });
+          return;
+        }
 
-                ctx.save();
-                ctx.beginPath();
-                ctx.moveTo(chartArea.left, chartArea.bottom);
-                ctx.lineTo(chartArea.right, chartArea.top);
-                ctx.strokeStyle = 'rgba(150, 150, 150, 0.6)';
-                ctx.lineWidth = 2;
-                ctx.setLineDash([5, 5]);
-                ctx.stroke();
-                ctx.restore();
-              }
-            }]
+        // 多个州，分别计算数据集
+        const colors = [
+          '#EF1505', '#FF54E0', '#AE03CD', '#5925B2', '#0C24A6',
+          '#2196F3', '#00BCD4', '#009688', '#4CAF50', '#CDDC39',
+          '#FFC107', '#D38105', '#795548', '#607D8B'
+        ];
+        const datasets = [];
+
+        selectedStates.forEach((state, i) => {
+          const dateMap = {};
+          allCrimeData.forEach(row => {
+            const cleanState = row.state ? row.state.trim() : '';
+            if (cleanState !== state) return;
+
+            const date = new Date(row.date);
+            if (!isNaN(date) && typeof row.crimes === 'number') {
+              const yearMonth = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-01`;
+              dateMap[yearMonth] = (dateMap[yearMonth] || 0) + row.crimes;
+            }
           });
 
-          function updateChart() {
-            const selectedYear = yearSlider.val();
-            const selectedStates = $('.state-checkbox:checked').map((_, el) => $(el).val()).get();
-            let newDatasets = [];
-            yearLabel.text(selectedYear);
-            selectedStates.forEach((state, index) => {
-              const yearlyData = dataByYear[state] ? dataByYear[state][selectedYear] : null;
-              if (yearlyData) {
-                newDatasets.push({
-                  label: state,
-                  data: [{ x: yearlyData.property, y: yearlyData.violent }],
-                  backgroundColor: stateColors[index % stateColors.length],
-                  pointRadius: 8
-                });
+          const sortedDates = Object.keys(dateMap).sort((a, b) => new Date(a) - new Date(b));
+          const values = sortedDates.map(date => dateMap[date]);
+
+          datasets.push({
+            label: state,
+            data: values,
+            borderColor: colors[i % colors.length],
+            backgroundColor: colors[i % colors.length] + '55',
+            fill: false,
+            tension: 0.3,
+            pointRadius: 4,
+            pointHoverRadius: 6
+          });
+        });
+
+        const allDatesSet = new Set();
+        allCrimeData.forEach(row => {
+          const date = new Date(row.date);
+          if (!isNaN(date)) {
+            const yearMonth = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-01`;
+            allDatesSet.add(yearMonth);
+          }
+        });
+        const allDates = Array.from(allDatesSet).sort((a, b) => new Date(a) - new Date(b));
+
+        chartInstance = new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: allDates,
+            datasets: datasets
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            animation: { duration: 750 },
+            scales: {
+              x: {
+                type: 'time',
+                time: { unit: 'month', tooltipFormat: 'YYYY-MM', displayFormats: { month: 'YYYY-MM' } },
+                ticks: { maxTicksLimit: 12 }
+              },
+              y: {
+                beginAtZero: true,
+                ticks: { callback: v => v.toLocaleString() }
+              }
+            }
+          }
+        });
+      }
+
+      $(function () {
+        Papa.parse(csvFile, {
+          download: true,
+          header: true,
+          dynamicTyping: true,
+          complete: function (results) {
+            allCrimeData = results.data;
+
+            const stateSet = new Set();
+            allCrimeData.forEach(row => {
+              if (row.state) stateSet.add(row.state.trim());
+            });
+            allStates = Array.from(stateSet).sort();
+
+            allStates.forEach(state => {
+              if (state.toLowerCase() !== 'malaysia') {  // 排除 Malaysia
+                $('#stateSearch').append(new Option(state, state));
               }
             });
 
-            scatterChart.data.datasets = newDatasets;
-            scatterChart.update();
 
-            // Logic to set the active "Select/Deselect" button style
-            const selectAllBtn = $('#select-all-states');
-            const deselectAllBtn = $('#deselect-all-states');
-            selectAllBtn.removeClass('active');
-            deselectAllBtn.removeClass('active');
-            if (selectedStates.length === allStates.length) {
-              selectAllBtn.addClass('active');
-            } else if (selectedStates.length === 0) {
-              deselectAllBtn.addClass('active');
-            }
+            $('#stateSearch').select2({
+              placeholder: "Please enter the state",
+              allowClear: true,
+              minimumInputLength: 1,
+              matcher: function (params, data) {
+                if ($.trim(params.term) === '') return data;
+                if (typeof data.text === 'undefined') return null;
+                if (data.text.toLowerCase().startsWith(params.term.toLowerCase())) return data;
+                return null;
+              }
+            });
+
+            drawChart();
+
+            $('#stateSearch').on('change', function () {
+              const selected = $(this).val() || [];
+              drawChart(selected);
+            });
           }
-
-          // Event Listeners
-          $('#state-checkboxes-container').on('change', '.state-checkbox', updateChart);
-          yearSlider.on('input', updateChart);
-          $('#select-all-states').on('click', () => {
-            $('.state-checkbox').prop('checked', true);
-            updateChart();
-          });
-          $('#deselect-all-states').on('click', () => {
-            $('.state-checkbox').prop('checked', false);
-            updateChart();
-          });
-
-          // Initial Chart Load
-          updateChart();
-        }
-
+        });
       });
     }
 
-*/
 
 
 
@@ -2225,195 +2040,167 @@
 
 
 
+    // 这里加你的 bar chart 代码
 
+    if ($("#bar-chart").length) {
+      const csvFile = 'data/chartdata.csv';
+      let chartInstance = null;
+      let allCrimeData = [];
+      let allYears = [];
+      let allTypes = [];
 
+      // 州名与颜色映射
+      const stateColors = {
+        "Johor": "#EF1505",
+        "Kedah": "#FF54E0",
+        "Kelantan": "#AE03CD",
+        "Malacca": "#5925B2",
+        "Negeri Sembilan": "#0C24A6",
+        "Pahang": "#2196F3",
+        "Penang": "#00BCD4",
+        "Perak": "#009688",
+        "Perlis": "#4CAF50",
+        "Sabah": "#CDDC39",
+        "Sarawak": "#FFC107",
+        "Selangor": "#D38105",
+        "Terengganu": "#795548",
+        "Kuala Lumpur": "#607D8B",
+        // "Putrajaya": "#8BC34A",
+        // "Labuan": "#9C27B0"
+      };
 
+      function renderStateColorList() {
+        const legendContainer = $("#state-color-legend");
+        legendContainer.empty();
+        for (const [state, color] of Object.entries(stateColors)) {
+          legendContainer.append(`
+        <div class="d-flex align-items-center" style="font-size:14px;">
+          <span style="display:inline-block;width:20px;height:20px;background:${color};border:1px solid #ccc;margin-right:6px;"></span>
+          ${state}
+        </div>
+      `);
+        }
+      }
 
+      function drawChart(selectedYear, selectedType) {
+        const ctx = $("#bar-chart").get(0).getContext("2d");
+        if (chartInstance) chartInstance.destroy();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // ========================================================================
-    // === FINAL, CONSOLIDATED JAVASCRIPT FOR THE ENTIRE DASHBOARD ===
-    // ========================================================================
-    /*
-        $(document).ready(function () {
-    
-          const csvFile = 'data/chartdata.csv';
-    
-          // 1. LOAD DATA ONCE
-          // This loads the CSV file and then passes the data to the functions that build the dashboard.
-          Papa.parse(csvFile, {
-            download: true,
-            header: true,
-            skipEmptyLines: true,
-            complete: function (results) {
-              // A robust filter to handle any inconsistencies in the CSV file
-              const allRawData = results.data.map(row => {
-                // Find the keys for state, date, type, and crimes, ignoring case
-                const stateKey = Object.keys(row).find(k => k.toLowerCase() === 'state');
-                const dateKey = Object.keys(row).find(k => k.toLowerCase() === 'date');
-                const typeKey = Object.keys(row).find(k => k.toLowerCase() === 'type');
-                const crimesKey = Object.keys(row).find(k => k.toLowerCase() === 'crimes');
-                if (stateKey && dateKey && typeKey && crimesKey && row[stateKey]) {
-                  return {
-                    state: row[stateKey],
-                    date: row[dateKey],
-                    type: row[typeKey],
-                    crimes: Number(String(row[crimesKey]).replace(/,/g, '')) || 0
-                  };
-                }
-                return null;
-              }).filter(row => row !== null);
-    
-              // 2. INITIALIZE BOTH COMPONENTS INDEPENDENTLY
-              initializeScatterChart(allRawData);
-              initializeDataTable(allRawData);
-            }
-          });
-    
-                function initializeScatterChart(rawData) {
-            if (!$("#scatterChart").length) return;
-    
-            const stateColors = [
-              'rgba(230, 25, 75, 0.8)', 'rgba(60, 180, 75, 0.8)', 'rgba(255, 225, 25, 0.8)',
-              'rgba(0, 130, 200, 0.8)', 'rgba(245, 130, 48, 0.8)', 'rgba(145, 30, 180, 0.8)',
-              'rgba(70, 240, 240, 0.8)', 'rgba(240, 50, 230, 0.8)', 'rgba(210, 245, 60, 0.8)'
-            ];
-            const propertyCrimeTypes = ['theft', 'burglary', 'vandalism', 'arson'];
-    
-            const dataByYear = {};
-            const years = new Set();
-            rawData.forEach(row => {
-              const year = new Date(row.date).getFullYear();
-              if (!year || isNaN(year)) return;
-              years.add(year);
-              const state = row.state;
-              if (!dataByYear[state]) dataByYear[state] = {};
-              if (!dataByYear[state][year]) dataByYear[state][year] = { property: 0, violent: 0 };
-              if (propertyCrimeTypes.some(type => row.type.toLowerCase().includes(type))) {
-                dataByYear[state][year].property += row.crimes;
-              } else {
-                dataByYear[state][year].violent += row.crimes;
-              }
-            });
-    
-            const allStates = Object.keys(dataByYear).sort();
-            const sortedYears = [...years].sort();
-            const checkboxContainer = $('#state-checkboxes-container');
-            allStates.forEach(state => { checkboxContainer.append(`<div class="form-check"><input class="form-check-input state-checkbox" type="checkbox" value="${state}" checked><label class="form-check-label">${state}</label></div>`); });
-    
-            const yearSlider = $('#year-slider');
-            const yearLabel = $('#current-year-label');
-            if (sortedYears.length > 0) {
-              yearSlider.attr('min', sortedYears[0]);
-              yearSlider.attr('max', sortedYears[sortedYears.length - 1]);
-              yearSlider.val(sortedYears[sortedYears.length - 1]);
-              yearLabel.text(sortedYears[sortedYears.length - 1]);
-            }
-    
-            const scatterChartCanvas = $("#scatterChart").get(0).getContext("2d");
-            const scatterChart = new Chart(scatterChartCanvas, {
-              type: 'scatter',
-              data: { datasets: [] },
-              options: {
-                responsive: true, maintainAspectRatio: false, animation: { duration: 750 },
-                scales: { xAxes: [{ type: 'linear', position: 'bottom', scaleLabel: { display: true, labelString: 'Total Property Crimes', fontSize: 14, fontStyle: 'bold' } }], yAxes: [{ type: 'linear', scaleLabel: { display: true, labelString: 'Total Violent Crimes', fontSize: 14, fontStyle: 'bold' } }] },
-                tooltips: { callbacks: { label: function (tooltipItem, data) { let label = data.datasets[tooltipItem.datasetIndex].label || ''; if (label) { label += ': '; } label += `(${Number(tooltipItem.xLabel).toLocaleString()}, ${Number(tooltipItem.yLabel).toLocaleString()})`; return label; } } },
-                legend: { display: true, position: 'top' },
-                plugins: [{ afterDraw: function (chart) { const ctx = chart.ctx; const chartArea = chart.chartArea; if (!chartArea) return; ctx.save(); ctx.beginPath(); ctx.moveTo(chartArea.left, chartArea.bottom); ctx.lineTo(chartArea.right, chartArea.top); ctx.strokeStyle = 'rgba(150, 150, 150, 0.6)'; ctx.lineWidth = 2; ctx.setLineDash([5, 5]); ctx.stroke(); ctx.restore(); } }]
-              }
-            });
-    
-            function updateChart() {
-              const selectedYear = yearSlider.val();
-              const selectedStates = $('.state-checkbox:checked').map((_, el) => $(el).val()).get();
-              let newDatasets = [];
-              yearLabel.text(selectedYear);
-              selectedStates.forEach((state, index) => {
-                const yearlyData = dataByYear[state] ? dataByYear[state][selectedYear] : null;
-                if (yearlyData) { newDatasets.push({ label: state, data: [{ x: yearlyData.property, y: yearlyData.violent }], backgroundColor: stateColors[index % stateColors.length], pointRadius: 8 }); }
-              });
-              scatterChart.data.datasets = newDatasets;
-              scatterChart.update();
-            }
-    
-            $('#state-checkboxes-container').on('change', '.state-checkbox', updateChart);
-            yearSlider.on('input', updateChart);
-            $('#select-all-states').on('click', () => { $('.state-checkbox').prop('checked', true); updateChart(); });
-            $('#deselect-all-states').on('click', () => { $('.state-checkbox').prop('checked', false); updateChart(); });
-            updateChart();
-          }
-    
-               function initializeDataTable(rawData) {
-            if (!$("#rawData-table").length) return;
-    
-            const states = [...new Set(rawData.map(item => item.state))].sort();
-            const crimeTypes = [...new Set(rawData.map(item => item.type))].sort();
-    
-            const stateFilter = $('#tableStateFilter');
-            stateFilter.append('<option value="">All States</option>');
-            states.forEach(state => stateFilter.append(`<option value="${state}">${state}</option>`));
-    
-            const crimeTypeFilter = $('#tableCrimeTypeFilter');
-            crimeTypeFilter.append('<option value="">All Crime Types</option>');
-            crimeTypes.forEach(type => crimeTypeFilter.append(`<option value="${type}">${type}</option>`));
-    
-            const dataTable = $('#rawData-table').DataTable({
-              data: rawData,
-              columns: [
-                { data: 'state' },
-                { data: 'date' },
-                { data: 'type' },
-                { data: 'crimes' }
-              ]
-            });
-    
-            function updateDataTable() {
-              const selectedState = stateFilter.val();
-              const selectedCrimeType = crimeTypeFilter.val();
-    
-              $.fn.dataTable.ext.search.pop();
-              $.fn.dataTable.ext.search.push(
-                function (settings, data, dataIndex) {
-                  const rowState = data[0];
-                  const rowCrimeType = data[2];
-                  const stateMatch = !selectedState || rowState === selectedState;
-                  const crimeTypeMatch = !selectedCrimeType || rowCrimeType === selectedCrimeType;
-                  return stateMatch && crimeTypeMatch;
-                }
-              );
-              dataTable.draw();
-            }
-    
-            stateFilter.on('change', updateDataTable);
-            crimeTypeFilter.on('change', updateDataTable);
-          }
-    
+        let filteredData = allCrimeData.filter(row => {
+          let year = parseInt(String(row.date).substring(0, 4));
+          let crimes = Number(row.crimes);
+          let typeValue = row.type ? row.type.trim().toLowerCase() : '';
+          return (year === selectedYear) &&
+            (selectedType ? typeValue === selectedType.toLowerCase() : true) &&
+            !isNaN(crimes);
         });
-    */
 
+        let stateMap = {};
+        filteredData.forEach(row => {
+          if (row.state && row.state.trim().toLowerCase() !== 'malaysia') {
+            if (!stateMap[row.state]) stateMap[row.state] = 0;
+            stateMap[row.state] += Number(row.crimes);
+          }
+        });
 
+        let sortedStates = Object.entries(stateMap).sort((a, b) => b[1] - a[1]).slice(0, 10);
+        if (!sortedStates.length) sortedStates = [["No Data", 0]];
 
+        chartInstance = new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: sortedStates.map(s => s[0]),
+            datasets: [{
+              label: `Type `,
+              data: sortedStates.map(s => s[1]),
+              backgroundColor: sortedStates.map(s => stateColors[s[0]] || '#999'),
+              borderRadius: 5
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            legend: {
+              display: true,
+              position: 'bottom',
+              onClick: null,
+              labels: {
+                generateLabels: function (chart) {
+                  const labels = chart.data.labels;
+                  return labels.map((state, i) => ({
+                    text: state,
+                    fillStyle: stateColors[state] || '#999',
+                    hidden: false
+                  }));
+                }
+              }
+            },
+            // --- THIS IS THE FINAL, CORRECTED TOOLTIP CONFIGURATION ---
+            tooltips: {
 
+            }
+          }
 
+        });
+      }
 
+      $(function () {
+        Papa.parse(csvFile, {
+          download: true,
+          header: true,
+          dynamicTyping: false,
+          complete: function (results) {
+            allCrimeData = results.data;
 
+            let yearSet = new Set();
+            let typeSet = new Set();
 
+            allCrimeData.forEach(row => {
+              if (row.date) {
+                let year = parseInt(String(row.date).substring(0, 4));
+                if (!isNaN(year)) yearSet.add(year);
+              }
+              if (row.type) typeSet.add(row.type.trim().toLowerCase());
+            });
 
+            allYears = Array.from(yearSet).sort((a, b) => a - b);
+            allTypes = Array.from(typeSet)
+              .filter(type => type.toLowerCase() !== "all")
+              .sort();
 
+            // 填充年份下拉
+            let yearSelect = $("#yearFilter");
+            allYears.forEach(year => {
+              yearSelect.append(`<option value="${year}">${year}</option>`);
+            });
+
+            // 填充罪案类型下拉
+            let typeSelect = $("#crimeTypeFilter");
+            typeSelect.append(`<option value="">All</option>`);
+            allTypes.forEach(type => {
+              let displayName = type.replace(/_/g, ' ');
+              typeSelect.append(`<option value="${type}">${displayName}</option>`);
+            });
+
+            // 默认选中最新年份
+            yearSelect.val(Math.max(...allYears));
+
+            // 渲染颜色对照表*********
+            renderStateColorList();
+
+            // 绑定事件
+            $("#yearFilter, #crimeTypeFilter").on("change", function () {
+              let year = parseInt($("#yearFilter").val());
+              let selectedType = $("#crimeTypeFilter").val();
+              drawChart(year, selectedType);
+            });
+
+            // 初次绘制
+            drawChart(Math.max(...allYears), "");
+          }
+        });
+      });
+    }
 
 
 
@@ -2561,7 +2348,7 @@
             },
             legend: {
               display: true,
-              position: 'top',
+              position: 'bottom',
               onClick: null
             }
           },
@@ -2683,6 +2470,115 @@
  
          stateFilter.on('change', () => dataTable.draw()); */
       }
+    });
+
+
+
+
+
+
+
+
+
+
+    $(document).ready(function () {
+
+      const csvFile = 'data/chartdata.csv'; // Make sure this path is correct
+
+      // Use PapaParse to read the CSV file
+      Papa.parse(csvFile, {
+        download: true,
+        header: true,
+        skipEmptyLines: true,
+        // This function runs after the data has been loaded
+        complete: function (results) {
+
+          // Convert crime numbers to actual numbers for calculations
+          const allCrimeData = results.data.map(row => {
+            const crimeCount = Number(String(row.crimes).replace(/,/g, '')) || 0;
+            return { ...row, crimes: crimeCount };
+          });
+
+          // --- START: KPI CALCULATIONS ---
+
+          // 1. Total Recorded Cases
+          // --- START: KPI CALCULATIONS ---
+
+          // 1. Calculate Total Recorded Cases
+          const totalCases = allCrimeData.reduce((sum, row) => sum + row.crimes, 0);
+          $('#kpi-title-1').text('Total Recorded Cases');
+          $('#kpi-value-1').text(totalCases.toLocaleString());
+
+          // 2. Calculate Highest Crime State
+          const crimesByState = {};
+          allCrimeData.forEach(row => {
+            if (row.state && row.state.trim().toLowerCase() !== 'malaysia') {
+              crimesByState[row.state] = (crimesByState[row.state] || 0) + row.crimes;
+            }
+          });
+          let maxState = 'N/A';
+          let maxStateCrimes = 0;
+          for (const state in crimesByState) {
+            if (crimesByState[state] > maxStateCrimes) {
+              maxStateCrimes = crimesByState[state];
+              maxState = state;
+            }
+          }
+          $('#kpi-title-2').text('Highest Crime State');
+          $('#kpi-value-2').text(maxState);
+
+          // 3. Calculate Most Frequent Crime Type
+          const uniqueYear = Array.from(new Set(allCrimeData.map(row => row.date ? new Date(row.date).getFullYear() : null).filter(y => y))).sort((a, b) => b - a);
+
+          if (uniqueYear.length >= 2) {
+            const mostRecentYear = uniqueYear[0];
+            const previousYear = uniqueYear[1];
+
+            const mostRecentYearTotal = allCrimeData
+              .filter(row => new Date(row.date).getFullYear() === mostRecentYear)
+              .reduce((sum, row) => sum + row.crimes, 0);
+
+            const previousYearTotal = allCrimeData
+              .filter(row => new Date(row.date).getFullYear() === previousYear)
+              .reduce((sum, row) => sum + row.crimes, 0);
+
+            const yoyGrowth = previousYearTotal === 0 ? 0 : ((mostRecentYearTotal - previousYearTotal) / previousYearTotal) * 100;
+
+            // --- This is the corrected part ---
+            // It now updates the third info card.
+            $('#kpi-title-3').text('Year-over-Year Growth Trend');
+            $('#kpi-value-3').text(yoyGrowth.toFixed(1) + '%');
+
+          } else {
+            $('#kpi-title-3').text('Year-over-Year Growth Trend');
+            $('#kpi-value-3').text('N/A');
+          }
+
+
+          // 4. Calculate Average Daily Cases
+          const uniqueYears = new Set(allCrimeData.map(row => row.date ? parseInt(String(row.date).substring(0, 4)) : null).filter(y => y));
+          const numberOfYears = uniqueYears.size > 0 ? uniqueYears.size : 1; // Avoid division by zero
+          const totalDays = numberOfYears * 365;
+          const averageDailyCases = Math.round(totalCases / totalDays);
+
+          // --- This is the corrected part ---
+          // It now updates the fourth info card.
+          $('#kpi-title-4').text('Average Daily Cases');
+          $('#kpi-value-4').text(averageDailyCases.toLocaleString());
+
+          // --- END: KPI CALCULATIONS ---
+
+          // --- END: KPI CALCULATIONS ---
+
+          // Initialize all your other charts and tables
+          initializeScatterChart(allCrimeData);
+          initializeDataTable(allCrimeData);
+          // Add initializations for your other charts here if they are in this file...
+        },
+        error: function (err) {
+          console.error("Error loading or parsing CSV file:", err);
+        }
+      });
     });
 
 
