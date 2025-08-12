@@ -145,42 +145,70 @@
             </div>
 
 
-          </div>
+    </div>
+<!--chart-->
 
-          <!-- Crime Trend Chart -->
-          <div class="mt-5">
-            <h4 class="text-center mb-3">Reported Crime Trend (2019-2024)</h4>
-            <canvas id="crimeChart" height="120"></canvas>
-          </div>
+<!-- Libraries -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.1/papaparse.min.js"></script>
 
-        </div>
-    </section>
+ <div class="mt-5">
+    <h4 class="text-center mb-3">Malaysia Crime Trend (2019–2024)</h4>
+    <canvas id="crimeChart" height="120"></canvas>
+  </div>
 
-    <!-- Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-      const ctx = document.getElementById('crimeChart').getContext('2d');
-      new Chart(ctx, {
-        type: 'line',
-        data: {
-          labels: ['2019', '2020', '2021', '2022', '2023', '2024'],
-          datasets: [{
-            label: 'Reported Crime Cases',
-            data: [25000, 22000, 27000, 30000, 32000, 36000],
-            borderColor: '#007bff',
-            backgroundColor: 'rgba(0, 123, 255, 0.2)',
-            fill: true,
-            tension: 0.3
-          }]
-        },
-        options: {
-          responsive: true,
-          plugins: {
-            legend: { display: true }
+  <script>
+    // Data directly embedded (example values)
+    // Format: { Year: Total Cases }
+    const yearlyTotals = {
+      "2019": 265432,
+      "2020": 243210,
+      "2021": 258765,
+      "2022": 287654,
+      "2023": 301234,
+      "2024": 0 // No official full-year data yet
+    };
+
+    const labels = Object.keys(yearlyTotals);
+    const values = Object.values(yearlyTotals);
+
+    const ctx = document.getElementById('crimeChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Total Reported Cases',
+          data: values,
+          borderColor: '#007bff',
+          backgroundColor: 'rgba(0, 123, 255, 0.2)',
+          fill: true,
+          tension: 0.3,
+          pointBackgroundColor: '#007bff',
+          pointBorderColor: '#fff',
+          pointBorderWidth: 2,
+          pointRadius: 5,
+          pointHoverRadius: 7
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          tooltip: {
+            callbacks: {
+              label: context => context.parsed.y.toLocaleString() + ' cases'
+            }
           }
+        },
+        scales: {
+          x: { title: { display: true, text: 'Year' } },
+          y: { title: { display: true, text: 'Number of Cases' }, beginAtZero: true }
         }
-      });
-    </script>
+      }
+    });
+  </script>
+
+<!--End Chart-->
 
 
   </main>
