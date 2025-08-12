@@ -3586,7 +3586,7 @@ table.dataTable thead .sorting_desc::after {
 }
 
 .btn-custom-primary {
-  background: linear-gradient(135deg, #2dd4bf, #0d9488);
+  background: linear-gradient(135deg, #1bbd36, #2ae149);
   /* 青绿色渐变 */
   color: white;
   border: none;
@@ -3597,15 +3597,15 @@ table.dataTable thead .sorting_desc::after {
 }
 
 .btn-custom-primary:hover {
-  background: linear-gradient(135deg, #0d9488, #115e59);
+  background: linear-gradient(135deg, #1bbd36, #2ae149);
   /* 深一点的青色 */
   transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(13, 148, 136, 0.4);
+  box-shadow: 0 4px 15px #1bbd36;
 }
 
 .btn-custom-outline {
-  border: 2px solid #2dd4bf;
-  color: #2dd4bf;
+  border: 2px solid #2ae149;
+  color: #2ae149;
   padding: 10px 20px;
   border-radius: 50px;
   font-weight: bold;
@@ -3613,10 +3613,10 @@ table.dataTable thead .sorting_desc::after {
 }
 
 .btn-custom-outline:hover {
-  background: #2dd4bf;
+  background: #2ae149;
   color: white;
   transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(45, 212, 191, 0.4);
+  box-shadow: 0 4px 15px #1bbd36;
 }
 
 
