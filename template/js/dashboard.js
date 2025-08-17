@@ -1662,10 +1662,12 @@
 
     // ================== PASTE THE FINAL DOUGHNUT CHART CODE HERE ==================
     // --- FINAL, DESIGNER & INTERACTIVE DOUGHNUT CHART CODE ---
-    // --- FINAL, ENHANCED-DESIGN DOUGHNUT CHART CODE ---
     if ($("#doughnutChart").length) {
 
-      const csvFile = '/data/chartdata.csv';
+      const chartContainer = $('#doughnut-chart-container'); // The div with the chart and filter
+      const errorContainer = $('#doughnut-chart-error');
+      const csvFile = 'data/chartdata.csv';
+
       let chartInstance = null;
       let allCrimeData = [];
 
@@ -1681,6 +1683,7 @@
 
       // --- This is a new plugin to draw text in the center of the chart ---
       const centerTextPlugin = {
+        id: 'centerText',
         beforeDraw: (chart) => {
           if (chart.config.options.elements.center) {
             const ctx = chart.ctx;
@@ -1711,8 +1714,18 @@
           }
         }
       };
-      // Register the plugin with Chart.js
-      Chart.plugins.register(centerTextPlugin);
+      // Safely register the plugin only if it hasn't been registered before
+      if (Chart.plugins.getAll().findIndex(p => p.id === 'centerText') === -1) {
+        Chart.plugins.register(centerTextPlugin);
+      }
+
+      // A single function to display the error and hide the chart
+      function displayError(logMessage, technicalError) {
+        console.error(logMessage, technicalError || ''); // Log for debugging
+        $('#doughnutChart').hide();
+        $('#doughnut-chart-error').show();
+
+      }
       // --------------------------------------------------------------------
 
       function drawChart(selectedState) {
@@ -1756,7 +1769,7 @@
               data: values,
               backgroundColor: proColorPalette,
               borderColor: '#ffffff',
-              borderWidth: 4, // Slightly thicker border for a cleaner look
+              borderWidth: 1, // Slightly thicker border for a cleaner look
               hoverOffset: 12 // A more pronounced "pop" on hover
             }]
           },
@@ -1782,10 +1795,8 @@
               display: true,
               position: 'bottom',
               labels: {
-                fontColor: '#555',
-                boxWidth: 20,
-                padding: 20,
-                fontSize: 14
+
+                borderWidth: 0,
               },
               onClick: null
             },
@@ -1813,7 +1824,12 @@
         header: true,
         dynamicTyping: true,
         complete: function (results) {
-          allCrimeData = results.data;
+
+          // If data is good, show the chart and hide any previous errors
+          $('#doughnutChart').show();
+          $('#doughnut-chart-error').hide();
+
+          allCrimeData = results.data.map(row => ({ ...row, crimes: Number(String(row.crimes).replace(/,/g, '')) || 0 }));
 
           const states = [...new Set(allCrimeData.map(row => row.state).filter(Boolean))];
           const stateFilterDropdown = document.getElementById('stateFilter');
@@ -1822,13 +1838,15 @@
             // --- THIS IS THE NEW LOGIC FOR THE DROPDOWN ---
 
             // 1. Add the disabled, selected placeholder first. This is what the user will see on load.
-            const placeholder = document.createElement('option');
-            placeholder.text = "Filter by State";
-            placeholder.value = ""; // Give it an empty value
-            placeholder.disabled = true;
-            placeholder.selected = true;
-            stateFilterDropdown.appendChild(placeholder);
+            /* const placeholder = document.createElement('option');
+             placeholder.text = "Filter by State";
+             placeholder.value = ""; // Give it an empty value
+             placeholder.disabled = true;
+             placeholder.selected = true;
+             stateFilterDropdown.appendChild(placeholder);*/
 
+            // Clear any existing options before adding new ones
+            stateFilterDropdown.innerHTML = '';
             // 2. Now add all the real state options from your data
             states.forEach(state => {
               const option = document.createElement('option');
@@ -1847,6 +1865,10 @@
           });
 
           drawChart("Malaysia");
+        },
+        // This function catches network errors (like a wrong file path)
+        error: function (err) {
+          displayError("Donut Chart: Error loading or parsing CSV file:", err);
         }
       });
     }
@@ -1862,6 +1884,15 @@
       let chartInstance = null;
       let allCrimeData = [];
       let allStates = [];
+
+      const chartContainer = $('#line-chart-wrapper');
+      const errorContainer = $('#line-chart-error');
+
+      function displayError(logMessage, technicalError) {
+        console.error(logMessage, technicalError || '');
+        chartContainer.hide();
+        errorContainer.show();
+      }
 
       function drawChart(selectedStates = []) {
         const ctx = $("#line-chart").get(0).getContext("2d");
@@ -1993,6 +2024,9 @@
           header: true,
           dynamicTyping: true,
           complete: function (results) {
+            chartContainer.show();
+            errorContainer.hide();
+
             allCrimeData = results.data;
 
             const stateSet = new Set();
@@ -2026,6 +2060,9 @@
               const selected = $(this).val() || [];
               drawChart(selected);
             });
+          },
+          error: function (err) {
+            displayError("Line Chart: Error loading or parsing CSV file:", err);
           }
         });
       });
@@ -2069,7 +2106,7 @@
         // "Labuan": "#9C27B0"
       };
 
-      function renderStateColorList() {
+      /*function renderStateColorList() {
         const legendContainer = $("#state-color-legend");
         legendContainer.empty();
         for (const [state, color] of Object.entries(stateColors)) {
@@ -2080,7 +2117,7 @@
         </div>
       `);
         }
-      }
+      }*/
 
       function drawChart(selectedYear, selectedType) {
         const ctx = $("#bar-chart").get(0).getContext("2d");
@@ -2104,7 +2141,14 @@
         });
 
         let sortedStates = Object.entries(stateMap).sort((a, b) => b[1] - a[1]).slice(0, 10);
-        if (!sortedStates.length) sortedStates = [["No Data", 0]];
+        if (!sortedStates.length) {
+          $("#bar-chart").hide();
+          $("#bar-chart-error").show();
+          return;
+        } else {
+          $("#bar-chart-error").hide();
+          $("#bar-chart").show();
+        }
 
         chartInstance = new Chart(ctx, {
           type: 'bar',
@@ -2150,58 +2194,68 @@
           header: true,
           dynamicTyping: false,
           complete: function (results) {
-            allCrimeData = results.data;
+            try {
+              allCrimeData = results.data;
 
-            let yearSet = new Set();
-            let typeSet = new Set();
+              let yearSet = new Set();
+              let typeSet = new Set();
 
-            allCrimeData.forEach(row => {
-              if (row.date) {
-                let year = parseInt(String(row.date).substring(0, 4));
-                if (!isNaN(year)) yearSet.add(year);
-              }
-              if (row.type) typeSet.add(row.type.trim().toLowerCase());
-            });
+              allCrimeData.forEach(row => {
+                if (row.date) {
+                  let year = parseInt(String(row.date).substring(0, 4));
+                  if (!isNaN(year)) yearSet.add(year);
+                }
+                if (row.type) typeSet.add(row.type.trim().toLowerCase());
+              });
 
-            allYears = Array.from(yearSet).sort((a, b) => a - b);
-            allTypes = Array.from(typeSet)
-              .filter(type => type.toLowerCase() !== "all")
-              .sort();
+              allYears = Array.from(yearSet).sort((a, b) => a - b);
+              allTypes = Array.from(typeSet)
+                .filter(type => type.toLowerCase() !== "all")
+                .sort();
 
-            // 填充年份下拉
-            let yearSelect = $("#yearFilter");
-            allYears.forEach(year => {
-              yearSelect.append(`<option value="${year}">${year}</option>`);
-            });
+              // 填充年份下拉
+              let yearSelect = $("#yearFilter");
+              allYears.forEach(year => {
+                yearSelect.append(`<option value="${year}">${year}</option>`);
+              });
 
-            // 填充罪案类型下拉
-            let typeSelect = $("#crimeTypeFilter");
-            typeSelect.append(`<option value="">All</option>`);
-            allTypes.forEach(type => {
-              let displayName = type.replace(/_/g, ' ');
-              typeSelect.append(`<option value="${type}">${displayName}</option>`);
-            });
+              // 填充罪案类型下拉
+              let typeSelect = $("#crimeTypeFilter");
+              typeSelect.append(`<option value="">All</option>`);
+              allTypes.forEach(type => {
+                let displayName = type.replace(/_/g, ' ');
+                typeSelect.append(`<option value="${type}">${displayName}</option>`);
+              });
 
-            // 默认选中最新年份
-            yearSelect.val(Math.max(...allYears));
+              // 默认选中最新年份
+              yearSelect.val(Math.max(...allYears));
 
-            // 渲染颜色对照表*********
-            renderStateColorList();
+              // 渲染颜色对照表*********
+              // renderStateColorList();
 
-            // 绑定事件
-            $("#yearFilter, #crimeTypeFilter").on("change", function () {
-              let year = parseInt($("#yearFilter").val());
-              let selectedType = $("#crimeTypeFilter").val();
-              drawChart(year, selectedType);
-            });
+              // 绑定事件
+              $("#yearFilter, #crimeTypeFilter").on("change", function () {
+                let year = parseInt($("#yearFilter").val());
+                let selectedType = $("#crimeTypeFilter").val();
+                drawChart(year, selectedType);
+              });
 
-            // 初次绘制
-            drawChart(Math.max(...allYears), "");
+              // 初次绘制
+              drawChart(Math.max(...allYears), "");
+            } catch (error) {
+              console.error("Error loading bar chart:", error);
+              $("#bar-chart").hide();
+              $("#bar-chart-error").show();
+            }
+          },
+          error: function (err) {
+            console.error("Failed to parse CSV:", err);
+            $("#bar-chart").hide();
+            $("#bar-chart-error").show();
           }
         });
       });
     }
-
 
 
 
@@ -2243,175 +2297,214 @@
           initializeDataTable(allRawData);
         },
         error: function (err) {
-          console.error("Error loading or parsing CSV file:", err);
-          alert("Failed to load the data file. Please check the file path and format.");
+          console.error("CSV Load Error:", err);
+
+          // --- SCATTER CHART ERROR HANDLING ---
+          $('#scatter-chart-container').hide();
+          $('#scatter-chart-error').show();
+          $('#year-slider-container').hide();
+
+          // --- CORRECTED DATA TABLE ERROR HANDLING ---
+          $('#data-table-header').show();   // 1. Explicitly show the header.
+          $('#data-table-content').hide();  // 2. Hide ONLY the table content.
+          $('#data-table-error').show();
         }
       });
 
       /**
-       * YOUR PREFERRED SCATTER CHART CODE
-       * This function contains your working scatter chart code, exactly as you provided it.
-       * @param {Array} rawData The complete dataset from the CSV.
-       */
+        * Scatter Chart: Property vs Violent Crimes
+        */
       function initializeScatterChart(rawData) {
         if (!$("#scatterChart").length) return;
 
-        // --- Your working chart code starts here ---
-        const stateColors = [
-          'rgba(239, 21, 5, 0.8)',   // Red
-          'rgba(255, 84, 224, 0.8)',  // Pink
-          'rgba(174, 3, 205, 0.8)',  // Purple
-          'rgba(89, 37, 178, 0.8)',  // Deep Purple
-          'rgba(12, 36, 166, 0.8)',   // Indigo
-          'rgba(33, 150, 243, 0.8)',  // Blue
-          'rgba(0, 188, 212, 0.8)',   // Cyan
-          'rgba(0, 150, 136, 0.8)',   // Teal
-          'rgba(76, 175, 80, 0.8)',   // Green
-          'rgba(205, 220, 57, 0.8)',  // Lime
-          'rgba(255, 193, 7, 0.8)',   // Amber
-          'rgba(211, 129, 5, 0.8)',   // Orange
-          'rgba(121, 85, 72, 0.8)',   // Brown
-          'rgba(96, 125, 139, 0.8)'   // Blue Grey
-        ];
-        const propertyCrimeTypes = ['theft', 'burglary', 'vandalism', 'arson'];
-        const violentCrimeTypes = ['assault', 'robbery', 'murder', 'homicide', 'rape'];
+        const chartContainer = $('#scatter-chart-container');
+        const errorContainer = $('#scatter-chart-error');
 
-        const dataByYear = {};
-        const years = new Set();
-        rawData.forEach(row => {
-          const year = new Date(row.date).getFullYear();
-          if (!year || isNaN(year) || row.state === 'Malaysia') return;
-          years.add(year);
-          const state = row.state;
-          if (!dataByYear[state]) dataByYear[state] = {};
-          if (!dataByYear[state][year]) dataByYear[state][year] = { property: 0, violent: 0 };
-          if (propertyCrimeTypes.some(type => row.type.toLowerCase().includes(type))) { dataByYear[state][year].property += row.crimes; }
-          if (violentCrimeTypes.some(type => row.type.toLowerCase().includes(type))) { dataByYear[state][year].violent += row.crimes; }
-        });
-
-        const allStates = Object.keys(dataByYear).sort();
-        const sortedYears = [...years].sort();
-
-        const checkboxContainer = $('#state-checkboxes-container');
-        allStates.forEach(state => {
-          checkboxContainer.append(
-            `<div class="form-check"><input class="form-check-input state-checkbox" type="checkbox" value="${state}" id="check-${state}" checked><label class="form-check-label" for="check-${state}">${state}</label></div>`
-          );
-        });
-        const yearSlider = $('#year-slider');
-        const yearLabel = $('#current-year-label');
-        if (sortedYears.length > 0) {
-          yearSlider.attr('min', sortedYears[0]);
-          yearSlider.attr('max', sortedYears[sortedYears.length - 1]);
-          yearSlider.val(sortedYears[sortedYears.length - 1]);
-          yearLabel.text(sortedYears[sortedYears.length - 1]);
+        // Single reusable error display function
+        function displayError(logMessage, technicalError) {
+          console.error(logMessage, technicalError || '');
+          chartContainer.hide();
+          errorContainer.show();
+          $('#year-slider-container').hide();
         }
 
-        const scatterChartCanvas = $("#scatterChart").get(0).getContext("2d");
-        const scatterChart = new Chart(scatterChartCanvas, {
-          type: 'scatter',
-          data: { datasets: [] },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            animation: { duration: 750 },
-            scales: {
-              xAxes: [{
-                type: 'linear',
+        try {
+          // --- Your working chart code starts here ---
+          const stateColors = [
+            'rgba(239, 21, 5, 0.8)',   // Red
+            'rgba(255, 84, 224, 0.8)',  // Pink
+            'rgba(174, 3, 205, 0.8)',  // Purple
+            'rgba(89, 37, 178, 0.8)',  // Deep Purple
+            'rgba(12, 36, 166, 0.8)',   // Indigo
+            'rgba(33, 150, 243, 0.8)',  // Blue
+            'rgba(0, 188, 212, 0.8)',   // Cyan
+            'rgba(0, 150, 136, 0.8)',   // Teal
+            'rgba(76, 175, 80, 0.8)',   // Green
+            'rgba(205, 220, 57, 0.8)',  // Lime
+            'rgba(255, 193, 7, 0.8)',   // Amber
+            'rgba(211, 129, 5, 0.8)',   // Orange
+            'rgba(121, 85, 72, 0.8)',   // Brown
+            'rgba(96, 125, 139, 0.8)'   // Blue Grey
+          ];
+          const propertyCrimeTypes = ['theft', 'burglary', 'vandalism', 'arson'];
+          const violentCrimeTypes = ['assault', 'robbery', 'murder', 'homicide', 'rape'];
+
+          const dataByYear = {};
+          const years = new Set();
+          rawData.forEach(row => {
+            const year = new Date(row.date).getFullYear();
+            if (!year || isNaN(year) || row.state === 'Malaysia') return;
+            years.add(year);
+            const state = row.state;
+            if (!dataByYear[state]) dataByYear[state] = {};
+            if (!dataByYear[state][year]) dataByYear[state][year] = { property: 0, violent: 0 };
+            if (propertyCrimeTypes.some(type => row.type.toLowerCase().includes(type))) { dataByYear[state][year].property += row.crimes; }
+            if (violentCrimeTypes.some(type => row.type.toLowerCase().includes(type))) { dataByYear[state][year].violent += row.crimes; }
+          });
+
+          const allStates = Object.keys(dataByYear).sort();
+          const sortedYears = [...years].sort();
+
+          const checkboxContainer = $('#state-checkboxes-container');
+          allStates.forEach(state => {
+            checkboxContainer.append(
+              `<div class="form-check"><input class="form-check-input state-checkbox" type="checkbox" value="${state}" id="check-${state}" checked><label class="form-check-label" for="check-${state}">${state}</label></div>`
+            );
+          });
+          const yearSlider = $('#year-slider');
+          const yearLabel = $('#current-year-label');
+          if (sortedYears.length > 0) {
+            const minYear = sortedYears[0];
+            const maxYear = sortedYears[sortedYears.length - 1];
+
+            yearSlider.attr('min', minYear);
+            yearSlider.attr('max', maxYear);
+            yearSlider.val(maxYear);
+            yearLabel.text(maxYear);
+
+            // --- ARIA FIX #1: Set initial ARIA attributes for the slider ---
+            yearSlider.attr('aria-valuemin', minYear);
+            yearSlider.attr('aria-valuemax', maxYear);
+            yearSlider.attr('aria-valuenow', maxYear);
+          }
+
+          const scatterChartCanvas = $("#scatterChart").get(0).getContext("2d");
+          const scatterChart = new Chart(scatterChartCanvas, {
+            type: 'scatter',
+            data: { datasets: [] },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              animation: { duration: 750 },
+              scales: {
+                xAxes: [{
+                  type: 'linear',
+                  position: 'bottom',
+                  scaleLabel: {
+                    display: true,
+                    labelString: 'Total Property Crimes',
+                    fontSize: 14,
+                    fontStyle: 'bold'
+                  }
+                }],
+                yAxes: [{
+                  type: 'linear',
+                  scaleLabel: {
+                    display: true,
+                    labelString: 'Total Violent Crimes',
+                    fontSize: 14,
+                    fontStyle: 'bold'
+                  }
+                }]
+              },
+              tooltips: {
+                callbacks: {
+                  label: function (tooltipItem, data) {
+                    let label = data.datasets[tooltipItem.datasetIndex].label || '';
+                    if (label) { label += ': '; }
+                    label += `(${Number(tooltipItem.xLabel).toLocaleString()}, ${Number(tooltipItem.yLabel).toLocaleString()})`;
+                    return label;
+                  }
+                }
+              },
+              legend: {
+                display: true,
                 position: 'bottom',
-                scaleLabel: {
-                  display: true,
-                  labelString: 'Total Property Crimes',
-                  fontSize: 14,
-                  fontStyle: 'bold'
-                }
-              }],
-              yAxes: [{
-                type: 'linear',
-                scaleLabel: {
-                  display: true,
-                  labelString: 'Total Violent Crimes',
-                  fontSize: 14,
-                  fontStyle: 'bold'
-                }
-              }]
-            },
-            tooltips: {
-              callbacks: {
-                label: function (tooltipItem, data) {
-                  let label = data.datasets[tooltipItem.datasetIndex].label || '';
-                  if (label) { label += ': '; }
-                  label += `(${Number(tooltipItem.xLabel).toLocaleString()}, ${Number(tooltipItem.yLabel).toLocaleString()})`;
-                  return label;
-                }
+                onClick: null
               }
             },
-            legend: {
-              display: true,
-              position: 'bottom',
-              onClick: null
-            }
-          },
-          plugins: [{
-            afterDraw: function (chart) {
-              const ctx = chart.ctx;
-              const chartArea = chart.chartArea;
-              if (!chartArea) return;
-              ctx.save();
-              ctx.beginPath();
-              ctx.moveTo(chartArea.left, chartArea.bottom);
-              ctx.lineTo(chartArea.right, chartArea.top);
-              ctx.strokeStyle = 'rgba(150, 150, 150, 0.6)';
-              ctx.lineWidth = 2;
-              ctx.setLineDash([5, 5]);
-              ctx.stroke();
-              ctx.restore();
-            }
-          }]
-        });
-
-        function updateChart() {
-          const selectedYear = yearSlider.val();
-          const selectedStates = $('.state-checkbox:checked').map((_, el) => $(el).val()).get();
-          let newDatasets = [];
-          yearLabel.text(selectedYear);
-          selectedStates.forEach((state, index) => {
-            const yearlyData = dataByYear[state] ? dataByYear[state][selectedYear] : null;
-            if (yearlyData) {
-              newDatasets.push({
-                label: state,
-                data: [{ x: yearlyData.property, y: yearlyData.violent }],
-                backgroundColor: stateColors[index % stateColors.length],
-                pointRadius: 8
-              });
-            }
+            plugins: [{
+              afterDraw: function (chart) {
+                const ctx = chart.ctx;
+                const chartArea = chart.chartArea;
+                if (!chartArea) return;
+                ctx.save();
+                ctx.beginPath();
+                ctx.moveTo(chartArea.left, chartArea.bottom);
+                ctx.lineTo(chartArea.right, chartArea.top);
+                ctx.strokeStyle = 'rgba(150, 150, 150, 0.6)';
+                ctx.lineWidth = 2;
+                ctx.setLineDash([5, 5]);
+                ctx.stroke();
+                ctx.restore();
+              }
+            }]
           });
-          scatterChart.data.datasets = newDatasets;
-          scatterChart.update();
-          const selectAllBtn = $('#select-all-states');
-          const deselectAllBtn = $('#deselect-all-states');
-          selectAllBtn.removeClass('active');
-          deselectAllBtn.removeClass('active');
-          if (selectedStates.length === allStates.length) {
-            selectAllBtn.addClass('active');
-          } else if (selectedStates.length === 0) {
-            deselectAllBtn.addClass('active');
-          }
-        }
 
-        $('#state-checkboxes-container').on('change', '.state-checkbox', updateChart);
-        yearSlider.on('input', updateChart);
-        $('#select-all-states').on('click', () => {
-          $('.state-checkbox').prop('checked', true);
+          function updateChart() {
+            const selectedYear = yearSlider.val();
+            const selectedStates = $('.state-checkbox:checked').map((_, el) => $(el).val()).get();
+            let newDatasets = [];
+            yearLabel.text(selectedYear);
+
+            yearSlider.attr('aria-valuenow', selectedYear);
+
+            selectedStates.forEach((state, index) => {
+              const yearlyData = dataByYear[state] ? dataByYear[state][selectedYear] : null;
+              if (yearlyData) {
+                newDatasets.push({
+                  label: state,
+                  data: [{ x: yearlyData.property, y: yearlyData.violent }],
+                  backgroundColor: stateColors[index % stateColors.length],
+                  pointRadius: 8
+                });
+              }
+            });
+            scatterChart.data.datasets = newDatasets;
+            scatterChart.update();
+
+            const selectAllBtn = $('#select-all-states');
+            const deselectAllBtn = $('#deselect-all-states');
+            selectAllBtn.removeClass('active');
+            deselectAllBtn.removeClass('active');
+            if (selectedStates.length === allStates.length) {
+              selectAllBtn.addClass('active');
+            } else if (selectedStates.length === 0) {
+              deselectAllBtn.addClass('active');
+            }
+          }
+
+          $('#state-checkboxes-container').on('change', '.state-checkbox', updateChart);
+          yearSlider.on('input', updateChart);
+          $('#select-all-states').on('click', () => {
+            $('.state-checkbox').prop('checked', true);
+            updateChart();
+          });
+          $('#deselect-all-states').on('click', () => {
+            $('.state-checkbox').prop('checked', false);
+            updateChart();
+          });
           updateChart();
-        });
-        $('#deselect-all-states').on('click', () => {
-          $('.state-checkbox').prop('checked', false);
-          updateChart();
-        });
-        updateChart();
-        // --- Your working chart code ends here ---
+          chartContainer.show();
+          errorContainer.hide();
+          $('#year-slider-container').show();
+
+        } catch (err) {
+          displayError("Scatter Chart: Unexpected error while rendering chart.", err);
+        }
       }
+      // --- Your working chart code ends here ---
+
 
       /**
        * Initializes the Data Table after aggregating data by State and Date.
@@ -2419,71 +2512,75 @@
       function initializeDataTable(rawData) {
         if (!$("#rawData-table").length) return;
 
-        const aggregatedDataMap = {};
-        rawData.forEach(row => {
-          const key = `${row.state}|${row.date}`;
-          if (!aggregatedDataMap[key]) {
-            aggregatedDataMap[key] = { state: row.state, date: row.date, crimes: 0 };
-          }
-          aggregatedDataMap[key].crimes += row.crimes;
-        });
-        const aggregatedData = Object.values(aggregatedDataMap);
+        const tableContainer = $('#data-table-container');
+        const errorContainer = $('#data-table-error');
+        const headerContainer = $('#data-table-header');
 
-        // Inside the initializeDataTable function...
+        function displayError(logMessage, technicalError) {
+          console.error(logMessage, technicalError || '');
+          $('#data-table-content').hide();
+          headerContainer.show();
+          errorContainer.show();
+        }
 
-        const dataTable = $('#rawData-table').DataTable({
-          data: aggregatedData,
-          columns: [
-            { data: 'state' },
-            { data: 'date' },
-            { data: 'crimes', render: $.fn.dataTable.render.number(',', '.', 0) }
-          ],
-          // The 'f' in the dom string tells DataTables to create the filter (search) input
-          dom: '<"row"<"col-sm-12"f>>' + // We only need the search box generated
-            '<"row"<"col-sm-12"tr>>',
-          scrollY: '450px',
-          scrollCollapse: true,
-          paging: false,
-          info: false,
+        try {
+          const aggregatedDataMap = {};
+          rawData.forEach(row => {
+            const key = `${row.state}|${row.date}`;
+            if (!aggregatedDataMap[key]) {
+              aggregatedDataMap[key] = { state: row.state, date: row.date, crimes: 0 };
+            }
+            aggregatedDataMap[key].crimes += row.crimes;
+          });
+          const aggregatedData = Object.values(aggregatedDataMap);
 
-          // --- THIS IS THE KEY CHANGE ---
-          // This function runs after the table is fully built.
-          initComplete: function () {
-            // Find the search box DataTables created...
-            const searchInput = $('#rawData-table_filter');
-            // ...and move it into our new placeholder div.
-            searchInput.appendTo('#table-search-placeholder');
-          }
-        });
+          // Inside the initializeDataTable function...
 
-        /* dataTable.on('init.dt', function () {
-           dataTable.columns.adjust().draw();
-         });
- 
-         $.fn.dataTable.ext.search.push(
-           function (settings, data, dataIndex) {
-             const selectedState = stateFilter.val();
-             const rowState = data[0];
-             return !selectedState || rowState === selectedState;
-           }
-         );
- 
-         stateFilter.on('change', () => dataTable.draw()); */
+          $('#rawData-table').DataTable({
+            data: aggregatedData,
+            columns: [
+              { data: 'state' },
+              { data: 'date' },
+              { data: 'crimes', render: $.fn.dataTable.render.number(',', '.', 0) }
+            ],
+            // The 'f' in the dom string tells DataTables to create the filter (search) input
+            dom: '<"row"<"col-sm-12"f>>' + // We only need the search box generated
+              '<"row"<"col-sm-12"tr>>',
+            scrollY: '450px',
+            scrollCollapse: true,
+            paging: false,
+            info: false,
+            initComplete: function () {
+              // Find the search box DataTables created...
+              const searchInput = $('#rawData-table_filter');
+              // ...and move it into our new placeholder div.
+              searchInput.appendTo('#table-search-placeholder');
+            }
+          });
+
+          $('#data-table-content').show();
+          headerContainer.show();
+          errorContainer.hide();
+
+        } catch (err) {
+          displayError("Data Table: Unexpected error while rendering table.", err);
+        }
       }
     });
 
 
-
-
-
-
-
-
-
-
     $(document).ready(function () {
 
+      const kpiContainer = $('#dashboard-content-wrapper');
+      const kpiErrorContainer = $('#kpi-error-message');
       const csvFile = 'data/chartdata.csv'; // Make sure this path is correct
+
+      // A single function to show the error and hide the KPIs
+      function displayKpiError(logMessage, technicalError) {
+        console.error(logMessage, technicalError || ''); // Log for debugging
+        kpiContainer.hide(); // Hide the KPI cards
+        kpiErrorContainer.show(); // Show the error message
+      }
 
       // Use PapaParse to read the CSV file
       Papa.parse(csvFile, {
@@ -2493,16 +2590,21 @@
         // This function runs after the data has been loaded
         complete: function (results) {
 
+          // Check for empty or invalid data first.
+          if (!results.data || results.data.length === 0 || results.errors.length > 0) {
+            displayKpiError("Main Dashboard: CSV file is empty or contains errors.", results.errors);
+            return; // Stop execution
+          }
+
+          // If data is good, show the KPIs and hide any previous errors
+          kpiContainer.show();
+          kpiErrorContainer.hide();
+
           // Convert crime numbers to actual numbers for calculations
           const allCrimeData = results.data.map(row => {
             const crimeCount = Number(String(row.crimes).replace(/,/g, '')) || 0;
             return { ...row, crimes: crimeCount };
           });
-
-          // --- START: KPI CALCULATIONS ---
-
-          // 1. Total Recorded Cases
-          // --- START: KPI CALCULATIONS ---
 
           // 1. Calculate Total Recorded Cases
           const totalCases = allCrimeData.reduce((sum, row) => sum + row.crimes, 0);
@@ -2565,9 +2667,6 @@
           // It now updates the fourth info card.
           $('#kpi-title-4').text('Average Daily Cases');
           $('#kpi-value-4').text(averageDailyCases.toLocaleString());
-
-          // --- END: KPI CALCULATIONS ---
-
           // --- END: KPI CALCULATIONS ---
 
           // Initialize all your other charts and tables
@@ -2576,19 +2675,10 @@
           // Add initializations for your other charts here if they are in this file...
         },
         error: function (err) {
-          console.error("Error loading or parsing CSV file:", err);
+          displayKpiError("Main Dashboard: Error loading or parsing CSV file:", err);
         }
       });
     });
-
-
-
-
-
-
-
-
-
 
 
 

@@ -9,7 +9,7 @@
   <meta name="keywords" content="">
 
   <!-- Favicons -->
-  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/favicon2.png" rel="icon">
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
   <!-- Fonts -->
@@ -49,16 +49,17 @@
         <h1 class="sitename">CrimeMY</h1><span></span>
       </a>
 
-      <nav id="navmenu" class="navmenu">
+      <nav id="navmenu" class="navmenu" aria-label="Main navigation">
         <ul>
           <li><a href="index.html">Home</a></li>
           <li><a href="about.html">About</a></li>
           <li><a href="crime.html">Crime Types</a></li>
           <li><a href="dashboard.html">Dashboard</a></li>
           <li><a href="casestudies.html">Case Studies</a></li>
-          <li><a href="contact.html" class="active">Contact</a></li>
+          <li><a href="contact.html" class="active" aria-current="page">Contact</a></li>
         </ul>
-        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list" aria-label="Open main menu" aria-controls="navmenu"
+          aria-expanded="false"></i>
       </nav>
     </div>
   </header>
@@ -87,7 +88,7 @@
       <div class="mb-5">
         <iframe style="width: 100%; height: 400px;"
           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.344890123762!2d101.68685531531876!3d3.1390039977084716!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31cc362a8d1a9d0f%3A0x66b2a58e57c42d71!2sKuala%20Lumpur%2C%20Malaysia!5e0!3m2!1sen!2smy!4v1691592000000!5m2!1sen!2smy"
-          frameborder="0" allowfullscreen=""></iframe>
+          frameborder="0" allowfullscreen="" title="Google Map showing our office location"></iframe>
       </div><!-- End Google Maps -->
 
       <div class="container" data-aos="fade">
@@ -101,7 +102,7 @@
               <p>Subscribe to get more information.</p>
 
               <div class="info-item d-flex">
-                <i class="bi bi-geo-alt flex-shrink-0"></i>
+                <i class="bi bi-geo-alt flex-shrink-0" aria-hidden="true"></i>
                 <div>
                   <h4>Location:</h4>
                   <p>1,Jln BU 3/1, Bandar Utama, 47800 Petaling Jaya, Selangor</p>
@@ -109,7 +110,7 @@
               </div><!-- End Info Item -->
 
               <div class="info-item d-flex">
-                <i class="bi bi-envelope flex-shrink-0"></i>
+                <i class="bi bi-envelope flex-shrink-0" aria-hidden="true"></i>
                 <div>
                   <h4>Email:</h4>
                   <p>contact@crimemy.my</p>
@@ -117,7 +118,7 @@
               </div><!-- End Info Item -->
 
               <div class="info-item d-flex">
-                <i class="bi bi-phone flex-shrink-0"></i>
+                <i class="bi bi-phone flex-shrink-0" aria-hidden="true"></i>
                 <div>
                   <h4>Call:</h4>
                   <p>+60189815566</p>
@@ -129,21 +130,18 @@
           </div>
 
           <div class="col-lg-8">
-            <div class="col-lg-8">
-  <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScV_MFqFT0diyFavBq7vifyouwy0vlDF2rj-30awy0Hakz3WQ/viewform?embedded=true" 
-    width="100%" 
-    height="800" 
-    frameborder="0" 
-    marginheight="0" 
-    marginwidth="0">
-    正在加载…
-  </iframe>
-</div>
+            <iframe
+              src="https://docs.google.com/forms/d/e/1FAIpQLScV_MFqFT0diyFavBq7vifyouwy0vlDF2rj-30awy0Hakz3WQ/viewform?embedded=true"
+              width="100%" height="800" frameborder="0" marginheight="0" marginwidth="0"
+              title="Contact Us form embedded from Google Forms">
+              loading...
+            </iframe>
+          </div>
 
-            </form>
-          </div><!-- End Contact Form -->
+          </form>
+        </div><!-- End Contact Form -->
 
-        </div>
+      </div>
 
       </div>
 
@@ -186,7 +184,8 @@
         <div class="col-lg-4 col-md-12 footer-newsletter">
           <h4>Crime Alert Newsletter</h4>
           <p>Subscribe to receive updates on local crime trends and prevention tips in your area.</p>
-          <form id="newsletter-form" action="forms/newsletter.php" method="post" class="php-email-form">
+          <form id="newsletter-form" action="forms/newsletter.php" method="post" class="php-email-form"
+            aria-label="Crime Alert Newsletter">
             <div class="newsletter-form">
               <input type="email" name="email" placeholder="Your Email" required>
               <input type="submit" value="Subscribe">
@@ -205,7 +204,7 @@
 
   <!-- Scroll Top -->
   <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
-      class="bi bi-arrow-up-short"></i></a>
+      class="bi bi-arrow-up-short" aria-hidden="true"></i></a>
 
   <!-- Preloader -->
   <div id="preloader"></div>

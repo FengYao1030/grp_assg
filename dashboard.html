@@ -9,7 +9,7 @@
     <meta name="keywords" content="">
 
     <!-- Favicons -->
-    <link href="assets/img/favicon.png" rel="icon">
+    <link href="assets/img/favicon2.png" rel="icon">
     <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
     <!-- Fonts -->
@@ -48,12 +48,12 @@
             <a href="index.html" class="logo d-flex align-items-center me-auto">
                 <!-- Uncomment the line below if you also wish to use an image logo -->
                 <!-- <img src="assets/img/logo.png" alt=""> -->
-                <h1 class="sitename">CrimeMY</h1><span>.</span>
+                <h1 class="sitename">CrimeMY</h1>
             </a>
 
             <nav id="navmenu" class="navmenu">
                 <ul>
-                    <li><a href="index.html" >Home</a></li>
+                    <li><a href="index.html">Home</a></li>
                     <li><a href="about.html">About</a></li>
                     <li><a href="crime.html">Crime Types</a></li>
                     <li><a href="dashboard.html" class="active">Dashboard</a></li>
@@ -83,71 +83,72 @@
             <div class="main-panel" style="width: 100%; margin-left: 0;">
                 <div class="content-wrapper">
                     <div class="row" style="margin-bottom: 20px;">
+                        <div id="kpi-error-message" class="col-12" style="display: none;">
+                            <div class="alert alert-danger" role="alert">
+                                <p class="mb-0"><strong>Data Unavailable.</strong> Could not load data for
+                                    the main dashboard cards.</p>
+                            </div>
+                        </div>
+                        <div class="row g-3 mb-4" id="dashboard-content-wrapper">
+                            <div class="col-12 col-sm-6 col-lg-3">
+                                <div class="card h-100">
+                                    <div class="card-body d-flex align-items-center">
+                                        <img src="assets/img/icon5.png" alt="Icon"
+                                            style="height: 50px; margin-right: 15px;">
+                                        <div>
+                                            <p class="mb-1 text-muted" id="kpi-title-1">Total Recorded
+                                                Cases</p>
+                                            <h4 class=" mb-0" id="kpi-value-1">--</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-lg-3">
+                                <div class="card h-100">
+                                    <div class="card-body d-flex align-items-center">
+                                        <img src="assets/img/icon3.png" alt="Icon"
+                                            style="height: 50px; margin-right: 15px;">
+                                        <div>
+                                            <p class="mb-1 text-muted" id="kpi-title-2">Highest Crime State
+                                            </p>
+                                            <h4 class="mb-0" id="kpi-value-2">--</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-lg-3">
+                                <div class="card h-100">
+                                    <div class="card-body d-flex align-items-center">
+                                        <img src="assets/img/icon7.png" alt="Icon"
+                                            style="height: 50px; margin-right: 15px;">
+                                        <div>
+                                            <p class="mb-1 text-muted" id="kpi-title-4">Average Daily Cases</p>
+                                            <h4 class="mb-0" id="kpi-value-4">--</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-lg-3">
+                                <div class="card h-100">
+                                    <div class="card-body d-flex align-items-center">
+                                        <img src="assets/img/icon4.png" alt="Icon"
+                                            style="height: 50px; margin-right: 15px;">
 
-                        <div class="col-md-3 stretch-card grid-margin">
-                            <div class="card h-100">
-                                <div class="card-body d-flex align-items-center">
-                                    <img src="assets/img/icon5.png" alt="Icon"
-                                        style="height: 50px; margin-right: 15px;">
-
-                                    <div>
-                                        <p class="mb-1 text-muted" id="kpi-title-1">Total Recorded
-                                            Cases</p>
-                                        <h4 class=" mb-0" id="kpi-value-1">--</h4>
+                                        <div>
+                                            <p class="mb-1 text-muted" id="kpi-title-3">Year-over-Year Growth
+                                                Trend</p>
+                                            <h4 class="mb-0" id="kpi-value-3">--</h4>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-                        <div class=" col-md-3 stretch-card grid-margin">
-                            <div class="card h-100">
-                                <div class="card-body d-flex align-items-center">
-                                    <img src="assets/img/icon3.png" alt="Icon"
-                                        style="height: 50px; margin-right: 15px;">
-
-                                    <div>
-                                        <p class="mb-1 text-muted" id="kpi-title-2">Highest Crime State
-                                        </p>
-                                        <h4 class="mb-0" id="kpi-value-2">--</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3 stretch-card grid-margin">
-                            <div class="card h-100">
-                                <div class="card-body d-flex align-items-center">
-                                    <img src="assets/img/icon7.png" alt="Icon"
-                                        style="height: 50px; margin-right: 15px;">
-
-                                    <div>
-                                        <p class="mb-1 text-muted" id="kpi-title-4">Average Daily Cases</p>
-                                        <h4 class="mb-0" id="kpi-value-4">--</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3 stretch-card grid-margin">
-                            <div class="card h-100">
-                                <div class="card-body d-flex align-items-center">
-                                    <img src="assets/img/icon4.png" alt="Icon"
-                                        style="height: 50px; margin-right: 15px;">
-
-                                    <div>
-                                        <p class="mb-1 text-muted" id="kpi-title-3">Year-over-Year Growth
-                                            Trend</p>
-                                        <h4 class="mb-0" id="kpi-value-3">--</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
                     </div>
-
-
                     <div class="row">
                         <div class="col-12 grid-margin stretch-card">
                             <div class="card" style="background-color: #fffcf3;">
                                 <div class="card-body">
+
                                     <h5 class="mb-2 text-titlecase mb-4" style="font-weight: 700;">
                                         Malaysia Nationwide Crime Trend (Yearly)
                                     </h5>
@@ -159,9 +160,17 @@
                                         <label for="stateSearch">Search state:</label>
                                         <select id="stateSearch" multiple style="width: 100%"></select>
                                     </div>
+                                    <div id="line-chart-error" style="display: none;">
+                                        <div class="alert alert-danger" role="alert">
+                                            <p class="mb-0"><strong>Data Unavailable.</strong> Could not load data for
+                                                the Nationwide Crime Trend chart.</p>
+                                        </div>
+                                    </div>
                                     <!-- Chart -->
-                                    <div style="height: 470px;">
-                                        <canvas id="line-chart"></canvas>
+                                    <div id="line-chart-wrapper" style="height: 470px;">
+                                        <canvas id="line-chart" role="img"
+                                            aria-label="Line chart showing the nationwide crime trend in Malaysia on a yearly basis.">
+                                        </canvas>
                                     </div>
                                 </div>
                             </div>
@@ -175,62 +184,83 @@
 
 
                     <div class="row">
+                        <div class="col-xl-5 grid-margin stretch-card" id="donut-content-wrapper">
+                            <div class="card" style="background-color: #ebf7ff; height: 655px;">
+                                <div class="card-body d-flex flex-column">
+                                    <div>
+                                        <div class="d-flex justify-content-between align-items-center mb-4">
+                                            <h5 class="mb-2 text-titlecase" style="font-weight: 700;">Top 5 Crime Types
+                                            </h5>
+                                        </div>
 
+                                        <!-- Filter -->
+                                        <div id="doughnut-chart-filter-container" class="state-filter-container">
+                                            <div class="mb-3">
+                                                <label for="stateFilter" class="font-weight-medium">Filter by
+                                                    State</label>
+                                                <select id="stateFilter" class="form-control"></select>
+                                            </div>
+                                        </div>
 
-                        <div class="col-xl-6 grid-margin stretch-card">
-                            <div class="card" style="background-color: #ebf7ff;">
-                                <div class="card-body">
-
-                                    <div class=" d-flex justify-content-between align-items-center mb-4">
-                                        <h5 class="mb-2 text-titlecase mb-4" style="font-weight: 700;">Top 5
-                                            Crime
-                                            Types
-                                        </h5>
-                                        <div id="doughnut-chart-filter-container" style="width: 200px;">
-                                            <select id="stateFilter" class="form-control"></select>
+                                        <!-- Error message (positioned right below filter) -->
+                                        <div id="doughnut-chart-error" style="display: none;">
+                                            <div class="alert alert-danger" role="alert">
+                                                <p class="mb-0"><strong>Data Unavailable.</strong> Could not load data
+                                                    for the Top 5 Crime Types chart.</p>
+                                            </div>
                                         </div>
                                     </div>
 
-                                    <div class="doughnut-chart-container"
-                                        style="height: 490px; position: relative; margin-top: 50px;">
-                                        <canvas id="doughnutChart"></canvas>
+                                    <!-- Chart container -->
+                                    <div class="doughnut-chart-container flex-grow-1 d-flex justify-content-center align-items-center"
+                                        style="min-height: 400px; position: relative; margin-bottom: 20px;">
+                                        <canvas id="doughnutChart" role="img"
+                                            aria-label="Doughnut chart showing the top 5 crime types."></canvas>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
 
 
+
                         <!-- 过滤器 + 图表卡片 -->
-                        <div class="col-md-6 col-xl-6 grid-margin stretch-card">
+                        <div class="col-12 col-lg-7 grid-margin stretch-card">
                             <div class="card" style="background-color: #fff5eb;">
-                                <div class="card-body">
-                                    <h5 class="mb-2 text-titlecase mb-4" style="font-weight: 700;">
-                                        Top 10 States by Crime Cases
-                                    </h5>
-
-
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="mb-3">
-                                                <label class="font-weight-medium d-block">Select
-                                                    Year</label>
-                                                <select id="yearFilter" class="form-select"></select>
+                                <div class="card-body d-flex flex-column">
+                                    <div>
+                                        <h5 class="mb-2 text-titlecase mb-4" style="font-weight: 700;">
+                                            Top 10 States by Crime Cases</h5>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label for="yearFilter" class="font-weight-medium d-block">Select
+                                                        Year</label>
+                                                    <select id="yearFilter" class="form-select"></select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label for="crimeTypeFilter"
+                                                        class="font-weight-medium d-block">Select
+                                                        Crime Type</label>
+                                                    <select id="crimeTypeFilter" class="form-select"></select>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
-                                            <div class="mb-3">
-                                                <label class="font-weight-medium d-block">Select Crime
-                                                    Type</label>
-                                                <select id="crimeTypeFilter" class="form-select"></select>
+                                        <div id="bar-chart-error" style="display: none;">
+                                            <div class="alert alert-danger mb-3" role="alert">
+                                                <p class="mb-0"><strong>Data Unavailable.</strong> Could not load data
+                                                    for
+                                                    the Top 10 States by Crime Cases chart.</p>
                                             </div>
                                         </div>
                                     </div>
 
                                     <!-- 图表 -->
                                     <div class="card-body">
-                                        <div style="height: 400px;">
-                                            <canvas id="bar-chart"></canvas>
+                                        <div class="bar-chart-wrapper flex-grow-1" style="position: relative;">
+                                            <canvas id="bar-chart" role="img"
+                                                aria-label="Bar chart showing the top 10 states by number of crime cases."></canvas>
                                         </div>
 
                                         <!-- 州名颜色对照表 -->
@@ -259,24 +289,32 @@
                     <div class="row">
                         <div class="col-xl-8 grid-margin stretch-card">
                             <div class="card" style="background-color: #f3fff7;">
-                                <div class="card-body">
+                                <div class="card-body" style="min-height: 695px;">
                                     <h5 class="mb-2 text-titlecase mb-4" style="font-weight: 700;">Property
-                                        Vs.
-                                        Violent Rate
+                                        Vs. Violent Rate
                                     </h5>
                                     <p class="card-description">
                                         Each point represents a state's total property and violent crime
-                                        counts
-                                        for the
-                                        selected year.
+                                        counts for the selected year.
                                     </p>
-                                    <div style="height: 450px; position: relative;">
-                                        <canvas id="scatterChart"></canvas>
+                                    <div id="scatter-chart-error" style="display: none;">
+                                        <div class="alert alert-danger" role="alert">
+                                            <p class="mb-0"><strong>Chart Unavailable.</strong> Could not load data
+                                                for the Property vs. Violent Rate chart.</p>
+                                        </div>
                                     </div>
-                                    <div class="pt-4">
-                                        <label for="year-slider" class="form-label"><strong>Year: <span
-                                                    id="current-year-label">2023</span></strong></label>
-                                        <input type="range" class="form-range" id="year-slider">
+                                    <div id="scatter-chart-wrapper">
+                                        <div style="height: 450px; position: relative;">
+                                            <canvas id="scatterChart" role="img"
+                                                aria-label="Scatter plot comparing property crime rates vs. violent crime rates by state."></canvas>
+                                        </div>
+                                        <div id="year-slider-container" class="pt-4">
+                                            <label for="year-slider" class="form-label"><strong>Year: <span
+                                                        id="current-year-label">2023</span></strong></label>
+                                            <input type="range" class="form-range" id="year-slider" min="2010"
+                                                max="2023" aria-valuemin="2010" aria-valuemax="2023"
+                                                aria-valuenow="2023">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -285,20 +323,25 @@
                         <div class="col-xl-4 grid-margin stretch-card">
                             <div class="card" style="height: 695px;">
                                 <div class="card-body">
-                                    <h5 class="mb-2 text-titlecase mb-4" style="font-weight: 700;">Select
-                                        States
+                                    <h5 id="states-group-label" class="mb-2 text-titlecase mb-4"
+                                        style="font-weight: 700;">
+                                        Select States
                                     </h5>
                                     <div class="row g-2 my-4">
                                         <div class="col">
                                             <button type="button" class="btn btn-outline-success w-100"
-                                                id="select-all-states">Select All</button>
+                                                id="select-all-states" aria-controls="state-checkboxes-container">Select
+                                                All</button>
                                         </div>
                                         <div class="col">
                                             <button type="button" class="btn btn-outline-secondary w-100"
-                                                id="deselect-all-states">Deselect All</button>
+                                                id="deselect-all-states"
+                                                aria-controls="state-checkboxes-container">Deselect
+                                                All</button>
                                         </div>
                                     </div>
-                                    <div id="state-checkboxes-container" style="height: 600px; overflow-y: auto;">
+                                    <div id="state-checkboxes-container" role="group"
+                                        aria-labelledby="states-group-label" style="height: 600px; overflow-y: auto;">
                                     </div>
                                 </div>
                             </div>
@@ -313,29 +356,39 @@
                         <div class="col-12 grid-margin stretch-card">
                             <div class="card shadow-sm" style="background-color: #fff0e6;">
                                 <div class="card-body">
-                                    <div class="table-header-controls">
-                                        <div>
-                                            <h5 class="mb-2 text-titlecase mb-4" style="font-weight: 700;">
-                                                Total
-                                                Crimes by State and Date</h5>
-                                            <p class="card-description">Search and explore total recorded
-                                                crimes
+                                    <div id="data-table-container">
+                                        <div id="data-table-header">
+
+                                            <h5 id="table-heading" class="mb-2 text-titlecase mb-4"
+                                                style="font-weight: 700;">
+                                                Total Crimes by State and Date</h5>
+                                            <p class="card-description">Search and explore total recorded crimes
                                                 for
                                                 each state on specific dates</p>
                                         </div>
-                                        <div id="table-search-placeholder"></div>
-                                    </div>
-                                    <div>
-                                        <table id="rawData-table" class="table table-striped" style="width:100%">
-                                            <thead>
-                                                <tr>
-                                                    <th>State</th>
-                                                    <th>Date</th>
-                                                    <th>Total Cases</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody></tbody>
-                                        </table>
+
+                                        <div id="data-table-error" style="display: none;">
+                                            <div class="alert alert-danger" role="alert">
+                                                <p class="mb-0"><strong>Table Unavailable.</strong> Could
+                                                    not load data for the crime data table.</p>
+                                            </div>
+                                        </div>
+                                        <div id="data-table-content">
+                                            <div id="table-search-placeholder"></div>
+                                            <div class="table-responsive">
+                                                <table id="rawData-table" class="table table-striped" style="width:100%"
+                                                    aria-labelledby="table-heading">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>State</th>
+                                                            <th>Date</th>
+                                                            <th>Total Cases</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -397,7 +450,8 @@
                 <div class="col-lg-4 col-md-12 footer-newsletter">
                     <h4>Crime Alert Newsletter</h4>
                     <p>Subscribe to receive updates on local crime trends and prevention tips in your area.</p>
-                    <form id="newsletter-form" action="forms/newsletter.php" method="post" class="php-email-form">
+                    <form id="newsletter-form" action="forms/newsletter.php" method="post" class="php-email-form"
+                        aria-label="Crime Alert Newsletter">
                         <div class="newsletter-form">
                             <input type="email" name="email" placeholder="Your Email" required>
                             <input type="submit" value="Subscribe">
@@ -415,7 +469,7 @@
     </footer>
     <!-- Scroll Top -->
     <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
-            class="bi bi-arrow-up-short"></i></a>
+            class="bi bi-arrow-up-short" aria-hidden="true"></i></a>
 
     <!-- Preloader -->
     <div id="preloader"></div>

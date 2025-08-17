@@ -9,7 +9,7 @@
   <meta name="keywords" content="">
 
   <!-- Favicons -->
-  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/favicon2.png" rel="icon">
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
   <!-- Fonts -->
@@ -49,16 +49,17 @@
         <h1 class="sitename">CrimeMY</h1>
       </a>
 
-      <nav id="navmenu" class="navmenu">
+      <nav id="navmenu" class="navmenu" aria-label="Main navigation">
         <ul>
-          <li><a href="index.html" class="active">Home</a></li>
+          <li><a href="index.html" class="active" aria-current="page">Home</a></li>
           <li><a href="about.html">About</a></li>
           <li><a href="crime.html">Crime Types</a></li>
           <li><a href="dashboard.html">Dashboard</a></li>
           <li><a href="casestudies.html">Case Studies</a></li>
           <li><a href="contact.html">Contact</a></li>
         </ul>
-        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list" aria-label="Open main menu" aria-controls="navmenu"
+          aria-expanded="false"></i>
       </nav>
     </div>
   </header>
@@ -90,7 +91,8 @@
             <h2>Types of Crime</h2>
             <p>Explore various categories of crime in Malaysia, from violent offenses and property crimes to cybercrime
               and fraud.</p>
-            <a href="crime.html" class="btn-get-started">View Latest Cases</a>
+            <a href="crime.html" class="btn-get-started" aria-label="View the latest cases on the Crime Types page">View
+              Latest Cases</a>
           </div>
         </div><!-- End Carousel Item -->
 
@@ -101,7 +103,8 @@
             <h2>Statistics of Crime</h2>
             <p>View detailed crime statistics and trends across Malaysia, presented through interactive charts and
               visual reports.</p>
-            <a href="dashboard.html" class="btn-get-started">View Data Analysis</a>
+            <a href="dashboard.html" class="btn-get-started"
+              aria-label="View the data analysis on the Dashboard page">View Data Analysis</a>
           </div>
         </div><!-- End Carousel Item -->
 
@@ -112,7 +115,8 @@
             <h2>Case Studies</h2>
             <p>Read real-life case studies highlighting notable crimes, investigation processes, and judicial outcomes.
             </p>
-            <a href="casestudies.html" class="btn-get-started">Read Prevention Guide</a>
+            <a href="casestudies.html" class="btn-get-started"
+              aria-label="Read the prevention guide on the Case Studies page">Read Prevention Guide</a>
           </div>
         </div><!-- End Carousel Item -->
 
@@ -125,7 +129,7 @@
           <span class="carousel-control-next-icon bi bi-chevron-right" aria-hidden="true"></span>
         </a>
 
-        <ol class="carousel-indicators"></ol>
+        <ol class="carousel-indicators" aria-label="Carousel slides"></ol>
 
       </div>
 
@@ -135,9 +139,10 @@
     <section id="about" class="about section">
       <div class="container">
         <div class="row align-items-center">
+          <h2 class="inner-title">Crime in Malaysia</h2>
+          <div class="col-lg-6 col-md-12 order-lg-1" data-aos="fade-up" data-aos-delay="100"
+            style="text-align: justify;">
 
-          <div class="col-lg-6 order-lg-1" data-aos="fade-up" data-aos-delay="100" style="text-align: justify;">
-            <h2 class="inner-title">Crime in Malaysia</h2>
             <div class="our-story">
               <h4>Updated 2025</h4>
               <h3>Types of Crime</h3>
@@ -161,16 +166,19 @@
 
               <div class="watch-video d-flex align-items-center position-relative">
                 <i class="bi bi-play-circle"></i>
-                <a href="https://youtu.be/YhYee1B_lww" class="glightbox stretched-link">Watch Video</a>
+                <a href="https://youtu.be/YhYee1B_lww" class="glightbox stretched-link"
+                  aria-label="Watch Video about crime prevention in Malaysia">Watch Video</a>
               </div>
             </div>
           </div>
 
-          <div class="col-lg-6 order-lg-2" data-aos="zoom-out" data-aos-delay="200">
-            <img src="assets/img/garisan-polis-1.png" alt="Crime in Malaysia" class="img-fluid rounded"
-              style="max-height: 500px;  object-fit: cover;">
+          <div class="col-lg-6 col-md-12 order-lg-2 image-col" data-aos="zoom-out" data-aos-delay="200">
+            <div class="image-collage-container">
+              <img src="assets/img/garisan-polis-1.png" alt="Crime Area" class="crime">
+              <!-- <img src="assets/img/handcuffs.jpg" alt="Bottom overlay" class="img-bottom-right">
+            -->
+            </div>
           </div>
-
         </div>
       </div>
     </section>
@@ -187,7 +195,7 @@
           <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
             <div class="service-item item-cyan position-relative">
               <div class="icon">
-                <svg width="100" height="100" viewBox="0 0 600 600">
+                <svg width="100" height="100" viewBox="0 0 600 600" aria-hidden="true">
                   <path fill="#f5f5f5"
                     d="M300,521C376,518,466,530,511,468C554,408,508,329,491,256C475,184,480,97,416,59C349,19,262,41,194,79C130,114,98,180,77,249C52,329,14,422,67,486C119,550,217,524,300,521">
                   </path>
@@ -195,7 +203,7 @@
                 <i class="bi bi-box-seam"></i>
               </div>
               <a href="https://www.freemalaysiatoday.com/category/nation/2025/08/04/cops-seize-rm18mil-worth-of-drugs-in-major-bust"
-                target="_blank" class="stretched-link">
+                target="_blank" class="stretched-link" aria-describedby="desc-drug-trafficking">
                 <h3>Drug Trafficking</h3>
               </a>
               <p>Authorities dismantled a major syndicate, seizing nearly 440 kg of narcotics worth RM17.8 million.</p>
@@ -206,7 +214,7 @@
           <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
             <div class="service-item item-orange position-relative">
               <div class="icon">
-                <svg width="100" height="100" viewBox="0 0 600 600">
+                <svg width="100" height="100" viewBox="0 0 600 600" aria-hidden="true">
                   <path fill="#f5f5f5"
                     d="M300,582C383,587,450,525,503,462C557,396,616,314,587,235C559,159,455,164,381,131C312,99,249,19,180,51C111,83,120,181,109,256C100,320,92,384,125,440C165,508,221,578,300,582">
                   </path>
@@ -214,7 +222,7 @@
                 <i class="bi bi-shield-exclamation"></i>
               </div>
               <a href="https://en.wikipedia.org/wiki/2025_Setia_City_Mall_shooting" target="_blank"
-                class="stretched-link">
+                class="stretched-link" aria-describedby="desc-shooting">
                 <h3>Shooting Incident</h3>
               </a>
               <p>In the Setia City Mall shooting, the gunman was killed during a police operation after firing randomly.
@@ -226,14 +234,15 @@
           <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
             <div class="service-item item-teal position-relative">
               <div class="icon">
-                <svg width="100" height="100" viewBox="0 0 600 600">
+                <svg width="100" height="100" viewBox="0 0 600 600" aria-hidden="true">
                   <path fill="#f5f5f5"
                     d="M300,500C370,490,460,520,510,460C560,400,500,300,480,230C460,160,470,90,410,60C340,20,260,40,190,80C130,120,90,180,70,250C50,320,20,420,80,480C140,540,230,510,300,500">
                   </path>
                 </svg>
                 <i class="bi bi-globe"></i>
               </div>
-              <a href="https://www.bernama.com/en/news.php?id=2448284" target="_blank" class="stretched-link">
+              <a href="https://www.bernama.com/en/news.php?id=2448284" target="_blank" class="stretched-link"
+                aria-describedby="desc-cybercrime">
                 <h3>Cybercrime Regulation</h3>
               </a>
               <p>Malaysia will sign the UN Convention on Cybercrime to strengthen international cooperation in October
@@ -267,9 +276,10 @@
               <h4>Altantuya Shaariibuu Murder (2006)</h4>
               <p>High-profile murder involving political figures.</p>
               <a href="assets/img/casestudy.jpeg" title="Altantuya Shaariibuu Murder" data-gallery="case-gallery"
-                class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
-              <a href="https://www.bbc.com/news/world-asia-34522928" target="_blank" title="Read News"
-                class="details-link"><i class="bi bi-link-45deg"></i></a>
+                class="glightbox preview-link" aria-label="Preview image of Altantuya Shaariibuu Murder case"><i
+                  class="bi bi-zoom-in"></i></a>
+              <a href="https://www.malaysiakini.com/news/504893" target="_blank" title="Read News" class="details-link"
+                aria-label="Read news about the Altantuya Shaariibuu Murder case"><i class="bi bi-link-45deg"></i></a>
             </div>
           </div>
 
@@ -280,61 +290,74 @@
               <h4>1MDB Financial Scandal</h4>
               <p>Billions misappropriated from Malaysia’s state fund.</p>
               <a href="assets/img/casestudy2.png" title="1MDB Scandal" data-gallery="case-gallery"
-                class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                class="glightbox preview-link" aria-label="Preview image of the 1MDB Scandal"><i
+                  class="bi bi-zoom-in"></i></a>
               <a href="https://www.reuters.com/article/us-malaysia-scandal-idUSKCN1V40I1" target="_blank"
-                title="Read News" class="details-link"><i class="bi bi-link-45deg"></i></a>
+                title="Read News" class="details-link" aria-label="Read news about the 1MDB Scandal"><i
+                  class="bi bi-link-45deg"></i></a>
             </div>
           </div>
 
           <!-- Case 3 -->
           <div class="col-lg-4 col-md-6 portfolio-item">
-            <img src="assets/img/casestudy3.jpeg" class="img-fluid" alt="Kim Jong-nam Assassination">
+            <img src="assets/img/casestudy3.jpeg" class="img-fluid" alt="KLIA Airport Shooting Incident">
             <div class="portfolio-info">
-              <h4>Kim Jong-nam Assassination (2017)</h4>
-              <p>VX nerve agent murder at Kuala Lumpur airport.</p>
-              <a href="assets/img/casestudy3.jpeg" title="Kim Jong-nam Assassination" data-gallery="case-gallery"
-                class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
-              <a href="https://www.theguardian.com/world/2017/feb/14/kim-jong-nam-dead-north-korean" target="_blank"
-                title="Read News" class="details-link"><i class="bi bi-link-45deg"></i></a>
+              <h4>KLIA Airport Shooting Incident</h4>
+              <p>Man shot at wife at KLIA, injuring bodyguard.</p>
+              <a href="assets/img/casestudy3.jpeg" title="KLIA Airport Shooting Incident" data-gallery="case-gallery"
+                class="glightbox preview-link" aria-label="Preview image of the KLIA Airport Shooting Incident"><i
+                  class="bi bi-zoom-in"></i></a>
+              <a href="https://www.bernama.com/en/news.php?id=2287859" target="_blank" title="Read News"
+                class="details-link" aria-label="Read news about the KLIA Airport Shooting Incident"><i
+                  class="bi bi-link-45deg"></i></a>
             </div>
           </div>
 
           <!-- Case 4 -->
           <div class="col-lg-4 col-md-6 portfolio-item">
-            <img src="assets/img/casestudy4.jpeg" class="img-fluid" alt="MH370 Disappearance">
+            <img src="assets/img/casestudy10.png" class="img-fluid" alt="Malaysian Banking Phishing Scams">
             <div class="portfolio-info">
-              <h4>MH370 Disappearance (2014)</h4>
-              <p>Mystery of the missing Malaysian Airlines flight.</p>
-              <a href="assets/img/casestudy4.jpeg" title="MH370 Disappearance" data-gallery="case-gallery"
-                class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
-              <a href="https://www.bbc.com/news/world-asia-26503141" target="_blank" title="Read News"
-                class="details-link"><i class="bi bi-link-45deg"></i></a>
+              <h4>Malaysian Banking Phishing Scams</h4>
+              <p>Phishing scams caused RM399 million losses.</p>
+              <a href="assets/img/casestudy10.png" title="Malaysian Banking Phishing Scams" data-gallery="case-gallery"
+                class="glightbox preview-link"
+                aria-label="Preview image of the Malaysian Banking Phishing Scams case"><i
+                  class="bi bi-zoom-in"></i></a>
+              <a href="https://www.freemalaysiatoday.com/category/nation/2025/03/24/banks-blocked-rm399mil-in-attempted-fraudulent-transactions-in-2024"
+                target="_blank" title="Read News" class="details-link"
+                aria-label="Read news about the Malaysian Banking Phishing Scams case"><i
+                  class="bi bi-link-45deg"></i></a>
             </div>
           </div>
 
           <!-- Case 5 -->
           <div class="col-lg-4 col-md-6 portfolio-item">
-            <img src="assets/img/casestudy5.jpg" class="img-fluid" alt="Teoh Beng Hock Death">
+            <img src="assets/img/casestudy13.jpeg" class="img-fluid" alt="Selangor Human Trafficking Ring">
             <div class="portfolio-info">
-              <h4>Teoh Beng Hock Death (2009)</h4>
-              <p>Political aide found dead after MACC questioning.</p>
-              <a href="assets/img/casestudy5.jpg" title="Teoh Beng Hock Death" data-gallery="case-gallery"
-                class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
-              <a href="https://www.theedgemalaysia.com/article/timeline-death-teoh-beng-hock" target="_blank"
-                title="Read News" class="details-link"><i class="bi bi-link-45deg"></i></a>
+              <h4>Selangor Human Trafficking Ring</h4>
+              <p>Selangor trafficking ring busted, 16 arrested.</p>
+              <a href="assets/img/casestudy13.jpeg" title="Selangor Human Trafficking Ring" data-gallery="case-gallery"
+                class="glightbox preview-link" aria-label="Preview image of the Selangor Human Trafficking Ring case"><i
+                  class="bi bi-zoom-in"></i></a>
+              <a href="https://www.malaymail.com/news/malaysia/2025/05/06/immigration-dept-busts-sex-trafficking-rings-in-kl-and-selangor-arrests-16-individuals/175693"
+                target="_blank" title="Read News" class="details-link"
+                aria-label="Read news about the Selangor Human Trafficking Ring case"><i
+                  class="bi bi-link-45deg"></i></a>
             </div>
           </div>
 
           <!-- Case 6 -->
           <div class="col-lg-4 col-md-6 portfolio-item">
-            <img src="assets/img/casestudy6.jpg" class="img-fluid" alt="SOSMA Controversies">
+            <img src="assets/img/casestudy21.jpeg" class="img-fluid" alt="Sabah Wildlife Poaching Incident">
             <div class="portfolio-info">
-              <h4>SOSMA Controversies</h4>
-              <p>Debates over Malaysia’s Security Offences Act.</p>
-              <a href="assets/img/casestudy6.jpg" title="SOSMA Controversies" data-gallery="case-gallery"
-                class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
-              <a href="https://www.malaysianbar.org.my/article/news/legal-and-general-news/general-news/sosma-what-you-need-to-know"
-                target="_blank" title="Read News" class="details-link"><i class="bi bi-link-45deg"></i></a>
+              <h4>Sabah Wildlife Poaching Incident</h4>
+              <p>Sabah elephant poaching ring busted.</p>
+              <a href="assets/img/casestudy21.jpeg" title="Sabah Wildlife Poaching Incident" data-gallery="case-gallery"
+                class="glightbox preview-link" aria-label="Preview image of the Sabah Wildlife Poaching Incident"><i
+                  class="bi bi-zoom-in"></i></a>
+              <a href="https://www.malaymail.com/news/malaysia/2025/04/06/no-tolerance-for-cruelty-sabah-warns-poachers-after-second-pygmy-elephant-killed-in-weeks/172118"
+                target="_blank" title="Read News" class="details-link"
+                aria-label="Read news about the Sabah Wildlife Poaching Incident"><i class="bi bi-link-45deg"></i></a>
             </div>
           </div>
 
@@ -387,7 +410,8 @@
         <div class="col-lg-4 col-md-12 footer-newsletter">
           <h4>Crime Alert Newsletter</h4>
           <p>Subscribe to receive updates on local crime trends and prevention tips in your area.</p>
-          <form id="newsletter-form" action="forms/newsletter.php" method="post" class="php-email-form">
+          <form id="newsletter-form" action="forms/newsletter.php" method="post" class="php-email-form"
+            aria-label="Crime Alert Newsletter">
             <div class="newsletter-form">
               <input type="email" name="email" placeholder="Your Email" required>
               <input type="submit" value="Subscribe">
@@ -406,7 +430,7 @@
 
   <!-- Scroll Top -->
   <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
-      class="bi bi-arrow-up-short"></i></a>
+      class="bi bi-arrow-up-short" aria-hidden="true"></i></a>
 
   <!-- Preloader -->
   <div id="preloader"></div>

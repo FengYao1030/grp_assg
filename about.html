@@ -9,7 +9,7 @@
   <meta name="keywords" content="">
 
   <!-- Favicons -->
-  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/favicon2.png" rel="icon">
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
   <!-- Fonts -->
@@ -29,13 +29,8 @@
   <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
 
-  <!-- =======================================================
-  * Template Name: Company
-  * Template URL: https://bootstrapmade.com/company-free-html-bootstrap-template/
-  * Updated: Aug 07 2024 with Bootstrap v5.3.3
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="https://unpkg.com/topojson-client@3"></script>
 
 </head>
 
@@ -57,66 +52,120 @@
     max-width: 100%;
     height: auto;
   }
+
+  .map-wrapper {
+    width: 100%;
+    overflow: hidden;
+    text-align: center;
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+
+  }
+
+  #malaysia-map {
+    display: block;
+    margin: 0 auto;
+    margin-top: 0 !important;
+
+  }
+
+  #crime-map-section {
+    padding: 0px 0;
+    background: #fff;
+  }
+
+  #crime-map-section h4 {
+    margin-top: 5px;
+    /* reduce top space */
+    margin-bottom: 5px !important;
+    /* reduce bottom gap before map */
+    font-weight: bold;
+  }
+
+  #crime-map-section.section-bg {
+    padding: 10px 0;
+    /* cut down section padding */
+  }
+
+  .tooltip {
+    position: absolute;
+    padding: 8px 12px;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    border-radius: 4px;
+    pointer-events: none;
+    font-size: 14px;
+    opacity: 0;
+    /* Start hidden */
+    transition: opacity 0.2s;
+    z-index: 9999;
+  }
+
+  .state {
+    stroke: #fff;
+    stroke-width: 1px;
+    transition: all 0.3s;
+  }
+
+  .state:hover {
+    stroke: #333;
+    stroke-width: 2px;
+  }
+
+  @media (max-width: 768px) {
+    .about h2 {
+      font-size: 1.5rem;
+      text-align: center;
+    }
+
+    .about p,
+    .about ul {
+      text-align: justify;
+    }
+  }
 </style>
 
 <body class="about-page">
 
   <header id="header" class="header d-flex align-items-center sticky-top">
     <div class="container position-relative d-flex align-items-center">
-
       <a href="index.html" class="logo d-flex align-items-center me-auto">
-        <!-- Uncomment the line below if you also wish to use an image logo -->
-        <!-- <img src="assets/img/logo.png" alt=""> -->
         <h1 class="sitename">CrimeMY</h1>
       </a>
-
-      <nav id="navmenu" class="navmenu">
+      <nav id="navmenu" class="navmenu" aria-label="Main navigation">
         <ul>
           <li><a href="index.html">Home</a></li>
-          <li><a href="about.html" class="active">About</a></li>
+          <li><a href="about.html" class="active" aria-current="page">About</a></li>
           <li><a href="crime.html">Crime Types</a></li>
           <li><a href="dashboard.html">Dashboard</a></li>
           <li><a href="casestudies.html">Case Studies</a></li>
           <li><a href="contact.html">Contact</a></li>
         </ul>
-        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list" aria-label="Open main menu" aria-controls="navmenu"
+          aria-expanded="false"></i>
       </nav>
     </div>
   </header>
 
   <main class="main">
 
-    <!-- Page Title
-    <div class="page-title accent-background">
-      <div class="container d-lg-flex justify-content-between align-items-center">
-        <h1 class="mb-2 mb-lg-0">About</h1>
-        <nav class="breadcrumbs">
-          <ol>
-            <li><a href="index.html">Home</a></li>
-            <li class="current">About</li>
-          </ol>
-        </nav>
-      </div>
-    </div>End Page Title -->
-
-
     <!-- About Section -->
     <section id="about" class="about section">
-      <div class="container">
-        <div class="row align-items-center">
+      <div class="ner-fluid px-4 px-md-5">
+        <div class="row align-items-center gx-4">
 
           <!-- Left Side: Images -->
-          <div class="col-lg-6">
+          <div class="col-12 col-md-6">
             <div class="about-img mb-3">
-              <img src="assets/img/crime1.png" alt="Major Crime News in Malaysia">
+              <img src="assets/img/crime1.png" class="img-fluid rounded shadow-sm" alt="Major Crime News in Malaysia">
             </div>
             <div class="about-img">
-              <img src="assets/img/crime2.png" alt="Crime Scene in Malaysia">
+              <img src="assets/img/crime2.png" class="img-fluid rounded shadow-sm" alt="Crime Scene in Malaysia">
             </div>
           </div>
 
           <!-- Right Side: Text -->
-          <div class="col-lg-6" style="text-align: justify;">
+          <div class="col-12 col-md-6" style="text-align: justify;">
             <h2>About Malaysia Crime</h2>
             <p>
               Our platform provides an in-depth look into crime trends and statistics in Malaysia.
@@ -130,7 +179,7 @@
             </p>
 
             <!-- Key Facts -->
-            <h4>Key Crime Facts (2024)</h4>
+            <h4 class="mt-4">Key Crime Facts (2024)</h4>
             <ul>
               <li>📊 <strong>27,900+ </strong> total reported crimes in Malaysia</li>
               <li>🚨 Most common crimes: theft, burglary, drug trafficking</li>
@@ -143,74 +192,46 @@
               <a href="casestudies.html" class="btn btn-custom-primary me-2">View Case Studies</a>
               <a href="dashboard.html" class="btn btn-custom-outline">Explore Dashboard</a>
             </div>
-
-
           </div>
-          <!--chart-->
+        </div>
+      </div>
+    </section>
+    <!--chart-->
 
-          <!-- Libraries -->
-          <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-          <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.1/papaparse.min.js"></script>
+    <!-- Libraries 
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.1/papaparse.min.js"></script>
+-->
+    <section id="crime-map-section" class="section-bg py-5">
+      <div class="container-fluid px-4 px-md-5">
 
-          <div class="mt-5">
-            <h4 class="text-center mb-3">Malaysia Crime Trend (2019–2023)</h4>
-            <canvas id="crimeChart" height="120"></canvas>
+        <div class="row justify-content-center">
+          <div class="col-lg-12">
+            <h4 class="text-center" style="padding-bottom: 10px;">Malaysia Crime Map: Average Yearly
+              Cases (2016–2023)</h4>
+            <div id="map-table-error" style="display: none;">
+              <div class="alert alert-danger" role="alert">
+                <p class="mb-0"><strong>Malaysia Crime Map Unavailable.</strong> Could
+                  not load data for the Malaysia Crime Map.</p>
+              </div>
+            </div>
+            <div class="map-wrapper">
+              <div style="position: relative; width: 100%; padding-bottom: 75%; height: 0;">
+                <svg id="malaysia-map" style="position:absolute;top:0;left:0;width:100%;height:100%;"></svg>
+              </div>
+              <div id="tooltip" class="tooltip"></div>
+            </div>
+            <p style="font-style: italic; text-align: center;">
+              ** This map visualizes the average yearly crime cases in each Malaysian state from 2016 to
+              2023. Hover over a state to see the average number of cases reported annually.</p>
           </div>
-
-          <script>
-            // Data directly embedded (example values)
-            // Format: { Year: Total Cases }
-            const yearlyTotals = {
-              "2019": 265432,
-              "2020": 243210,
-              "2021": 258765,
-              "2022": 287654,
-              "2023": 301234,
-              // "2024": 0 // No official full-year data yet
-            };
-
-            const labels = Object.keys(yearlyTotals);
-            const values = Object.values(yearlyTotals);
-
-            const ctx = document.getElementById('crimeChart').getContext('2d');
-            new Chart(ctx, {
-              type: 'line',
-              data: {
-                labels: labels,
-                datasets: [{
-                  label: 'Total Reported Cases',
-                  data: values,
-                  borderColor: '#007bff',
-                  backgroundColor: 'rgba(0, 123, 255, 0.2)',
-                  fill: true,
-                  tension: 0.3,
-                  pointBackgroundColor: '#007bff',
-                  pointBorderColor: '#fff',
-                  pointBorderWidth: 2,
-                  pointRadius: 5,
-                  pointHoverRadius: 7
-                }]
-              },
-              options: {
-                responsive: true,
-                plugins: {
-                  tooltip: {
-                    callbacks: {
-                      label: context => context.parsed.y.toLocaleString() + ' cases'
-                    }
-                  }
-                },
-                scales: {
-                  x: { title: { display: true, text: 'Year' } },
-                  y: { title: { display: true, text: 'Number of Cases' }, beginAtZero: true }
-                }
-              }
-            });
-          </script>
-
-          <!--End Chart-->
+        </div>
+      </div>
+    </section>
 
 
+
+    <!--End Chart-->
   </main>
 
   <footer id="footer" class="footer dark-background">
@@ -248,7 +269,8 @@
         <div class="col-lg-4 col-md-12 footer-newsletter">
           <h4>Crime Alert Newsletter</h4>
           <p>Subscribe to receive updates on local crime trends and prevention tips in your area.</p>
-          <form id="newsletter-form" action="forms/newsletter.php" method="post" class="php-email-form">
+          <form id="newsletter-form" action="forms/newsletter.php" method="post" class="php-email-form"
+            aria-label="Crime Alert Newsletter">
             <div class="newsletter-form">
               <input type="email" name="email" placeholder="Your Email" required>
               <input type="submit" value="Subscribe">
@@ -267,7 +289,7 @@
 
   <!-- Scroll Top -->
   <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
-      class="bi bi-arrow-up-short"></i></a>
+      class="bi bi-arrow-up-short" aria-hidden="true"></i></a>
 
   <!-- Preloader -->
   <div id="preloader"></div>
@@ -284,7 +306,10 @@
 
   <!-- Main JS File -->
   <script src="assets/js/main.js"></script>
-
+  <!-- 
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://unpkg.com/topojson-client@3"></script>
+ -->
   <script>
     document.getElementById('newsletter-form').addEventListener('submit', function (event) {
       event.preventDefault();
@@ -302,6 +327,172 @@
       }
     });
   </script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const svg = d3.select("#malaysia-map");
+      const tooltip = d3.select("#tooltip");
+
+      const projection = d3.geoMercator();
+      const path = d3.geoPath().projection(projection);
+
+      Promise.all([
+        d3.json("https://raw.githubusercontent.com/codeforamerica/click_that_hood/master/public/data/malaysia.geojson"),
+        d3.csv("data/chartdata.csv")
+      ]).then(([mapData, csvData]) => {
+
+        // ✅ Fix naming differences
+        function getCsvName(mapName) {
+          const nameMapping = {
+            "Kuala Lumpur": "W.P. Kuala Lumpur",
+            "Federal Territory of Kuala Lumpur": "W.P. Kuala Lumpur",
+            "Putrajaya": "W.P. Putrajaya",
+            "Federal Territory of Putrajaya": "W.P. Putrajaya",
+            "Labuan": "W.P. Labuan",
+            "Federal Territory of Labuan": "W.P. Labuan",
+            "Penang": "Pulau Pinang",
+            "Negeri Sembilan Darul Khusus": "Negeri Sembilan"
+          };
+          return nameMapping[mapName] || mapName;
+        }
+
+        const filteredData = csvData.filter(d => d.state !== "Malaysia");
+
+        // ✅ Average yearly crimes
+        const crimesByStateAvg = d3.rollup(
+          filteredData,
+          v => {
+            const total = d3.sum(v, d => +d.crimes || 0);
+            const years = new Set(v.map(d => d.date.substring(0, 4))).size;
+            return Math.round(total / (years || 1));
+          },
+          d => d.state
+        );
+
+        const maxCrimes = d3.max([...crimesByStateAvg.values()]);
+
+        const colorScale = d3.scaleThreshold()
+          .domain([
+            0.2 * maxCrimes,
+            0.4 * maxCrimes,
+            0.6 * maxCrimes,
+            0.8 * maxCrimes
+          ])
+          .range(["#006837", "#31a354", "#f7fcb9", "#fd8d3c", "#bd0026"]);
+
+        // ✅ Draw function
+        function drawMap() {
+          const container = document.querySelector(".map-wrapper");
+          const width = container.clientWidth;
+          const height = width * 0.65; // keep 4:3 aspect
+
+          svg.attr("width", width).attr("height", height);
+
+          projection.fitSize([width, height], mapData);
+
+
+          // --- Draw States ---
+          const states = svg.selectAll("path")
+            .data(mapData.features, d => d.properties.name);
+
+          states.join("path")
+            .attr("d", path)
+            .attr("fill", d => {
+              const csvStateName = getCsvName(d.properties.name);
+              return crimesByStateAvg.has(csvStateName)
+                ? colorScale(crimesByStateAvg.get(csvStateName))
+                : "#eee";
+            })
+            .attr("stroke", "#fff")
+            .attr("stroke-width", 1)
+            .on("mouseover", function () {
+              tooltip.style("opacity", 1);
+              d3.select(this).attr("stroke", "black").attr("stroke-width", 2);
+            })
+            .on("mousemove", function (event, d) {
+              const csvStateName = getCsvName(d.properties.name);
+              const avgCrimes = crimesByStateAvg.get(csvStateName) || 0;
+              tooltip.html(`<strong>${d.properties.name}</strong><br>Avg. Yearly Cases: ${avgCrimes.toLocaleString()}`)
+                .style("left", (event.pageX + 15) + "px")
+                .style("top", (event.pageY - 30) + "px");
+            })
+            .on("mouseout", function () {
+              tooltip.style("opacity", 0);
+              d3.select(this).attr("stroke", "#fff").attr("stroke-width", 1);
+            });
+
+          // --- Draw Legend ---
+          svg.selectAll(".legend").remove(); // clear old legend
+
+          const legendWidth = Math.min(700, width * 0.9);
+          const legendItemWidth = legendWidth / 5;
+
+          const legendRanges = [
+            { color: "#006837", label: `0 – ${Math.round(0.2 * maxCrimes).toLocaleString()}` },
+            { color: "#31a354", label: `${Math.round(0.2 * maxCrimes + 1).toLocaleString()} – ${Math.round(0.4 * maxCrimes).toLocaleString()}` },
+            { color: "#f7fcb9", label: `${Math.round(0.4 * maxCrimes + 1).toLocaleString()} – ${Math.round(0.6 * maxCrimes).toLocaleString()}` },
+            { color: "#fd8d3c", label: `${Math.round(0.6 * maxCrimes + 1).toLocaleString()} – ${Math.round(0.8 * maxCrimes).toLocaleString()}` },
+            { color: "#bd0026", label: `> ${Math.round(0.8 * maxCrimes).toLocaleString()}` }
+          ];
+
+          const legend = svg.append("g")
+            .attr("class", "legend")
+            .attr("transform", `translate(${width / 2 - legendWidth / 2}, ${height - 30})`);
+
+          // Title
+          legend.append("text")
+            .attr("class", "legend-title")
+            .attr("x", legendWidth / 2)
+            .attr("y", -15)
+            .attr("text-anchor", "middle")
+            .style("font-size", "14px")
+            .style("font-weight", "bold")
+            .text("Average Yearly Cases (2016–2023)");
+
+          // Boxes
+          legend.selectAll("rect")
+            .data(legendRanges)
+            .enter()
+            .append("rect")
+            .attr("x", (d, i) => i * legendItemWidth)
+            .attr("y", 0)
+            .attr("width", legendItemWidth)
+            .attr("height", 12)
+            .attr("fill", d => d.color);
+
+          // Labels
+          legend.selectAll("text.legend-label")
+            .data(legendRanges)
+            .enter()
+            .append("text")
+            .attr("class", "legend-label")
+            .attr("x", (d, i) => i * legendItemWidth + legendItemWidth / 2)
+            .attr("y", 28)
+            .attr("text-anchor", "middle")
+            .style("font-size", "12px")
+            .text(d => d.label);
+        }
+
+        // First draw
+        drawMap();
+
+        // Redraw on resize
+        window.addEventListener("resize", drawMap);
+
+      }).catch(err => {
+        console.error("Error loading data:", err);
+        document.getElementById("map-table-error").style.display = "block";
+
+        svg.append("text")
+      });
+    });
+  </script>
+
+
+
+
+
+
 
 </body>
 
