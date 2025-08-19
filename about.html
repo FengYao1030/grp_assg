@@ -34,97 +34,6 @@
 
 </head>
 
-<style>
-  .about.section {
-    padding: 60px 0;
-  }
-
-  .about h2 {
-    font-weight: bold;
-  }
-
-  .about p {
-    font-size: 1.1rem;
-    line-height: 1.6;
-  }
-
-  .about img {
-    max-width: 100%;
-    height: auto;
-  }
-
-  .map-wrapper {
-    width: 100%;
-    overflow: hidden;
-    text-align: center;
-    margin-top: 0 !important;
-    padding-top: 0 !important;
-
-  }
-
-  #malaysia-map {
-    display: block;
-    margin: 0 auto;
-    margin-top: 0 !important;
-
-  }
-
-  #crime-map-section {
-    padding: 0px 0;
-    background: #fff;
-  }
-
-  #crime-map-section h4 {
-    margin-top: 5px;
-    /* reduce top space */
-    margin-bottom: 5px !important;
-    /* reduce bottom gap before map */
-    font-weight: bold;
-  }
-
-  #crime-map-section.section-bg {
-    padding: 10px 0;
-    /* cut down section padding */
-  }
-
-  .tooltip {
-    position: absolute;
-    padding: 8px 12px;
-    background: rgba(0, 0, 0, 0.8);
-    color: white;
-    border-radius: 4px;
-    pointer-events: none;
-    font-size: 14px;
-    opacity: 0;
-    /* Start hidden */
-    transition: opacity 0.2s;
-    z-index: 9999;
-  }
-
-  .state {
-    stroke: #fff;
-    stroke-width: 1px;
-    transition: all 0.3s;
-  }
-
-  .state:hover {
-    stroke: #333;
-    stroke-width: 2px;
-  }
-
-  @media (max-width: 768px) {
-    .about h2 {
-      font-size: 1.5rem;
-      text-align: center;
-    }
-
-    .about p,
-    .about ul {
-      text-align: justify;
-    }
-  }
-</style>
-
 <body class="about-page">
 
   <header id="header" class="header d-flex align-items-center sticky-top">
@@ -207,8 +116,8 @@
 
         <div class="row justify-content-center">
           <div class="col-lg-12">
-            <h4 class="text-center" style="padding-bottom: 10px;">Malaysia Crime Map: Average Yearly
-              Cases (2016–2023)</h4>
+            <h2 class="text-center" style="padding-bottom: 10px; font-weight: bold;">Malaysia Crime Map: Average Yearly
+              Cases (2016–2023)</h2>
             <div id="map-table-error" style="display: none;">
               <div class="alert alert-danger" role="alert">
                 <p class="mb-0"><strong>Malaysia Crime Map Unavailable.</strong> Could
@@ -253,7 +162,7 @@
           <h4>Quick Links</h4>
           <ul>
             <li><a href="index.html">Home</a></li>
-            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="about.html">About</a></li>
             <li><a href="contact.html">Contact</a></li>
           </ul>
         </div>
@@ -261,6 +170,7 @@
         <div class="col-lg-2 col-md-3 footer-links">
           <h4>Resources</h4>
           <ul>
+            <li><a href="dashboard.html">Dashboard</a></li>
             <li><a href="crime.html">Crime Types</a></li>
             <li><a href="casestudies.html">Case Studies</a></li>
           </ul>
@@ -326,9 +236,7 @@
         this.reset();
       }
     });
-  </script>
 
-  <script>
     document.addEventListener('DOMContentLoaded', function () {
       const svg = d3.select("#malaysia-map");
       const tooltip = d3.select("#tooltip");
@@ -341,7 +249,6 @@
         d3.csv("data/chartdata.csv")
       ]).then(([mapData, csvData]) => {
 
-        // ✅ Fix naming differences
         function getCsvName(mapName) {
           const nameMapping = {
             "Kuala Lumpur": "W.P. Kuala Lumpur",
@@ -358,7 +265,6 @@
 
         const filteredData = csvData.filter(d => d.state !== "Malaysia");
 
-        // ✅ Average yearly crimes
         const crimesByStateAvg = d3.rollup(
           filteredData,
           v => {
@@ -378,16 +284,14 @@
             0.6 * maxCrimes,
             0.8 * maxCrimes
           ])
-          .range(["#006837", "#31a354", "#f7fcb9", "#fd8d3c", "#bd0026"]);
+          .range(["#1f77b4", "#2ca02c", "#ffcc00", "#ff7f0e", "#d62728"]);
 
-        // ✅ Draw function
         function drawMap() {
           const container = document.querySelector(".map-wrapper");
           const width = container.clientWidth;
-          const height = width * 0.65; // keep 4:3 aspect
+          const height = width * 0.65;
 
           svg.attr("width", width).attr("height", height);
-
           projection.fitSize([width, height], mapData);
 
 
@@ -411,8 +315,15 @@
             })
             .on("mousemove", function (event, d) {
               const csvStateName = getCsvName(d.properties.name);
-              const avgCrimes = crimesByStateAvg.get(csvStateName) || 0;
-              tooltip.html(`<strong>${d.properties.name}</strong><br>Avg. Yearly Cases: ${avgCrimes.toLocaleString()}`)
+
+              if (crimesByStateAvg.has(csvStateName)) {
+                const avgCrimes = crimesByStateAvg.get(csvStateName);
+                tooltip.html(`<strong>${d.properties.name}</strong><br>Avg. Yearly Cases: ${avgCrimes.toLocaleString()}`);
+              } else {
+                tooltip.html(`<strong>${d.properties.name}</strong><br><em>No data available</em>`);
+              }
+
+              tooltip
                 .style("left", (event.pageX + 15) + "px")
                 .style("top", (event.pageY - 30) + "px");
             })
@@ -424,28 +335,36 @@
           // --- Draw Legend ---
           svg.selectAll(".legend").remove(); // clear old legend
 
-          const legendWidth = Math.min(700, width * 0.9);
+          const isSmallScreen = width < 768;
+
+          const legendWidth = isSmallScreen ? width * 0.95 : Math.min(700, width * 0.9);
           const legendItemWidth = legendWidth / 5;
 
           const legendRanges = [
-            { color: "#006837", label: `0 – ${Math.round(0.2 * maxCrimes).toLocaleString()}` },
-            { color: "#31a354", label: `${Math.round(0.2 * maxCrimes + 1).toLocaleString()} – ${Math.round(0.4 * maxCrimes).toLocaleString()}` },
-            { color: "#f7fcb9", label: `${Math.round(0.4 * maxCrimes + 1).toLocaleString()} – ${Math.round(0.6 * maxCrimes).toLocaleString()}` },
-            { color: "#fd8d3c", label: `${Math.round(0.6 * maxCrimes + 1).toLocaleString()} – ${Math.round(0.8 * maxCrimes).toLocaleString()}` },
-            { color: "#bd0026", label: `> ${Math.round(0.8 * maxCrimes).toLocaleString()}` }
+            { color: "#1f77b4", label: `0 – ${Math.round(0.2 * maxCrimes).toLocaleString()}` },
+            { color: "#2ca02c", label: `${Math.round(0.2 * maxCrimes + 1).toLocaleString()} – ${Math.round(0.4 * maxCrimes).toLocaleString()}` },
+            { color: "#ffcc00", label: `${Math.round(0.4 * maxCrimes + 1).toLocaleString()} – ${Math.round(0.6 * maxCrimes).toLocaleString()}` },
+            { color: "#ff7f0e", label: `${Math.round(0.6 * maxCrimes + 1).toLocaleString()} – ${Math.round(0.8 * maxCrimes).toLocaleString()}` },
+            { color: "#d62728", label: `> ${Math.round(0.8 * maxCrimes).toLocaleString()}` }
           ];
+
+          const legendY = isSmallScreen ? height - 55 : height - 30;
+          const titleFontSize = isSmallScreen ? "18px" : "24px";
+          const labelFontSize = isSmallScreen ? "10px" : "16px";
+          const titleY = isSmallScreen ? -8 : -15;
+          const labelY = isSmallScreen ? 22 : 28;
 
           const legend = svg.append("g")
             .attr("class", "legend")
-            .attr("transform", `translate(${width / 2 - legendWidth / 2}, ${height - 30})`);
+            .attr("transform", `translate(${width / 2 - legendWidth / 2}, ${legendY})`);
 
           // Title
           legend.append("text")
             .attr("class", "legend-title")
             .attr("x", legendWidth / 2)
-            .attr("y", -15)
+            .attr("y", titleY)
             .attr("text-anchor", "middle")
-            .style("font-size", "14px")
+            .style("font-size", titleFontSize)
             .style("font-weight", "bold")
             .text("Average Yearly Cases (2016–2023)");
 
@@ -467,9 +386,9 @@
             .append("text")
             .attr("class", "legend-label")
             .attr("x", (d, i) => i * legendItemWidth + legendItemWidth / 2)
-            .attr("y", 28)
+            .attr("y", labelY)
             .attr("text-anchor", "middle")
-            .style("font-size", "12px")
+            .style("font-size", labelFontSize)
             .text(d => d.label);
         }
 

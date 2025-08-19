@@ -130,14 +130,38 @@
           </div>
 
           <div class="col-lg-8">
-            <iframe
-              src="https://docs.google.com/forms/d/e/1FAIpQLScV_MFqFT0diyFavBq7vifyouwy0vlDF2rj-30awy0Hakz3WQ/viewform?embedded=true"
-              width="100%" height="800" frameborder="0" marginheight="0" marginwidth="0"
-              title="Contact Us form embedded from Google Forms">
-              loading...
-            </iframe>
-          </div>
+            <form id="contact-form" class="php-email-form">
+              <div class="row">
+                <div class="col-md-6 form-group">
+                  <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required>
+                </div>
+                <div class="col-md-6 form-group mt-3 mt-md-0">
+                  <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required>
+                </div>
+              </div>
+              <div class="form-group mt-3">
+                <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" required>
+              </div>
+              <div class="form-group mt-3">
+                <textarea class="form-control" name="message" placeholder="Message" required></textarea>
+              </div>
 
+              <div class="form-group mt-3">
+                <label for="fileUpload" class="form-label">Attach File</label>
+                <input type="file" class="form-control" id="fileUpload" name="fileUpload" required>
+              </div>
+              <!-- /File upload -->
+
+              <div class="my-3">
+                <div class="loading">Loading</div>
+                <div class="error-message">There was an error sending your message.</div>
+                <div class="sent-message">Your message has been sent. Thank you!</div>
+              </div>
+              <div class="text-center">
+                <button type="submit">Send Message</button>
+              </div>
+            </form>
+          </div>
           </form>
         </div><!-- End Contact Form -->
 
@@ -168,7 +192,7 @@
           <h4>Quick Links</h4>
           <ul>
             <li><a href="index.html">Home</a></li>
-            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="about.html">About</a></li>
             <li><a href="contact.html">Contact</a></li>
           </ul>
         </div>
@@ -176,6 +200,7 @@
         <div class="col-lg-2 col-md-3 footer-links">
           <h4>Resources</h4>
           <ul>
+            <li><a href="dashboard.html">Dashboard</a></li>
             <li><a href="crime.html">Crime Types</a></li>
             <li><a href="casestudies.html">Case Studies</a></li>
           </ul>
@@ -211,7 +236,7 @@
 
   <!-- Vendor JS Files -->
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <!--<script src="assets/vendor/php-email-form/validate.js"></script> -->
   <script src="assets/vendor/aos/aos.js"></script>
   <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
   <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
@@ -237,6 +262,25 @@
         // Reset form
         this.reset();
       }
+    });
+
+    document.getElementById("contact-form").addEventListener("submit", function (e) {
+      e.preventDefault(); // stop actual submission
+
+      const loading = this.querySelector(".loading");
+      const sent = this.querySelector(".sent-message");
+      const error = this.querySelector(".error-message");
+
+      loading.style.display = "block";
+      sent.style.display = "none";
+      error.style.display = "none";
+
+      // For demo only: show success after delay
+      setTimeout(() => {
+        loading.style.display = "none";
+        sent.style.display = "block"; // success
+        this.reset(); // clear form
+      }, 1500);
     });
   </script>
 
